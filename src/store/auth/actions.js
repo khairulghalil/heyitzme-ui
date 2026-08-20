@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { extractResponseData } from "../../utils";
 import { loginApi } from "../../api/auth/auth";
 import { setUser, setAuthLoading } from "./slice";
 
@@ -10,8 +11,7 @@ export const login = createAsyncThunk(
       dispatch(setAuthLoading(true));
 
       const response = await loginApi(data);
-
-      const user = response.data.data;
+      const user = extractResponseData(response);
 
       //   dispatch(setUser(user));
 

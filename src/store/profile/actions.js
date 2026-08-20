@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { extractResponseData } from "../../utils";
 import { getProfile as getProfileApi } from "../../api/profile/profile";
 import { setProfile, setProfileLoading } from "./slice";
 
@@ -9,8 +10,9 @@ export const getProfile = createAsyncThunk(
   async (username, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setProfileLoading(true));
+
       const response = await getProfileApi(username);
-      const profile = response.data.data;
+      const profile = extractResponseData(response);
 
       dispatch(setProfile(profile));
 
