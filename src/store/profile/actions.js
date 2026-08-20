@@ -10,7 +10,7 @@ export const getProfile = createAsyncThunk(
     try {
       dispatch(setProfileLoading(true));
       const response = await getProfileApi(username);
-      const profile = response.data.data.data;
+      const profile = response.data.data;
 
       dispatch(setProfile(profile));
 
