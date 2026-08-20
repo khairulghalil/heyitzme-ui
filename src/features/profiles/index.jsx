@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Modal, Dropdown } from "react-bootstrap";
 import { Footer, useLogin, Loader } from "../../components";
-import { applyTheme } from "../../utils/theme";
+import { applyTheme, saveContact } from "../../utils";
 import { getProfile } from "../../store/profile/actions";
 import {
   selectProfile,
