@@ -1,5 +1,6 @@
 import { ToastProvider, useToast } from "./toast";
-import Footer from "./footer";
 import { LoginProvider, useLogin } from "./login";
+import Footer from "./footer";
+import Loader from "./loader";
 
-export { ToastProvider, useToast, Footer, LoginProvider, useLogin };
+export { ToastProvider, useToast, LoginProvider, useLogin, Footer, Loader };

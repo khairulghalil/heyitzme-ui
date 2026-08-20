@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Modal, Dropdown } from "react-bootstrap";
-import { Footer, useLogin } from "../../components";
+import { Footer, useLogin, Loader } from "../../components";
 import { applyTheme } from "../../utils/theme";
 import { getProfile } from "../../store/profile/actions";
 import {
@@ -19,6 +19,7 @@ function Profiles() {
   const { showLogin } = useLogin();
 
   const profile = useSelector(selectProfile);
+  const loading = useSelector(selectProfileLoading);
 
   const [showShareModal, setShowShareModal] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
@@ -48,6 +49,7 @@ function Profiles() {
 
   return (
     <>
+      <Loader show={loading} showLogo />
       {profile && (
         <>
           <Dropdown className="profile-header text-left">
