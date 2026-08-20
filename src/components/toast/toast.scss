@@ -1,0 +1,19 @@
+.toast-container {
+  width: auto;
+  max-width: 100%;
+
+  .toast {
+    max-width: 400px;
+    margin: 20px auto;
+    background: #333;
+    color: #fff;
+    border-radius: 8px;
+    border: none;
+  }
+
+  .toast-body {
+    padding: 15px;
+    color: #fff;
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,32 @@
+.modal-content {
+  background-color: #8b8b8b4c;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  .login-body {
+    img {
+      width: 70%;
+    }
+
+    label {
+      color: white;
+    }
+
+    p {
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .form-control {
+      background-color: #5d5d5d;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+    }
+
+    .form-control:focus {
+      box-shadow: none !important;
+    }
+  }
+}

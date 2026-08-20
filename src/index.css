@@ -1,0 +1,122 @@
+:root {
+  /* Declare your global colors */
+  --primary-color: #ffa01a;
+  --primary-font-color: #484848;
+  --secondary-font-color: #8b8a8a;
+  --accent-color: #ffca2c;
+  --bg-dark: #212529;
+  --secondary-color: #fdd7a3;
+  --background-color: #ffffff;
+  --font-color: #9e9e9e;
+}
+
+html,
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: #000;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden !important;
+  font-family: "Afacad", sans-serif;
+  font-size: 18px !important;
+  background: #000;
+}
+
+body.modal-open {
+  padding-right: 0 !important;
+}
+
+#app {
+  background: #fff;
+  min-height: 100dvh;
+}
+/*  */
+.floating-btn {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 15px;
+  bottom: 15px;
+  z-index: 99999;
+  background-color: #95b12f;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  transition: all 0.4s;
+}
+
+.floating-btn i {
+  font-size: 24px;
+  color: white;
+  line-height: 0;
+}
+
+.floating-btn:hover {
+  background-color: color-mix(in srgb, #a5c926, transparent 20%);
+  color: white;
+}
+
+.floating-btn.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+/*  */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  overflow: hidden;
+  background: #fff;
+  transition: all 0.6s ease-out;
+}
+
+#preloader:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #ffffff;
+  border-color: #95b12f transparent #fff transparent;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: animate-preloader 1.5s linear infinite;
+}
+
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+header .navbar {
+  background-color: #fff !important;
+  border-bottom: 1px solid #e0e0e0;
+}
+header .navbar .nav-link {
+  color: var(--primary-font-color) !important;
+  font-weight: 500;
+}
+header .navbar {
+  color: var(--primary-font-color) !important;
+  font-weight: 500;
+}
+header .navbar-toggler {
+  border: 1px solid #c7c6c6 !important;
+}
+
+.navbar-toggler i {
+  color: #b0b0b0 !important;
+}
