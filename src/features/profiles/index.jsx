@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Modal, Dropdown } from "react-bootstrap";
-import { Footer, Login } from "../../components";
+import { Footer, useLogin } from "../../components";
 import { applyTheme } from "../../utils/theme";
 import SocialLink from "./components/SocialLink";
 import SocialMedia from "./components/SocialMedia";
@@ -51,14 +51,15 @@ function Profiles() {
       "$2b$12$nfJblNrKU9qfGLLMu7ieW.W5gCmJtb6pXBYSAt.0iWqXPWmYdQ1Hq",
   };
 
+  const { showLogin } = useLogin();
+
   const [showShareModal, setShowShareModal] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const profilePictureUrl = `https://images.heyitzme.com/profiles/${profileData.profileImage}?v=${profileData.profileImageVer}`;
   const profileUrl = `https://heyitzme.com/${profileData.username}`;
   const editProfile = () => {
-    setShowLoginModal(true);
+    showLogin(profileData.username);
   };
   applyTheme(profileData.theme);
 
@@ -148,11 +149,6 @@ function Profiles() {
       >
         <AboutModal profileData={profileData} />
       </Modal>
-
-      <Login
-        showLoginModal={showLoginModal}
-        setShowLoginModal={setShowLoginModal}
-      />
     </>
   );
 }
