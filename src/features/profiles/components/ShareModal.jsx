@@ -10,7 +10,7 @@ function ShareModal({ profileUrl }) {
     const copied = await copyToClipboard(profileUrl);
 
     if (copied) {
-      showToast("Link copied!");
+      showToast("Link copied", "success");
     }
   };
 

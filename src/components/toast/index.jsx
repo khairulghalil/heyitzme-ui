@@ -10,10 +10,11 @@ export function ToastProvider({ children }) {
     message: "",
   });
 
-  const showToast = (message) => {
+  const showToast = (message, type = "info") => {
     setToast({
       show: true,
       message,
+      type,
     });
   };
 
@@ -21,7 +22,13 @@ export function ToastProvider({ children }) {
     setToast({
       show: false,
       message: "",
+      type: "info",
     });
+  };
+
+  const icon = {
+    success: "✅",
+    error: "⚠️",
   };
 
   return (
@@ -32,10 +39,15 @@ export function ToastProvider({ children }) {
         <BootstrapToast
           show={toast.show}
           onClose={hideToast}
-          delay={3000}
+          delay={1500}
           autohide
         >
-          <BootstrapToast.Body>{toast.message}</BootstrapToast.Body>
+          <BootstrapToast.Body>
+            {toast.type !== "info" && (
+              <span className="me-2">{icon[toast.type]}</span>
+            )}
+            {toast.message}
+          </BootstrapToast.Body>
         </BootstrapToast>
       </ToastContainer>
     </ToastContext.Provider>
