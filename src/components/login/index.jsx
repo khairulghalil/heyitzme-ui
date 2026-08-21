@@ -12,11 +12,13 @@ const LoginContext = createContext(null);
 export function LoginProvider({ children }) {
   const [viewLogin, setViewLogin] = useState(false);
   const [uname, setUname] = useState("");
+  const [loginSuccessCallback, setLoginSuccessCallback] = useState(null);
 
-  const showLogin = (uname) => {
+  const showLogin = (uname, onSuccess) => {
     if (uname) {
       setUname(uname);
     }
+    setLoginSuccessCallback(() => onSuccess);
     setViewLogin(true);
   };
 
@@ -28,7 +30,13 @@ export function LoginProvider({ children }) {
     <LoginContext.Provider value={{ showLogin, closeLogin }}>
       {children}
 
-      <LoginModal show={viewLogin} onHide={closeLogin} uname={uname} />
+      <LoginModal
+        show={viewLogin}
+        onHide={closeLogin}
+        uname={uname}
+        loginSuccessCallback={loginSuccessCallback}
+        setLoginSuccessCallback={setLoginSuccessCallback}
+      />
     </LoginContext.Provider>
   );
 }
@@ -37,7 +45,13 @@ export function useLogin() {
   return useContext(LoginContext);
 }
 
-function LoginModal({ show, onHide, uname }) {
+function LoginModal({
+  show,
+  onHide,
+  uname,
+  loginSuccessCallback,
+  setLoginSuccessCallback,
+}) {
   const { showToast } = useToast();
 
   const loading = useSelector(selectAuthLoading);
@@ -69,7 +83,13 @@ function LoginModal({ show, onHide, uname }) {
       };
       await dispatch(login(data)).unwrap();
 
+      if (loginSuccessCallback) {
+        loginSuccessCallback();
+        setLoginSuccessCallback(null);
+      }
+
       showToast("Login successful!", "success");
+
       handleClose();
     } catch (error) {
       setPassword("");

@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { extractResponseData } from "../../utils";
 import { loginApi } from "../../api/auth/auth";
 import { setUser, setAuthLoading } from "./slice";
+import { setToken } from "../../utils/jwt";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -11,11 +12,12 @@ export const login = createAsyncThunk(
       dispatch(setAuthLoading(true));
 
       const response = await loginApi(data);
-      const user = extractResponseData(response);
+      const res = extractResponseData(response);
 
-      //   dispatch(setUser(user));
+      const accessToken = res.accessToken;
+      setToken(accessToken);
 
-      return user;
+      return res.user;
     } catch (error) {
       const message =
         error.response?.data?.message || "Invalid username or password";

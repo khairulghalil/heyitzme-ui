@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Modal, Dropdown } from "react-bootstrap";
 import { Footer, useLogin, Loader } from "../../components";
-import { applyTheme, saveContact } from "../../utils";
+import {
+  applyTheme,
+  saveContact,
+  isAuthenticated,
+  removeToken,
+} from "../../utils";
 import { getProfile } from "../../store/profile/actions";
 import {
   selectProfile,
@@ -44,7 +49,24 @@ function Profiles() {
   }, [profile]);
 
   const editProfile = () => {
-    showLogin(profile.username);
+    if (!isAuthenticated(profile.username)) {
+      showLogin(profile.username);
+      return;
+    } else {
+      removeToken();
+      console.log("Token is removed");
+    }
+  };
+
+  const showAbout = () => {
+    if (!isAuthenticated(profile.username)) {
+      showLogin(profile.username, () => {
+        setShowAboutModal(true);
+      });
+      return;
+    }
+
+    setShowAboutModal(true);
   };
 
   return (
@@ -67,10 +89,7 @@ function Profiles() {
                 Edit Profile
               </Dropdown.Item>
 
-              <Dropdown.Item
-                as="button"
-                onClick={() => setShowAboutModal(true)}
-              >
+              <Dropdown.Item as="button" onClick={() => showAbout()}>
                 About
               </Dropdown.Item>
             </Dropdown.Menu>
