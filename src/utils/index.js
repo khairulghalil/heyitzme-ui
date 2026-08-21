@@ -2,14 +2,7 @@ import { saveContact } from "./vcard";
 import { applyTheme } from "./theme";
 import { copyToClipboard } from "./clipboard";
 import { extractResponseData } from "./extractResponse";
-import {
-  setToken,
-  getToken,
-  removeToken,
-  hasToken,
-  isTokenExpired,
-  isAuthenticated,
-} from "./jwt";
+import { setToken, getToken, removeToken, isAuthenticated } from "./token";
 
 export {
   saveContact,
@@ -19,7 +12,5 @@ export {
   setToken,
   getToken,
   removeToken,
-  hasToken,
-  isTokenExpired,
   isAuthenticated,
 };

@@ -16,9 +16,7 @@ export const getTokenPayload = () => {
   }
 
   try {
-    const payload = token.split(".")[1];
-
-    return JSON.parse(atob(payload));
+    return JSON.parse(atob(token));
   } catch {
     return null;
   }
@@ -28,10 +26,6 @@ export const removeToken = () => {
   localStorage.removeItem(TOKEN_KEY);
 };
 
-export const hasToken = () => {
-  return !!getToken();
-};
-
 export const isTokenExpired = () => {
   const token = getToken();
   if (!token) {
@@ -39,9 +33,9 @@ export const isTokenExpired = () => {
   }
 
   try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
+    const payload = JSON.parse(atob(token));
 
-    return payload.exp * 1000 <= Date.now();
+    return payload.expiresAt * 1000 <= Date.now();
   } catch {
     return true;
   }
@@ -49,8 +43,7 @@ export const isTokenExpired = () => {
 
 export const isAuthenticated = (user) => {
   const payload = getTokenPayload();
-
-  if (payload && payload.sub !== user) {
+  if (payload && payload.user !== user) {
     return false;
   }
 
