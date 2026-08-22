@@ -269,3 +269,30 @@
     }
   }
 }
+
+.profile-not-found {
+  height: 100vh;
+  background-color: #262626;
+
+  p {
+    color: white;
+    font-size: 20px;
+    margin-top: 20px;
+    font-weight: 700;
+  }
+
+  span {
+    color: white;
+    font-size: 17px;
+    a {
+      color: orange;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+  }
+
+  img {
+    width: 250px;
+    height: auto;
+  }
+}

@@ -9,10 +9,14 @@ import {
   selectProfile,
   selectProfileLoading,
 } from "../../store/profile/selectors";
-import SocialLink from "./components/SocialLink";
-import SocialMedia from "./components/SocialMedia";
-import AboutModal from "./components/AboutModal";
-import ShareModal from "./components/ShareModal";
+import {
+  SocialLink,
+  SocialMedia,
+  AboutModal,
+  ShareModal,
+  ProfileNotFound,
+} from "./components";
+
 import "./profiles.scss";
 function Profiles() {
   const dispatch = useDispatch();
@@ -157,7 +161,7 @@ function Profiles() {
           </Modal>
         </>
       ) : (
-        <div>No profile found</div>
+        <ProfileNotFound />
       )}
     </>
   );

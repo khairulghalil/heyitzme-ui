@@ -11,9 +11,9 @@ function generateCard({ type }) {
   const profile = useSelector(selectProfile);
 
   useEffect(() => {
-    // if (!isAuthenticated(username) || !profile) {
-    //   navigate(`/${username}`);
-    // }
+    if (!isAuthenticated(username) || !profile) {
+      navigate(`/${username}`);
+    }
   }, []);
 
   return (
