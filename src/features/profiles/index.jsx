@@ -1,14 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Modal, Dropdown } from "react-bootstrap";
 import { Footer, useLogin, Loader } from "../../components";
-import {
-  applyTheme,
-  saveContact,
-  isAuthenticated,
-  removeToken,
-} from "../../utils";
+import { applyTheme, saveContact, isAuthenticated } from "../../utils";
 import { getProfile } from "../../store/profile/actions";
 import {
   selectProfile,
@@ -21,6 +16,8 @@ import ShareModal from "./components/ShareModal";
 import "./profiles.scss";
 function Profiles() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const username = useParams().username;
   const { showLogin } = useLogin();
 
   const profile = useSelector(selectProfile);
@@ -31,7 +28,6 @@ function Profiles() {
   const [profileUrl, setProfileUrl] = useState("");
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
 
-  const username = useParams().username;
   useEffect(() => {
     if (username) {
       dispatch(getProfile(username));
@@ -50,12 +46,13 @@ function Profiles() {
 
   const editProfile = () => {
     if (!isAuthenticated(profile.username)) {
-      showLogin(profile.username);
+      showLogin(profile.username, () => {
+        navigate(`/edit/${profile.username}`);
+      });
       return;
-    } else {
-      removeToken();
-      console.log("Token is removed");
     }
+
+    navigate(`/edit/${profile.username}`);
   };
 
   const showAbout = () => {
@@ -71,8 +68,8 @@ function Profiles() {
 
   return (
     <>
-      <Loader show={loading} showLogo />
-      {profile && (
+      <Loader show={loading} showLogo opacity={1} />
+      {profile ? (
         <>
           <Dropdown className="profile-header text-left">
             <Dropdown.Toggle
@@ -159,6 +156,8 @@ function Profiles() {
             <AboutModal profileData={profile} />
           </Modal>
         </>
+      ) : (
+        <div>No profile found</div>
       )}
     </>
   );

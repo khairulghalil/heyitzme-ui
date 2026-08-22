@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { extractResponseData } from "../../utils";
 import { loginApi } from "../../api/auth/auth";
-import { setUser, setAuthLoading } from "./slice";
+import { setAuthLoading } from "./slice";
 import { setToken } from "../../utils/token";
 
 export const login = createAsyncThunk(

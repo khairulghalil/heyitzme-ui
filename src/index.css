@@ -33,7 +33,7 @@ body.modal-open {
   padding-right: 0 !important;
 }
 
-#app {
+#root {
   background: #fff;
   min-height: 100dvh;
 }
