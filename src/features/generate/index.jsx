@@ -91,11 +91,7 @@ function generateCard({ type }) {
       <button className="btn btn-primary m-4" onClick={() => handleUpdate()}>
         Update
       </button>
-      <button
-        disabled
-        className="btn btn-danger m-4 "
-        onClick={() => removeToken()}
-      >
+      <button className="btn btn-danger m-4 " onClick={() => removeToken()}>
         Logout
       </button>
     </div>
