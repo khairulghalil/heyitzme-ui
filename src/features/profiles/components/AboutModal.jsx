@@ -32,7 +32,7 @@ function AboutModal({ profileData }) {
           <i className="bi bi-info-circle me-2"></i>
           Status
         </p>
-        <span>{profileData.status.active ? "Active" : "Inactive"}</span>
+        <span>{profileData.status == "active" ? "Active" : "Inactive"}</span>
       </div>
 
       <div>
@@ -40,9 +40,7 @@ function AboutModal({ profileData }) {
           <i className="bi bi-calendar-check me-2"></i>
           Valid until
         </p>
-        <span>
-          {moment(profileData.status.expiryDate).format("DD MMM YYYY")}
-        </span>
+        <span>{moment(profileData.expiresAt).format("DD MMM YYYY")}</span>
       </div>
       <div className="about-footer text-center pt-1 m-0">
         <button type="button" className="btn btn-primary my-3">
