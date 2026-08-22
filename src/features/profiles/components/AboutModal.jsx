@@ -1,4 +1,5 @@
 import Modal from "react-bootstrap/Modal";
+import moment from "moment";
 
 function AboutModal({ profileData }) {
   return (
@@ -39,9 +40,11 @@ function AboutModal({ profileData }) {
           <i className="bi bi-calendar-check me-2"></i>
           Valid until
         </p>
-        <span>{profileData.status.expiryDate}</span>
+        <span>
+          {moment(profileData.status.expiryDate).format("DD MMM YYYY")}
+        </span>
       </div>
-      <div className="footer text-center pt-1 m-0">
+      <div className="about-footer text-center pt-1 m-0">
         <button type="button" className="btn btn-primary my-3">
           Renew Subscription
         </button>

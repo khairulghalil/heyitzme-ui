@@ -1,6 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { extractResponseData } from "../../utils";
-import { getProfile as getProfileApi } from "../../api/profile/profile";
+import {
+  getProfile as getProfileApi,
+  updateProfile as updateProfileApi,
+} from "../../api/profile/profile";
 import { setProfile, setProfileLoading } from "./slice";
 
 export { setProfile, setProfileLoading };
@@ -20,6 +23,27 @@ export const getProfile = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to get profile",
+      );
+    } finally {
+      dispatch(setProfileLoading(false));
+    }
+  },
+);
+
+export const updateProfile = createAsyncThunk(
+  "profile/updateProfile",
+  async ({ username, data }, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(setProfileLoading(true));
+
+      await updateProfileApi(username, data);
+
+      dispatch(setProfile(data));
+
+      return;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to update profile",
       );
     } finally {
       dispatch(setProfileLoading(false));
