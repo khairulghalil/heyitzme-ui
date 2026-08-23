@@ -9,7 +9,6 @@
   padding-top: 35vh;
 
   .generate-card {
-    // background: rgb(240, 250, 253);
     position: relative;
     background: var(--background-color);
     min-height: 25vh;
@@ -31,7 +30,6 @@
       font-weight: bold;
       font-size: 17px;
       color: var(--font-color);
-      // color: #292929;
     }
 
     .form-control {
@@ -39,7 +37,6 @@
       border: 0.1px solid #a3a3a3ac;
       background-color: transparent;
       color: var(--font-color);
-      // color: rgb(55, 55, 55);
     }
 
     .form-control:focus {
@@ -128,7 +125,7 @@
     background-color: transparent;
     border: 1px solid #a4a4a4;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
+    color: white;
     border-radius: 7px;
     padding: 10px 15px;
     text-decoration: none;

@@ -106,21 +106,21 @@
     background: var(--background-color);
     border-radius: 50% 50% 0 0;
   }
+}
 
-  .profile-banner {
-    background-color: #404040;
-    padding: 10px;
-    text-align: center;
+.profile-banner {
+  background-color: #404040;
+  padding: 10px;
+  text-align: center;
 
-    p {
-      color: #fff !important;
-      font-size: 15px;
-      margin: 0;
+  p {
+    color: #fff !important;
+    font-size: 15px;
+    margin: 0;
 
-      a {
-        color: orange;
-        text-decoration: underline;
-      }
+    a {
+      color: orange;
+      text-decoration: underline;
     }
   }
 }

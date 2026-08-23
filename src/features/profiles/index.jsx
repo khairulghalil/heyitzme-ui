@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Modal, Dropdown } from "react-bootstrap";
 import { Footer, useLogin, Loader } from "../../components";
 import { applyTheme, saveContact, isAuthenticated } from "../../utils";
-import { getProfile } from "../../store/profile/actions";
+import { getProfile, setProfile } from "../../store/profile/actions";
 import {
   selectProfile,
   selectProfileLoading,
@@ -18,7 +18,13 @@ import {
 } from "./components";
 
 import "./profiles.scss";
-function Profiles() {
+function Profiles({
+  previewData = null,
+  type = null,
+  updateAction = null,
+  createAction = null,
+  backAction = null,
+}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const username = useParams().username;
@@ -33,10 +39,12 @@ function Profiles() {
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
 
   useEffect(() => {
-    if (username) {
+    if (previewData) {
+      dispatch(setProfile(previewData));
+    } else if (username) {
       dispatch(getProfile(username));
     }
-  }, [username]);
+  }, [username, previewData]);
 
   useEffect(() => {
     if (profile) {
@@ -75,7 +83,9 @@ function Profiles() {
       <Loader show={loading} showLogo opacity={1} />
       {profile ? (
         <>
-          <Dropdown className="profile-header text-left">
+          <Dropdown
+            className={`profile-header text-left ${previewData ? "d-none" : ""}`}
+          >
             <Dropdown.Toggle
               variant="link"
               id="profile-dropdown"
@@ -104,7 +114,9 @@ function Profiles() {
                 src={profilePictureUrl || null}
               />
 
-              <div className="profile-content text-center mt-3">
+              <div
+                className={`profile-content text-center mt-3 ${previewData ? "pe-none" : ""}`}
+              >
                 <h2 id="name">{profile.name}</h2>
                 <p id="bio">{profile.bio}</p>
                 <SocialLink contact={profile.contact} />
@@ -132,12 +144,31 @@ function Profiles() {
               </div>
             </div>
             <div className="profile-banner">
-              <p>
-                Like this Business Card? Get yours now at
-                <a href="https://heyitzme.com" className="ps-1">
-                  HeyItzMe.com
-                </a>
-              </p>
+              {type === "edit" && (
+                <>
+                  <p>Like what you see?</p>
+                  <div className="text-center pt-3 pb-2">
+                    <button className="btn btn-light me-2" onClick={backAction}>
+                      <span className="me-2">◂</span>Back to Edit
+                    </button>
+                    <button
+                      className="btn btn-primary profile-theme"
+                      onClick={updateAction}
+                    >
+                      Update Card
+                    </button>
+                  </div>
+                </>
+              )}
+              {type === "new" && <p>You are creating a new profile.</p>}
+              {!type && (
+                <p>
+                  Like this Business Card? Get yours now at
+                  <a href="https://heyitzme.com" className="ps-1">
+                    HeyItzMe.com
+                  </a>
+                </p>
+              )}
             </div>
             <Footer />
 

@@ -1,10 +1,17 @@
 import { Accordion, Form } from "react-bootstrap";
 
-function ThemeCard({ updProfile, handleChange }) {
+function ThemeCard({
+  updProfile,
+  handleChange,
+  showThemeList = false,
+  setShowThemeList,
+}) {
   return (
-    <Accordion className="mb-3">
-      <Accordion.Item eventKey="0">
-        <Accordion.Header>Theme</Accordion.Header>
+    <Accordion defaultActiveKey={showThemeList ? "1" : "0"} className="mb-3">
+      <Accordion.Item eventKey="1">
+        <Accordion.Header onClick={() => setShowThemeList(!showThemeList)}>
+          Theme
+        </Accordion.Header>
         <Accordion.Body>
           <Form.Group className="mb-3" controlId="primaryColor">
             <div className="d-flex align-items-center justify-content-between">

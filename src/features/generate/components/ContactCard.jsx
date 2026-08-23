@@ -1,10 +1,17 @@
 import { Accordion, Form } from "react-bootstrap";
 
-function ContactCard({ updProfile, handleChange }) {
+function ContactCard({
+  updProfile,
+  handleChange,
+  showContactList = false,
+  setShowContactList,
+}) {
   return (
-    <Accordion className="mb-3">
-      <Accordion.Item eventKey="0">
-        <Accordion.Header>Contact</Accordion.Header>
+    <Accordion defaultActiveKey={showContactList ? "1" : "0"} className="mb-3">
+      <Accordion.Item eventKey="1">
+        <Accordion.Header onClick={() => setShowContactList(!showContactList)}>
+          Contact
+        </Accordion.Header>
         <Accordion.Body>
           <Form.Group className="mb-3" controlId="phone">
             <Form.Label>Phone</Form.Label>

@@ -150,3 +150,19 @@ header .navbar-toggler {
   border: 1px solid var(--primary-color) !important;
   box-shadow: none;
 }
+
+/*  */
+
+.btn-light {
+  background: none;
+  color: lightgray;
+  border: 1px solid lightgray;
+}
+.btn-light:active,
+.btn-light:focus,
+.btn-light:hover {
+  background: none !important;
+  color: lightgray !important;
+  border: 1px solid lightgray !important;
+  box-shadow: none;
+}
