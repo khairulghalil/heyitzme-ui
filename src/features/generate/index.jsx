@@ -129,76 +129,81 @@ function generateCard({ type }) {
 
   return (
     <>
-      <div className="generate-card p-4">
-        <div className="text-center">
-          <img
-            id="profile-picture"
-            className="profile-picture rounded-circle img-fluid my-4"
-            alt="Profile"
-            src={profilePictureUrl || null}
+      <div className="profile-wrapper">
+        <div className="generate-card p-4">
+          <div className="text-center">
+            <img
+              id="profile-picture"
+              className="profile-picture rounded-circle img-fluid"
+              alt="Profile"
+              src={profilePictureUrl || null}
+            />
+          </div>
+
+          <Form.Group className="mb-3 mt-5" controlId="name">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              value={updProfile?.name || ""}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="bio">
+            <Form.Label>Bio</Form.Label>
+            <Form.Control
+              type="text"
+              name="bio"
+              value={updProfile?.bio || ""}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="about">
+            <Form.Label>About</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="about"
+              value={updProfile?.about || ""}
+              onChange={handleChange}
+              rows={3}
+            />
+          </Form.Group>
+
+          <ContactCard updProfile={updProfile} handleChange={handleChange} />
+          <SocialMediaCard
+            updProfile={updProfile}
+            handleChange={handleChange}
           />
+          <ThemeCard updProfile={updProfile} handleChange={handleChange} />
+
+          <div className="text-center">
+            <button
+              className="btn btn-secondary profile-theme my-4 me-2"
+              onClick={handleConfirmCancel}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-primary profile-theme my-4"
+              onClick={handleConfirmUpdate}
+            >
+              Update
+            </button>
+          </div>
         </div>
+        <Footer />
 
-        <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="name"
-            value={updProfile?.name || ""}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="bio">
-          <Form.Label>Bio</Form.Label>
-          <Form.Control
-            type="text"
-            name="bio"
-            value={updProfile?.bio || ""}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="about">
-          <Form.Label>About</Form.Label>
-          <Form.Control
-            as="textarea"
-            name="about"
-            value={updProfile?.about || ""}
-            onChange={handleChange}
-            rows={3}
-          />
-        </Form.Group>
-
-        <ContactCard updProfile={updProfile} handleChange={handleChange} />
-        <SocialMediaCard updProfile={updProfile} handleChange={handleChange} />
-        <ThemeCard updProfile={updProfile} handleChange={handleChange} />
-
-        <div className="text-center">
-          <button
-            className="btn btn-secondary profile-theme my-4 me-2"
-            onClick={handleConfirmCancel}
-          >
-            Cancel
-          </button>
-          <button
-            className="btn btn-primary profile-theme my-4"
-            onClick={handleConfirmUpdate}
-          >
-            Update
-          </button>
-        </div>
+        <Modal
+          show={showConfirmModal}
+          onHide={() => setShowConfirmModal(false)}
+          centered
+          className="confirmModal"
+        >
+          <ConfirmModal text={modalText} action={action} />
+        </Modal>
       </div>
-      <Footer />
-
-      <Modal
-        show={showConfirmModal}
-        onHide={() => setShowConfirmModal(false)}
-        centered
-        className="confirmModal"
-      >
-        <ConfirmModal text={modalText} action={action} />
-      </Modal>
     </>
   );
 }

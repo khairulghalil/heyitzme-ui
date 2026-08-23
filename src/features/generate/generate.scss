@@ -1,78 +1,125 @@
-.generate-card {
-  // background: rgb(240, 250, 253);
-  .profile-picture {
-    width: 210px;
-    height: 210px;
-    object-fit: cover;
-    border: 10px solid var(--secondary-color);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  }
+.profile-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    var(--primary-color) 0 62%,
+    black 62% 100%
+  );
+  position: relative;
+  padding-top: 35vh;
 
-  label {
-    font-weight: bold;
-    font-size: 17px;
-    color: #292929;
-  }
+  .generate-card {
+    // background: rgb(240, 250, 253);
+    position: relative;
+    background: var(--background-color);
+    min-height: 25vh;
+    padding-top: 45px;
 
-  .form-control {
-    border-radius: 5px;
-    border: 1px solid #e5e5e5;
-    color: rgb(55, 55, 55);
-  }
-
-  .form-control:focus {
-    border: 1px solid #e5e5e5;
-    box-shadow: none;
-  }
-
-  .accordion {
-    .accordion-item {
-      background-color: #f8f9fa !important;
-      background: white !important;
-      border: none;
-      padding: 0;
+    .profile-picture {
+      position: absolute;
+      z-index: 2;
+      width: 230px;
+      height: 230px;
+      object-fit: cover;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 10px solid var(--secondary-color);
     }
 
-    .accordion-collapse {
-      background-color: white !important;
+    label {
+      font-weight: bold;
+      font-size: 17px;
+      color: var(--font-color);
+      // color: #292929;
     }
 
-    .accordion-body {
-      border-radius: 8px;
-      border: 1px solid #e5e5e5;
-      background-color: #fffffff1;
-      color: #292929;
-      margin-top: 10px;
+    .form-control {
+      border-radius: 5px;
+      border: 0.1px solid #a3a3a3ac;
+      background-color: transparent;
+      color: var(--font-color);
+      // color: rgb(55, 55, 55);
+    }
 
-      label {
-        font-weight: 600 !important;
-        font-size: 16px !important;
+    .form-control:focus {
+      border: 0.1px solid #a3a3a3ac;
+      box-shadow: none;
+    }
+
+    .accordion {
+      .accordion-item {
+        background-color: #f8f9fa !important;
+        background: transparent !important;
+        border: none;
+        padding: 0;
+      }
+
+      .accordion-collapse {
+        background-color: transparent !important;
+      }
+
+      .accordion-body {
+        border-radius: 8px;
+        border: 0.1px solid #a3a3a3ac;
+        background-color: transparent;
+        color: #292929;
+        margin-top: 10px;
+
+        label {
+          font-weight: 600 !important;
+          font-size: 16px !important;
+        }
+      }
+
+      .accordion-button {
+        --bs-accordion-btn-bg: transparent;
+        --bs-accordion-active-bg: transparent;
+        --bs-accordion-active-color: #212529;
+
+        background-color: transparent !important;
+        color: var(--font-color) !important;
+        font-weight: 700;
+        font-size: 17px;
+        padding: 10px 5px 10px 0;
+
+        &::after {
+          background-image: none;
+          background-color: var(--font-color);
+          mask-image: var(--bs-accordion-btn-icon);
+          -webkit-mask-image: var(--bs-accordion-btn-icon);
+          mask-repeat: no-repeat;
+          -webkit-mask-repeat: no-repeat;
+          mask-position: center;
+          -webkit-mask-position: center;
+          mask-size: contain;
+          -webkit-mask-size: contain;
+        }
+      }
+
+      .accordion-button:focus,
+      .accordion-button:hover {
+        background: transparent !important;
+        background-color: transparent !important;
+        color: var(--font-color) !important;
+        box-shadow: none !important;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .accordion-button:not(.collapsed) {
+        box-shadow: none !important;
       }
     }
-
-    .accordion-button {
-      --bs-accordion-btn-bg: white;
-      --bs-accordion-active-bg: white;
-      --bs-accordion-active-color: #212529;
-
-      background-color: white;
-      font-weight: 700;
-      font-size: 17px;
-      padding: 10px 5px 10px 0;
-    }
-
-    .accordion-button:focus,
-    .accordion-button:hover {
-      background: white !important;
-      background-color: white !important;
-      color: #292929 !important;
-      box-shadow: none !important;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .accordion-button:not(.collapsed) {
-      box-shadow: none !important;
-    }
+  }
+  .generate-card::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    left: -10%;
+    width: 120%;
+    height: 160px;
+    background: var(--background-color);
+    border-radius: 50% 50% 0 0;
   }
 }
 
