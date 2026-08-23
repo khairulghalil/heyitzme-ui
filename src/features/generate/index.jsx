@@ -195,7 +195,7 @@ function generateCard({ type }) {
         show={showConfirmModal}
         onHide={() => setShowConfirmModal(false)}
         centered
-        className="shareModal"
+        className="confirmModal"
       >
         <ConfirmModal text={modalText} action={action} />
       </Modal>
