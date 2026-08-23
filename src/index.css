@@ -90,8 +90,8 @@ header .navbar-toggler {
 
 .modal-content {
   background-color: #8b8b8b4c;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
 }
 
 .btn {
