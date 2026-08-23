@@ -68,39 +68,6 @@ body.modal-open {
   opacity: 1;
 }
 
-/*  */
-#preloader {
-  position: fixed;
-  inset: 0;
-  z-index: 999999;
-  overflow: hidden;
-  background: #fff;
-  transition: all 0.6s ease-out;
-}
-
-#preloader:before {
-  content: "";
-  position: fixed;
-  top: calc(50% - 30px);
-  left: calc(50% - 30px);
-  border: 6px solid #ffffff;
-  border-color: #95b12f transparent #fff transparent;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: animate-preloader 1.5s linear infinite;
-}
-
-@keyframes animate-preloader {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 header .navbar {
   background-color: #fff !important;
   border-bottom: 1px solid #e0e0e0;
@@ -119,4 +86,45 @@ header .navbar-toggler {
 
 .navbar-toggler i {
   color: #b0b0b0 !important;
+}
+
+/*  */
+
+.modal-content {
+  background-color: #8b8b8b4c;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn {
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+  min-width: 130px;
+  font-weight: 600;
+}
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.btn-primary:focus,
+.btn-primary:hover {
+  background: var(--primary-color) !important;
+}
+
+.btn-secondary {
+  background: none;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.btn-secondary:focus,
+.btn-secondary:hover {
+  background: none !important;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color) !important;
+  box-shadow: none;
 }

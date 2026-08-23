@@ -140,25 +140,25 @@ function Profiles() {
               </p>
             </div>
             <Footer />
+
+            <Modal
+              show={showShareModal}
+              onHide={() => setShowShareModal(false)}
+              centered
+              className="shareModal"
+            >
+              <ShareModal profileUrl={profileUrl || null} />
+            </Modal>
+
+            <Modal
+              show={showAboutModal}
+              onHide={() => setShowAboutModal(false)}
+              centered
+              className="aboutModal"
+            >
+              <AboutModal profileData={profile} />
+            </Modal>
           </div>
-
-          <Modal
-            show={showShareModal}
-            onHide={() => setShowShareModal(false)}
-            centered
-            className="shareModal"
-          >
-            <ShareModal profileUrl={profileUrl || null} />
-          </Modal>
-
-          <Modal
-            show={showAboutModal}
-            onHide={() => setShowAboutModal(false)}
-            centered
-            className="aboutModal"
-          >
-            <AboutModal profileData={profile} />
-          </Modal>
         </>
       ) : (
         <ProfileNotFound />
