@@ -1,12 +1,17 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Form } from "react-bootstrap";
+import { Form, Modal } from "react-bootstrap";
 import { selectProfile } from "../../store/profile/selectors";
 import { updateProfile } from "../../store/profile/actions";
 import { isAuthenticated } from "../../utils";
 import { Footer } from "../../components";
-import { ContactCard, SocialMediaCard, ThemeCard } from "./components";
+import {
+  ContactCard,
+  SocialMediaCard,
+  ThemeCard,
+  ConfirmModal,
+} from "./components";
 import "./generate.scss";
 
 function generateCard({ type }) {
@@ -55,6 +60,9 @@ function generateCard({ type }) {
 
   const [updProfile, setUpdProfile] = useState(null);
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [modalText, setModalText] = useState("");
+  const [action, setAction] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,9 +87,30 @@ function generateCard({ type }) {
     });
   };
 
+  const handleConfirmCancel = () => {
+    setModalText(
+      "Are you sure you want to cancel the changes? Any unsaved changes will be discarded.",
+    );
+    setAction(() => handleCancel);
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmUpdate = () => {
+    setModalText("Are you sure you want to update your profile?");
+    setAction(() => handleUpdate);
+    setShowConfirmModal(true);
+  };
+
   const handleUpdate = () => {
     console.log("Updating profile:", updProfile);
-    dispatch(updateProfile({ username, data: updProfile }));
+    // dispatch(updateProfile({ username, data: updProfile }));
+    setShowConfirmModal(false);
+    navigate(`/${username}`);
+  };
+
+  const handleCancel = () => {
+    setShowConfirmModal(false);
+    navigate(`/${username}`);
   };
 
   useEffect(() => {
@@ -145,16 +174,30 @@ function generateCard({ type }) {
         <ThemeCard updProfile={updProfile} handleChange={handleChange} />
 
         <div className="text-center">
-          <button className="btn btn-secondary my-4 me-2">Cancel</button>
+          <button
+            className="btn btn-secondary my-4 me-2"
+            onClick={handleConfirmCancel}
+          >
+            Cancel
+          </button>
           <button
             className="btn btn-primary my-4"
-            onClick={() => handleUpdate()}
+            onClick={handleConfirmUpdate}
           >
             Update
           </button>
         </div>
       </div>
       <Footer />
+
+      <Modal
+        show={showConfirmModal}
+        onHide={() => setShowConfirmModal(false)}
+        centered
+        className="shareModal"
+      >
+        <ConfirmModal text={modalText} action={action} />
+      </Modal>
     </>
   );
 }
