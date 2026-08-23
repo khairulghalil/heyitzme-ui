@@ -102,8 +102,7 @@ function generateCard({ type }) {
   };
 
   const handleUpdate = () => {
-    console.log("Updating profile:", updProfile);
-    // dispatch(updateProfile({ username, data: updProfile }));
+    dispatch(updateProfile({ username, data: updProfile }));
     setShowConfirmModal(false);
     navigate(`/${username}`);
   };
