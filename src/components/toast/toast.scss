@@ -5,15 +5,15 @@
   .toast {
     max-width: 400px;
     margin: 20px auto;
-    background: #333;
-    color: #fff;
+    background: var(--bs-secondary-text-emphasis);
+    color: white;
     border-radius: 8px;
     border: none;
   }
 
   .toast-body {
     padding: 15px;
-    color: #fff;
+    color: white;
     font-size: 15px;
   }
 }

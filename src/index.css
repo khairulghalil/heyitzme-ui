@@ -1,6 +1,6 @@
 :root {
   /* Declare your global colors */
-  --primary-color: #ffa01a;
+  --primary-color: #067e9c;
   --secondary-color: #fdd7a3;
   --background-color: #ffffff;
   --font-color: #9e9e9e;
@@ -12,7 +12,7 @@ html,
 body {
   margin: 0;
   overflow-x: hidden;
-  background: #000;
+  background: black;
 }
 
 html {
@@ -24,7 +24,7 @@ body {
   overflow-x: hidden !important;
   font-family: "Afacad", sans-serif;
   font-size: 18px !important;
-  background: #000;
+  background: black;
 }
 
 body.modal-open {
@@ -32,7 +32,7 @@ body.modal-open {
 }
 
 #root {
-  background: #fff;
+  background: white;
   min-height: 100dvh;
 }
 /*  */
@@ -67,7 +67,7 @@ body.modal-open {
 }
 
 header .navbar {
-  background-color: #fff !important;
+  background-color: white !important;
   border-bottom: 1px solid #e0e0e0;
 }
 header .navbar .nav-link {

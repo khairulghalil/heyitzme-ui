@@ -3,7 +3,7 @@
   background: linear-gradient(
     to bottom,
     var(--primary-color) 0 62%,
-    #000 62% 100%
+    black 62% 100%
   );
   position: relative;
   padding-top: 35vh;
@@ -173,7 +173,7 @@
     background-color: transparent;
     border: 1px solid #a4a4a4;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
+    color: white;
     border-radius: 7px;
     padding: 10px 15px;
     text-decoration: none;
@@ -206,7 +206,7 @@
     margin-bottom: 15px;
 
     p {
-      color: #ffffff;
+      color: white;
       border-radius: 7px;
       text-decoration: none;
       transition: 0.2s;

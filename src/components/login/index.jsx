@@ -138,7 +138,7 @@ function LoginModal({
 
           <button
             type="button"
-            className="btn btn-primary my-4"
+            className="btn btn-primary profile-theme my-4"
             onClick={() => handleLogin()}
           >
             Login
