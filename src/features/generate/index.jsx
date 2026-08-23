@@ -176,13 +176,13 @@ function generateCard({ type }) {
 
         <div className="text-center">
           <button
-            className="btn btn-secondary my-4 me-2"
+            className="btn btn-secondary profile-theme my-4 me-2"
             onClick={handleConfirmCancel}
           >
             Cancel
           </button>
           <button
-            className="btn btn-primary my-4"
+            className="btn btn-primary profile-theme my-4"
             onClick={handleConfirmUpdate}
           >
             Update

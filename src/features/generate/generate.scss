@@ -1,14 +1,16 @@
 .generate-card {
+  // background: rgb(240, 250, 253);
   .profile-picture {
-    width: 200px;
-    height: 200px;
+    width: 210px;
+    height: 210px;
     object-fit: cover;
-    border: 5px solid #067e9c75;
+    border: 10px solid var(--secondary-color);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   }
 
   label {
     font-weight: bold;
+    font-size: 17px;
     color: #292929;
   }
 
@@ -55,7 +57,7 @@
 
       background-color: white;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 17px;
       padding: 10px 5px 10px 0;
     }
 
