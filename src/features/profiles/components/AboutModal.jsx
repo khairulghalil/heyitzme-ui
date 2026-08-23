@@ -43,7 +43,7 @@ function AboutModal({ profileData }) {
         <span>{moment(profileData.expiresAt).format("DD MMM YYYY")}</span>
       </div>
       <div className="about-footer text-center pt-1 m-0">
-        <button type="button" className="btn btn-primary my-3">
+        <button type="button" className="btn btn-primary profile-theme my-3">
           Renew Subscription
         </button>
       </div>

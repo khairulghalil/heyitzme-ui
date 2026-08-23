@@ -110,14 +110,14 @@ function Profiles() {
                 <SocialLink contact={profile.contact} />
 
                 <button
-                  className="btn btn-primary mt-2 mx-1"
+                  className="btn btn-primary profile-theme mt-2 mx-1"
                   onClick={() => saveContact(profile)}
                 >
                   <i className="bi bi-bookmark-fill me-1"></i>
                   Save
                 </button>
                 <button
-                  className="btn btn-secondary mt-2 mx-1"
+                  className="btn btn-secondary profile-theme mt-2 mx-1"
                   onClick={() => setShowShareModal(true)}
                 >
                   <i className="bi bi-share me-1"></i>

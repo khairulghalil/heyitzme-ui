@@ -29,7 +29,7 @@ function ShareModal({ profileUrl }) {
       />
       <p id="profile-url">{profileUrl}</p>
       <button
-        className="btn btn-primary my-2 mt-3"
+        className="btn btn-primary profile-theme my-2 mt-3"
         onClick={() => handleCopyLink()}
       >
         Copy Link
