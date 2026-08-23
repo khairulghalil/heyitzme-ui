@@ -5,7 +5,6 @@ function ThemeCard({ updProfile, handleChange }) {
     <Accordion className="mb-3">
       <Accordion.Item eventKey="0">
         <Accordion.Header>Theme</Accordion.Header>
-
         <Accordion.Body>
           <Form.Group className="mb-3" controlId="primaryColor">
             <div className="d-flex align-items-center justify-content-between">

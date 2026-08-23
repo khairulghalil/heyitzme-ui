@@ -5,7 +5,6 @@ function ContactCard({ updProfile, handleChange }) {
     <Accordion className="mb-3">
       <Accordion.Item eventKey="0">
         <Accordion.Header>Contact</Accordion.Header>
-
         <Accordion.Body>
           <Form.Group className="mb-3" controlId="phone">
             <Form.Label>Phone</Form.Label>
@@ -16,7 +15,6 @@ function ContactCard({ updProfile, handleChange }) {
               onChange={handleChange}
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="email">
             <Form.Label>Email</Form.Label>
             <Form.Control

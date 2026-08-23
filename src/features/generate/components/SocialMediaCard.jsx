@@ -5,7 +5,6 @@ function SocialMediaCard({ updProfile, handleChange }) {
     <Accordion className="mb-3">
       <Accordion.Item eventKey="0">
         <Accordion.Header>Social Media</Accordion.Header>
-
         <Accordion.Body>
           <Form.Group className="mb-3" controlId="facebook">
             <Form.Label>Facebook</Form.Label>
