@@ -118,10 +118,12 @@ function generateCard({ type }) {
         navigate(`/${username}`);
       }
 
-      setUpdProfile(profile);
-      setProfilePictureUrl(
-        `https://images.heyitzme.com/profiles/${profile.profileImage}?v=${profile.profileImageVer}`,
-      );
+      if (profile) {
+        setUpdProfile(profile);
+        setProfilePictureUrl(
+          `https://images.heyitzme.com/profiles/${profile.profileImage}?v=${profile.profileImageVer}`,
+        );
+      }
     }
   }, []);
 
