@@ -1,9 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Form } from "react-bootstrap";
 import { selectProfile } from "../../store/profile/selectors";
 import { updateProfile } from "../../store/profile/actions";
-import { removeToken, isAuthenticated } from "../../utils";
+import { isAuthenticated } from "../../utils";
+import { Footer } from "../../components";
+import { ContactCard, SocialMediaCard, ThemeCard } from "./components";
+import "./generate.scss";
 
 function generateCard({ type }) {
   const dispatch = useDispatch();
@@ -50,9 +54,33 @@ function generateCard({ type }) {
   // };
 
   const [updProfile, setUpdProfile] = useState(null);
+  const [profilePictureUrl, setProfilePictureUrl] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name.includes(".")) {
+      const [parent, child] = name.split(".");
+
+      setUpdProfile({
+        ...updProfile,
+        [parent]: {
+          ...updProfile?.[parent],
+          [child]: value,
+        },
+      });
+
+      return;
+    }
+
+    setUpdProfile({
+      ...updProfile,
+      [name]: value,
+    });
+  };
 
   const handleUpdate = () => {
-    console.log("Update profile:", updProfile);
+    console.log("Updating profile:", updProfile);
     dispatch(updateProfile({ username, data: updProfile }));
   };
 
@@ -63,38 +91,71 @@ function generateCard({ type }) {
       }
 
       setUpdProfile(profile);
+      setProfilePictureUrl(
+        `https://images.heyitzme.com/profiles/${profile.profileImage}?v=${profile.profileImageVer}`,
+      );
     }
   }, []);
 
   return (
-    <div className="generate-card d-flex flex-column justify-content-center align-items-center text-center p-4">
-      <h4>Generate Card for {username}</h4>
+    <>
+      <div className="generate-card p-4">
+        <div className="text-center">
+          <img
+            id="profile-picture"
+            className="profile-picture rounded-circle img-fluid my-4"
+            alt="Profile"
+            src={profilePictureUrl || null}
+          />
+        </div>
 
-      <input
-        type="text"
-        value={updProfile?.name || ""}
-        onChange={(e) => setUpdProfile({ ...updProfile, name: e.target.value })}
-      />
-      <input
-        type="text"
-        value={updProfile?.bio || ""}
-        onChange={(e) => setUpdProfile({ ...updProfile, bio: e.target.value })}
-      />
-      <input
-        type="text"
-        value={updProfile?.about || ""}
-        onChange={(e) =>
-          setUpdProfile({ ...updProfile, about: e.target.value })
-        }
-      />
+        <Form.Group className="mb-3" controlId="name">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            value={updProfile?.name || ""}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-      <button className="btn btn-primary m-4" onClick={() => handleUpdate()}>
-        Update
-      </button>
-      <button className="btn btn-danger m-4 " onClick={() => removeToken()}>
-        Logout
-      </button>
-    </div>
+        <Form.Group className="mb-3" controlId="bio">
+          <Form.Label>Bio</Form.Label>
+          <Form.Control
+            type="text"
+            name="bio"
+            value={updProfile?.bio || ""}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="about">
+          <Form.Label>About</Form.Label>
+          <Form.Control
+            as="textarea"
+            name="about"
+            value={updProfile?.about || ""}
+            onChange={handleChange}
+            rows={3}
+          />
+        </Form.Group>
+
+        <ContactCard updProfile={updProfile} handleChange={handleChange} />
+        <SocialMediaCard updProfile={updProfile} handleChange={handleChange} />
+        <ThemeCard updProfile={updProfile} handleChange={handleChange} />
+
+        <div className="text-center">
+          <button className="btn btn-secondary my-4 me-2">Cancel</button>
+          <button
+            className="btn btn-primary my-4"
+            onClick={() => handleUpdate()}
+          >
+            Update
+          </button>
+        </div>
+      </div>
+      <Footer />
+    </>
   );
 }
 
