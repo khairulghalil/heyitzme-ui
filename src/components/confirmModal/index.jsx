@@ -1,4 +1,5 @@
 import Modal from "react-bootstrap/Modal";
+import "./confirmModal.scss";
 
 function ConfirmModal({ text, action }) {
   return (

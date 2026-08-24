@@ -1,7 +1,7 @@
 import { Accordion, Form } from "react-bootstrap";
 
 function ContactCard({
-  updProfile,
+  builderProfile,
   handleChange,
   showContactList = false,
   setShowContactList,
@@ -18,7 +18,7 @@ function ContactCard({
             <Form.Control
               type="text"
               name="contact.phone"
-              value={updProfile?.contact?.phone || ""}
+              value={builderProfile?.contact?.phone || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -27,7 +27,7 @@ function ContactCard({
             <Form.Control
               type="email"
               name="contact.email"
-              value={updProfile?.contact?.email || ""}
+              value={builderProfile?.contact?.email || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -36,7 +36,7 @@ function ContactCard({
             <Form.Control
               type="text"
               name="contact.whatsapp"
-              value={updProfile?.contact?.whatsapp || ""}
+              value={builderProfile?.contact?.whatsapp || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -45,7 +45,7 @@ function ContactCard({
             <Form.Control
               type="text"
               name="contact.whatsappText"
-              value={updProfile?.contact?.whatsappText || ""}
+              value={builderProfile?.contact?.whatsappText || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -54,7 +54,7 @@ function ContactCard({
             <Form.Control
               type="text"
               name="contact.linkedin"
-              value={updProfile?.contact?.linkedin || ""}
+              value={builderProfile?.contact?.linkedin || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -63,7 +63,7 @@ function ContactCard({
             <Form.Control
               type="text"
               name="contact.website"
-              value={updProfile?.contact?.website || ""}
+              value={builderProfile?.contact?.website || ""}
               onChange={handleChange}
             />
           </Form.Group>

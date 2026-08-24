@@ -1,7 +1,7 @@
 import { Accordion, Form } from "react-bootstrap";
 
 function SocialMediaCard({
-  updProfile,
+  builderProfile,
   handleChange,
   showSocMedList = false,
   setShowSocMedList,
@@ -18,7 +18,7 @@ function SocialMediaCard({
             <Form.Control
               type="text"
               name="socialMedia.facebook"
-              value={updProfile?.socialMedia?.facebook || ""}
+              value={builderProfile?.socialMedia?.facebook || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -27,7 +27,7 @@ function SocialMediaCard({
             <Form.Control
               type="text"
               name="socialMedia.tiktok"
-              value={updProfile?.socialMedia?.tiktok || ""}
+              value={builderProfile?.socialMedia?.tiktok || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -36,7 +36,7 @@ function SocialMediaCard({
             <Form.Control
               type="text"
               name="socialMedia.instagram"
-              value={updProfile?.socialMedia?.instagram || ""}
+              value={builderProfile?.socialMedia?.instagram || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -45,7 +45,7 @@ function SocialMediaCard({
             <Form.Control
               type="text"
               name="socialMedia.x"
-              value={updProfile?.socialMedia?.x || ""}
+              value={builderProfile?.socialMedia?.x || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -54,7 +54,7 @@ function SocialMediaCard({
             <Form.Control
               type="text"
               name="socialMedia.threads"
-              value={updProfile?.socialMedia?.threads || ""}
+              value={builderProfile?.socialMedia?.threads || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -63,7 +63,7 @@ function SocialMediaCard({
             <Form.Control
               type="text"
               name="socialMedia.youtube"
-              value={updProfile?.socialMedia?.youtube || ""}
+              value={builderProfile?.socialMedia?.youtube || ""}
               onChange={handleChange}
             />
           </Form.Group>
@@ -72,7 +72,7 @@ function SocialMediaCard({
             <Form.Control
               type="text"
               name="socialMedia.discord"
-              value={updProfile?.socialMedia?.discord || ""}
+              value={builderProfile?.socialMedia?.discord || ""}
               onChange={handleChange}
             />
           </Form.Group>

@@ -1,7 +1,7 @@
 import { Accordion, Form } from "react-bootstrap";
 
 function ThemeCard({
-  updProfile,
+  builderProfile,
   handleChange,
   showThemeList = false,
   setShowThemeList,
@@ -18,7 +18,7 @@ function ThemeCard({
               <Form.Label className="mb-0">Primary Color</Form.Label>
               <Form.Control
                 type="color"
-                value={updProfile?.theme?.primaryColor || "#FFA01A"}
+                value={builderProfile?.theme?.primaryColor || "#FFA01A"}
                 onChange={handleChange}
                 name="theme.primaryColor"
               />
@@ -29,7 +29,7 @@ function ThemeCard({
               <Form.Label className="mb-0">Secondary Color</Form.Label>
               <Form.Control
                 type="color"
-                value={updProfile?.theme?.secondaryColor || "#FDD7A3"}
+                value={builderProfile?.theme?.secondaryColor || "#FDD7A3"}
                 onChange={handleChange}
                 name="theme.secondaryColor"
               />
@@ -40,7 +40,7 @@ function ThemeCard({
               <Form.Label className="mb-0">Background Color</Form.Label>
               <Form.Control
                 type="color"
-                value={updProfile?.theme?.backgroundColor || "#FFFFFF"}
+                value={builderProfile?.theme?.backgroundColor || "#FFFFFF"}
                 onChange={handleChange}
                 name="theme.backgroundColor"
               />
@@ -51,7 +51,7 @@ function ThemeCard({
               <Form.Label className="mb-0">Font Color</Form.Label>
               <Form.Control
                 type="color"
-                value={updProfile?.theme?.fontColor || "#9e9e9e"}
+                value={builderProfile?.theme?.fontColor || "#9e9e9e"}
                 onChange={handleChange}
                 name="theme.fontColor"
               />

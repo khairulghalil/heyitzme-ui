@@ -5,17 +5,12 @@ import { Form, Modal } from "react-bootstrap";
 import { selectProfile } from "../../store/profile/selectors";
 import { updateProfile } from "../../store/profile/actions";
 import { applyTheme, isAuthenticated } from "../../utils";
-import { Footer } from "../../components";
-import {
-  ContactCard,
-  SocialMediaCard,
-  ThemeCard,
-  ConfirmModal,
-} from "./components";
+import { Footer, ConfirmModal } from "../../components";
+import { ContactCard, SocialMediaCard, ThemeCard } from "./components";
 import Profiles from "../profiles";
-import "./generate.scss";
+import "./ProfileBuilder.scss";
 
-function GenerateCard({ type }) {
+function ProfileBuilder({ type }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,44 +18,8 @@ function GenerateCard({ type }) {
   const editScrollPosition = useRef(0);
 
   const profile = useSelector(selectProfile);
-  // const profile = {
-  //   username: "khairul-ghalil",
-  //   name: "Muhammad Khairullah",
-  //   bio: "Founder of HeyItzMe 1",
-  //   profileImage: "khairul-ghalil.png",
-  //   profileImageVer: 2,
-  //   about:
-  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation caecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  //   contact: {
-  //     email: "khairulmuhdghalil@gmail.com",
-  //     phone: "+60105757340",
-  //     website: "",
-  //     linkedin: "",
-  //     whatsapp: "+60105757340",
-  //     whatsappText: "HeyItzMe!",
-  //   },
-  //   socialMedia: {
-  //     x: "https://x.com/khairul_ghalil",
-  //     tiktok: "https://www.tiktok.com/@khairul.ghalil",
-  //     discord: "",
-  //     threads: "",
-  //     youtube: "",
-  //     facebook: "https://www.facebook.com/khairul.ghalil",
-  //     instagram: "https://www.instagram.com/khairul.ghalil/",
-  //   },
-  //   theme: {
-  //     primaryColor: "#FFA01A",
-  //     secondaryColor: "#FDD7A3",
-  //     backgroundColor: "#ffffff",
-  //     fontColor: "#9e9e9e",
-  //   },
-  //   status: {
-  //     active: true,
-  //     expiryDate: "2027-08-14 05:15:45.484465+00",
-  //   },
-  // };
 
-  const [updProfile, setUpdProfile] = useState(null);
+  const [builderProfile, setBuilderProfile] = useState(null);
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [modalText, setModalText] = useState("");
@@ -76,10 +35,10 @@ function GenerateCard({ type }) {
     if (name.includes(".")) {
       const [parent, child] = name.split(".");
 
-      setUpdProfile({
-        ...updProfile,
+      setBuilderProfile({
+        ...builderProfile,
         [parent]: {
-          ...updProfile?.[parent],
+          ...builderProfile?.[parent],
           [child]: value,
         },
       });
@@ -87,8 +46,8 @@ function GenerateCard({ type }) {
       return;
     }
 
-    setUpdProfile({
-      ...updProfile,
+    setBuilderProfile({
+      ...builderProfile,
       [name]: value,
     });
   };
@@ -102,14 +61,13 @@ function GenerateCard({ type }) {
   };
 
   const handleConfirmUpdate = () => {
-    console.log("handleConfirmUpdate called");
     setModalText("Are you sure you want to update your profile?");
     setAction(() => handleUpdate);
     setShowConfirmModal(true);
   };
 
   const handleUpdate = () => {
-    dispatch(updateProfile({ username, data: updProfile }));
+    dispatch(updateProfile({ username, data: builderProfile }));
     setShowConfirmModal(false);
     navigate(`/${username}`);
   };
@@ -128,7 +86,7 @@ function GenerateCard({ type }) {
       }
 
       if (profile) {
-        setUpdProfile(profile);
+        setBuilderProfile(profile);
         setProfilePictureUrl(
           `https://images.heyitzme.com/profiles/${profile.profileImage}?v=${profile.profileImageVer}`,
         );
@@ -150,8 +108,8 @@ function GenerateCard({ type }) {
   return (
     <>
       {!showCard && (
-        <div className="generate-wrapper">
-          <div className="generate-card p-4">
+        <div className="builder-wrapper">
+          <div className="builder-card p-4">
             <div className="text-center">
               <img
                 id="profile-picture"
@@ -166,7 +124,7 @@ function GenerateCard({ type }) {
               <Form.Control
                 type="text"
                 name="name"
-                value={updProfile?.name || ""}
+                value={builderProfile?.name || ""}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -176,7 +134,7 @@ function GenerateCard({ type }) {
               <Form.Control
                 type="text"
                 name="bio"
-                value={updProfile?.bio || ""}
+                value={builderProfile?.bio || ""}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -186,26 +144,26 @@ function GenerateCard({ type }) {
               <Form.Control
                 as="textarea"
                 name="about"
-                value={updProfile?.about || ""}
+                value={builderProfile?.about || ""}
                 onChange={handleChange}
                 rows={3}
               />
             </Form.Group>
 
             <ContactCard
-              updProfile={updProfile}
+              builderProfile={builderProfile}
               handleChange={handleChange}
               showContactList={showContactList}
               setShowContactList={setShowContactList}
             />
             <SocialMediaCard
-              updProfile={updProfile}
+              builderProfile={builderProfile}
               handleChange={handleChange}
               showSocMedList={showSocMedList}
               setShowSocMedList={setShowSocMedList}
             />
             <ThemeCard
-              updProfile={updProfile}
+              builderProfile={builderProfile}
               handleChange={handleChange}
               showThemeList={showThemeList}
               setShowThemeList={setShowThemeList}
@@ -235,7 +193,7 @@ function GenerateCard({ type }) {
 
       {showCard && (
         <Profiles
-          previewData={updProfile}
+          previewData={builderProfile}
           type={type}
           updateAction={handleConfirmUpdate}
           backAction={() => setShowCard(false)}
@@ -254,4 +212,4 @@ function GenerateCard({ type }) {
   );
 }
 
-export default GenerateCard;
+export default ProfileBuilder;
