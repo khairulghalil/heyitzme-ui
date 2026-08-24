@@ -1,8 +1,8 @@
-.profile-wrapper {
+.generate-wrapper {
   min-height: 100vh;
   background: linear-gradient(
     to bottom,
-    var(--primary-color) 0 62%,
+    var(--primary-builder-color) 0 62%,
     black 62% 100%
   );
   position: relative;
@@ -10,7 +10,7 @@
 
   .generate-card {
     position: relative;
-    background: var(--background-color);
+    background: var(--background-builder-color);
     min-height: 25vh;
     padding-top: 45px;
 
@@ -23,20 +23,20 @@
       top: -200px;
       left: 50%;
       transform: translateX(-50%);
-      border: 10px solid var(--secondary-color);
+      border: 10px solid var(--secondary-builder-color);
     }
 
     label {
       font-weight: bold;
       font-size: 17px;
-      color: var(--font-color);
+      color: var(--font-builder-color);
     }
 
     .form-control {
       border-radius: 5px;
       border: 0.1px solid #a3a3a3ac;
       background-color: transparent;
-      color: var(--font-color);
+      color: var(--font-builder-color);
     }
 
     .form-control:focus {
@@ -75,14 +75,14 @@
         --bs-accordion-active-color: #212529;
 
         background-color: transparent !important;
-        color: var(--font-color) !important;
+        color: var(--font-builder-color) !important;
         font-weight: 700;
         font-size: 17px;
         padding: 10px 5px 10px 0;
 
         &::after {
           background-image: none;
-          background-color: var(--font-color);
+          background-color: var(--font-builder-color);
           mask-image: var(--bs-accordion-btn-icon);
           -webkit-mask-image: var(--bs-accordion-btn-icon);
           mask-repeat: no-repeat;
@@ -98,7 +98,7 @@
       .accordion-button:hover {
         background: transparent !important;
         background-color: transparent !important;
-        color: var(--font-color) !important;
+        color: var(--font-builder-color) !important;
         box-shadow: none !important;
         -webkit-tap-highlight-color: transparent;
       }
@@ -115,7 +115,7 @@
     left: -10%;
     width: 120%;
     height: 160px;
-    background: var(--background-color);
+    background: var(--background-builder-color);
     border-radius: 50% 50% 0 0;
   }
 }

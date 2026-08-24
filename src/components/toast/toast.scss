@@ -1,8 +1,20 @@
 .toast-container {
-  width: auto;
-  max-width: 100%;
+  position: fixed !important;
+  left: 50% !important;
+  bottom: 20px !important;
+  top: auto !important;
+  right: auto !important;
+
+  transform: translateX(-50%) !important;
+
+  min-width: 350px !important;
+  max-width: calc(100% - 40px);
+  padding: 0 !important;
+
+  z-index: 99999 !important;
 
   .toast {
+    width: auto;
     max-width: 400px;
     margin: 20px auto;
     background: var(--bs-secondary-text-emphasis);

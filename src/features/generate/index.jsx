@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Form, Modal } from "react-bootstrap";
 import { selectProfile } from "../../store/profile/selectors";
 import { updateProfile } from "../../store/profile/actions";
-import { isAuthenticated } from "../../utils";
+import { applyTheme, isAuthenticated } from "../../utils";
 import { Footer } from "../../components";
 import {
   ContactCard,
@@ -20,6 +20,7 @@ function GenerateCard({ type }) {
   const navigate = useNavigate();
 
   const username = useParams().username;
+  const editScrollPosition = useRef(0);
 
   const profile = useSelector(selectProfile);
   // const profile = {
@@ -120,6 +121,8 @@ function GenerateCard({ type }) {
 
   useEffect(() => {
     if (type === "edit") {
+      const builder = true;
+
       if (!isAuthenticated(username) || !profile) {
         navigate(`/${username}`);
       }
@@ -129,11 +132,10 @@ function GenerateCard({ type }) {
         setProfilePictureUrl(
           `https://images.heyitzme.com/profiles/${profile.profileImage}?v=${profile.profileImageVer}`,
         );
+        applyTheme(profile.theme, builder);
       }
     }
   }, []);
-
-  const editScrollPosition = useRef(0);
 
   useEffect(() => {
     if (showCard) {
@@ -148,7 +150,7 @@ function GenerateCard({ type }) {
   return (
     <>
       {!showCard && (
-        <div className="profile-wrapper">
+        <div className="generate-wrapper">
           <div className="generate-card p-4">
             <div className="text-center">
               <img
@@ -211,13 +213,13 @@ function GenerateCard({ type }) {
 
             <div className="text-center">
               <button
-                className="btn btn-secondary profile-theme my-4 me-2"
+                className="btn btn-secondary my-4 me-2"
                 onClick={handleConfirmCancel}
               >
                 Cancel
               </button>
               <button
-                className="btn btn-primary profile-theme my-4"
+                className="btn btn-primary my-4"
                 onClick={() => {
                   editScrollPosition.current = window.scrollY;
                   setShowCard(true);

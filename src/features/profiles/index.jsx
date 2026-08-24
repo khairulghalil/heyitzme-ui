@@ -151,10 +151,7 @@ function Profiles({
                     <button className="btn btn-light me-2" onClick={backAction}>
                       <span className="me-2">◂</span>Back to Edit
                     </button>
-                    <button
-                      className="btn btn-primary profile-theme"
-                      onClick={updateAction}
-                    >
+                    <button className="btn btn-primary" onClick={updateAction}>
                       Update Card
                     </button>
                   </div>

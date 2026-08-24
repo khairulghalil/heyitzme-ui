@@ -6,6 +6,11 @@
   --font-color: #9e9e9e;
 
   --primary-app-color: #067e9c;
+
+  --primary-builder-color: #067e9c;
+  --secondary-builder-color: #fdd7a3;
+  --background-builder-color: #ffffff;
+  --font-builder-color: #9e9e9e;
 }
 
 html,
