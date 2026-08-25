@@ -177,24 +177,21 @@ header .navbar-toggler {
 
 .btn-light {
   background: none;
-  color: lightgray;
+  color: var(--font-builder-color) !important;
   border: 1px solid lightgray;
 }
-.btn-light.active,
+
 .btn-light:active,
 .btn-light:focus,
 .btn-light:hover {
   --bs-btn-active-bg: transparent;
   background: none !important;
-  color: lightgray !important;
+  color: var(--font-builder-color) !important;
   border: 1px solid lightgray !important;
   box-shadow: none;
 }
-.btn-check:checked + .btn,
-.btn.active,
-.btn.show,
-.btn:first-child:active,
-:not(.btn-check) + .btn:active {
+
+.btn-light:active {
   --bs-btn-active-bg: transparent;
   --bs-btn-active-color: lightgray;
 }

@@ -74,6 +74,12 @@
           font-weight: 600 !important;
           font-size: 16px !important;
         }
+
+        .dropdown-toggle {
+          background-color: transparent !important;
+          border: 0.1px solid #a3a3a3ac !important;
+          color: var(--font-builder-color) !important;
+        }
       }
 
       .accordion-button {
