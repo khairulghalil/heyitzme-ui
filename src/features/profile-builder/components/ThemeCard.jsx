@@ -1,4 +1,4 @@
-import { Accordion, Form } from "react-bootstrap";
+import { Accordion, Form, Dropdown } from "react-bootstrap";
 
 function ThemeCard({
   builderProfile,
@@ -6,6 +6,8 @@ function ThemeCard({
   showThemeList = false,
   setShowThemeList,
 }) {
+  const fontFamily = ["Afacad", "Sofia", "Aclonica", "Alex Brush"];
+
   return (
     <Accordion defaultActiveKey={showThemeList ? "1" : "0"} className="mb-3">
       <Accordion.Item eventKey="1">
@@ -55,6 +57,33 @@ function ThemeCard({
                 onChange={handleChange}
                 name="theme.fontColor"
               />
+            </div>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="fontFamily">
+            <div className="d-flex align-items-center justify-content-between">
+              <Form.Label className="mb-0">Font</Form.Label>
+
+              <Dropdown>
+                <Dropdown.Toggle className="text-end" variant="light">
+                  {builderProfile?.theme?.fontFamily || "Afacad"}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  {fontFamily.map((font) => (
+                    <Dropdown.Item
+                      key={font}
+                      style={{ fontFamily: font }}
+                      onClick={() =>
+                        handleChange({
+                          target: { name: "theme.fontFamily", value: font },
+                        })
+                      }
+                    >
+                      {font}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </Form.Group>
         </Accordion.Body>

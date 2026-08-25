@@ -77,7 +77,7 @@ function ProfileBuilder({ type }) {
     dispatch(updateProfile({ username, data: builderProfile }))
       .unwrap()
       .then(() => {
-        showToast("Profile updated successfully", "success");
+        showToast("Profile updated", "success");
         navigate(`/${username}`);
       })
       .catch(() => {

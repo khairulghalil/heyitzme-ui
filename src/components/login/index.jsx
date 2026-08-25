@@ -88,7 +88,7 @@ function LoginModal({
         setLoginSuccessCallback(null);
       }
 
-      showToast("Login successful!", "success");
+      showToast("Login successful", "success");
 
       handleClose();
     } catch (error) {

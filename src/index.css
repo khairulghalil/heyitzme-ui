@@ -4,6 +4,7 @@
   --secondary-color: #fdd7a3;
   --background-color: #ffffff;
   --font-color: #9e9e9e;
+  --font-family: "Afacad";
 
   --primary-app-color: #067e9c;
   --accent-app-color: #fbb503;
@@ -12,6 +13,7 @@
   --secondary-builder-color: #fdd7a3;
   --background-builder-color: #ffffff;
   --font-builder-color: #9e9e9e;
+  --font-builder-family: "Afacad";
 }
 
 html,
@@ -178,13 +180,23 @@ header .navbar-toggler {
   color: lightgray;
   border: 1px solid lightgray;
 }
+.btn-light.active,
 .btn-light:active,
 .btn-light:focus,
 .btn-light:hover {
+  --bs-btn-active-bg: transparent;
   background: none !important;
   color: lightgray !important;
   border: 1px solid lightgray !important;
   box-shadow: none;
+}
+.btn-check:checked + .btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check) + .btn:active {
+  --bs-btn-active-bg: transparent;
+  --bs-btn-active-color: lightgray;
 }
 
 .btn-primary.accent-theme {
