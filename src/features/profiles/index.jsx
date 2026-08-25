@@ -31,39 +31,44 @@ function Profiles({ previewData = null, backAction = null }) {
   const [showAboutModal, setShowAboutModal] = useState(false);
   const [profileUrl, setProfileUrl] = useState("");
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  const [profileData, setProfileData] = useState(null);
 
   useEffect(() => {
     if (previewData) {
-      dispatch(setProfile(previewData));
+      setProfileData(previewData);
+    } else if (profile) {
+      setProfileData(profile);
     } else if (username) {
-      dispatch(getProfile(username));
+      if (!profile || profile.username !== username) {
+        dispatch(getProfile(username));
+      }
     }
-  }, [username, previewData]);
+  }, [username, previewData, profile]);
 
   useEffect(() => {
-    if (profile) {
+    if (profileData) {
       setProfilePictureUrl(
-        `https://images.heyitzme.com/profiles/${profile.profileImage}?v=${profile.profileImageVer}`,
+        `https://images.heyitzme.com/profiles/${profileData.profileImage}?v=${profileData.profileImageVer}`,
       );
-      setProfileUrl(`https://heyitzme.com/${profile.username}`);
-      applyTheme(profile.theme);
+      setProfileUrl(`https://heyitzme.com/${profileData.username}`);
+      applyTheme(profileData.theme);
     }
-  }, [profile]);
+  }, [profileData]);
 
   const editProfile = () => {
-    if (!isAuthenticated(profile.username)) {
-      showLogin(profile.username, () => {
-        navigate(`/edit/${profile.username}`);
+    if (!isAuthenticated(profileData.username)) {
+      showLogin(profileData.username, () => {
+        navigate(`/edit/${profileData.username}`);
       });
       return;
     }
 
-    navigate(`/edit/${profile.username}`);
+    navigate(`/edit/${profileData.username}`);
   };
 
   const showAbout = () => {
-    if (!isAuthenticated(profile.username)) {
-      showLogin(profile.username, () => {
+    if (!isAuthenticated(profileData.username)) {
+      showLogin(profileData.username, () => {
         setShowAboutModal(true);
       });
       return;
@@ -75,7 +80,7 @@ function Profiles({ previewData = null, backAction = null }) {
   return (
     <>
       <Loader show={loading} showLogo opacity={1} />
-      {profile ? (
+      {profileData ? (
         <>
           {previewData && (
             <div className="builder-banner text-start">
@@ -118,13 +123,13 @@ function Profiles({ previewData = null, backAction = null }) {
               <div
                 className={`profile-content text-center mt-3 ${previewData ? "pe-none" : ""}`}
               >
-                <h2 id="name">{profile.name}</h2>
-                <p id="bio">{profile.bio}</p>
-                <SocialLink contact={profile.contact} />
+                <h2 id="name">{profileData.name}</h2>
+                <p id="bio">{profileData.bio}</p>
+                <SocialLink contact={profileData.contact} />
 
                 <button
                   className="btn btn-primary profile-theme mt-2 mx-1"
-                  onClick={() => saveContact(profile)}
+                  onClick={() => saveContact(profileData)}
                 >
                   <i className="bi bi-bookmark-fill me-1"></i>
                   Save
@@ -138,10 +143,10 @@ function Profiles({ previewData = null, backAction = null }) {
                 </button>
 
                 <p id="about" className="about">
-                  {profile.about}
+                  {profileData.about}
                 </p>
 
-                <SocialMedia links={profile.socialMedia} />
+                <SocialMedia links={profileData.socialMedia} />
               </div>
             </div>
 
@@ -172,7 +177,7 @@ function Profiles({ previewData = null, backAction = null }) {
               centered
               className="aboutModal"
             >
-              <AboutModal profileData={profile} />
+              <AboutModal profileData={profileData} />
             </Modal>
           </div>
         </>
