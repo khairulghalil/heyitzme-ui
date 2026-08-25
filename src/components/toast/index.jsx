@@ -41,6 +41,7 @@ export function ToastProvider({ children }) {
           onClose={hideToast}
           delay={1500}
           autohide
+          className={`${toast.type}`}
         >
           <BootstrapToast.Body>
             {icon[toast.type] && (

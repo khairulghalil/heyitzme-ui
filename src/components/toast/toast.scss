@@ -25,7 +25,12 @@
 
   .toast-body {
     padding: 15px;
-    color: white;
     font-size: 15px;
+  }
+  .success {
+    background-color: green !important;
+  }
+  .error {
+    background-color: red !important;
   }
 }
