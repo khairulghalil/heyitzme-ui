@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Modal, Dropdown } from "react-bootstrap";
 import { Footer, useLogin, Loader } from "../../components";
 import { applyTheme, saveContact, isAuthenticated } from "../../utils";
-import { getProfile, setProfile } from "../../store/profile/actions";
+import { getProfile } from "../../store/profile/actions";
 import {
   selectProfile,
   selectProfileLoading,

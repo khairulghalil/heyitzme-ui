@@ -2,10 +2,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Modal } from "react-bootstrap";
-import { selectProfile } from "../../store/profile/selectors";
+import {
+  selectProfile,
+  selectUpdProfileLoading,
+} from "../../store/profile/selectors";
 import { updateProfile } from "../../store/profile/actions";
 import { applyTheme, isAuthenticated } from "../../utils";
-import { Footer, ConfirmModal } from "../../components";
+import { Footer, ConfirmModal, Loader } from "../../components";
 import { ContactCard, SocialMediaCard, ThemeCard } from "./components";
 import Profiles from "../profiles";
 import "./ProfileBuilder.scss";
@@ -18,6 +21,7 @@ function ProfileBuilder({ type }) {
   const editScrollPosition = useRef(0);
 
   const profile = useSelector(selectProfile);
+  const updLoading = useSelector(selectUpdProfileLoading);
 
   const [builderProfile, setBuilderProfile] = useState(null);
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
@@ -107,6 +111,7 @@ function ProfileBuilder({ type }) {
 
   return (
     <>
+      <Loader show={updLoading} showLogo opacity={1} />
       {!showCard && (
         <div className="builder-wrapper">
           <div className="builder-card p-4">

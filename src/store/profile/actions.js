@@ -4,9 +4,9 @@ import {
   getProfile as getProfileApi,
   updateProfile as updateProfileApi,
 } from "../../api/profile/profile";
-import { setProfile, setProfileLoading } from "./slice";
+import { setProfile, setProfileLoading, setUpdProfileLoading } from "./slice";
 
-export { setProfile, setProfileLoading };
+export { setProfile, setProfileLoading, setUpdProfileLoading };
 
 export const getProfile = createAsyncThunk(
   "profile/getProfile",
@@ -34,7 +34,7 @@ export const updateProfile = createAsyncThunk(
   "profile/updateProfile",
   async ({ username, data }, { dispatch, rejectWithValue }) => {
     try {
-      dispatch(setProfileLoading(true));
+      dispatch(setUpdProfileLoading(true));
 
       await updateProfileApi(username, data);
 
@@ -46,7 +46,7 @@ export const updateProfile = createAsyncThunk(
         error.response?.data?.message || "Failed to update profile",
       );
     } finally {
-      dispatch(setProfileLoading(false));
+      dispatch(setUpdProfileLoading(false));
     }
   },
 );
