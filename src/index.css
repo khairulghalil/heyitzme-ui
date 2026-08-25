@@ -6,6 +6,7 @@
   --font-color: #9e9e9e;
 
   --primary-app-color: #067e9c;
+  --accent-app-color: #fbb503;
 
   --primary-builder-color: #067e9c;
   --secondary-builder-color: #fdd7a3;
@@ -170,4 +171,29 @@ header .navbar-toggler {
   color: lightgray !important;
   border: 1px solid lightgray !important;
   box-shadow: none;
+}
+
+.btn-light {
+  background: none;
+  color: lightgray;
+  border: 1px solid lightgray;
+}
+.btn-light:active,
+.btn-light:focus,
+.btn-light:hover {
+  background: none !important;
+  color: lightgray !important;
+  border: 1px solid lightgray !important;
+  box-shadow: none;
+}
+
+.btn-primary.accent-theme {
+  background: var(--accent-app-color);
+  color: black;
+  border: none;
+  /* border-radius: 15px; */
+}
+.btn-primary.accent-theme:focus,
+.btn-primary.accent-theme:hover {
+  background: var(--accent-app-color) !important;
 }

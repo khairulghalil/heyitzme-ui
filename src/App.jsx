@@ -11,8 +11,8 @@ function App() {
       <ScrollToTop />
 
       <Routes>
-        <Route path="/:username" element={<Profiles />} />
         <Route path="/" element={<Home />} />
+        <Route path="/:username" element={<Profiles />} />
         <Route path="/edit" element={<Navigate to="/" replace />} />
         <Route
           path="/edit/:username"

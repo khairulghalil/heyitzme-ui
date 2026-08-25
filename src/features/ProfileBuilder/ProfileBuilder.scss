@@ -44,6 +44,14 @@
       box-shadow: none;
     }
 
+    .confirm-section {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      border-top: 0.1px solid #a3a3a3ac;
+      // padding-top: 20px;
+    }
+
     .accordion {
       .accordion-item {
         background-color: #f8f9fa !important;

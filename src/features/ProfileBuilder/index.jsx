@@ -169,21 +169,28 @@ function ProfileBuilder({ type }) {
               setShowThemeList={setShowThemeList}
             />
 
-            <div className="text-center">
+            <button
+              className="btn btn-primary accent-theme my-4 w-100"
+              onClick={() => {
+                editScrollPosition.current = window.scrollY;
+                setShowCard(true);
+              }}
+            >
+              Preview Card <span className="ms-2">▸</span>
+            </button>
+
+            <div className="confirm-section text-center">
               <button
-                className="btn btn-secondary my-4 me-2"
+                className="btn btn-secondary mt-4 me-2 w-100"
                 onClick={handleConfirmCancel}
               >
                 Cancel
               </button>
               <button
-                className="btn btn-primary my-4"
-                onClick={() => {
-                  editScrollPosition.current = window.scrollY;
-                  setShowCard(true);
-                }}
+                className="btn btn-primary mt-4 w-100"
+                onClick={handleConfirmUpdate}
               >
-                Show Card <span className="ms-2">▸</span>
+                Update
               </button>
             </div>
           </div>
@@ -194,8 +201,6 @@ function ProfileBuilder({ type }) {
       {showCard && (
         <Profiles
           previewData={builderProfile}
-          type={type}
-          updateAction={handleConfirmUpdate}
           backAction={() => setShowCard(false)}
         />
       )}

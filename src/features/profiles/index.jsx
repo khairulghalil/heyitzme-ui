@@ -18,13 +18,7 @@ import {
 } from "./components";
 
 import "./profiles.scss";
-function Profiles({
-  previewData = null,
-  type = null,
-  updateAction = null,
-  createAction = null,
-  backAction = null,
-}) {
+function Profiles({ previewData = null, backAction = null }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const username = useParams().username;
@@ -83,6 +77,13 @@ function Profiles({
       <Loader show={loading} showLogo opacity={1} />
       {profile ? (
         <>
+          {previewData && (
+            <div className="builder-banner text-start">
+              <p onClick={backAction}>
+                <span className="me-2">◂</span>Back to Edit
+              </p>
+            </div>
+          )}
           <Dropdown
             className={`profile-header text-left ${previewData ? "d-none" : ""}`}
           >
@@ -143,30 +144,17 @@ function Profiles({
                 <SocialMedia links={profile.socialMedia} />
               </div>
             </div>
-            <div className="profile-banner">
-              {type === "edit" && (
-                <>
-                  <p>Like what you see?</p>
-                  <div className="text-center pt-3 pb-2">
-                    <button className="btn btn-light me-2" onClick={backAction}>
-                      <span className="me-2">◂</span>Back to Edit
-                    </button>
-                    <button className="btn btn-primary" onClick={updateAction}>
-                      Update Card
-                    </button>
-                  </div>
-                </>
-              )}
-              {type === "new" && <p>You are creating a new profile.</p>}
-              {!type && (
+
+            {!previewData && (
+              <div className="profile-banner">
                 <p>
                   Like this Business Card? Get yours now at
                   <a href="https://heyitzme.com" className="ps-1">
                     HeyItzMe.com
                   </a>
                 </p>
-              )}
-            </div>
+              </div>
+            )}
             <Footer />
 
             <Modal

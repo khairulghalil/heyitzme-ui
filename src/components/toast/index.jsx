@@ -27,7 +27,7 @@ export function ToastProvider({ children }) {
   };
 
   const icon = {
-    success: "✅",
+    // success: "✅",
     error: "⚠️",
   };
 
@@ -43,7 +43,7 @@ export function ToastProvider({ children }) {
           autohide
         >
           <BootstrapToast.Body>
-            {toast.type !== "info" && (
+            {icon[toast.type] && (
               <span className="me-2">{icon[toast.type]}</span>
             )}
             {toast.message}
