@@ -27,7 +27,7 @@ export function ToastProvider({ children }) {
   };
 
   const icon = {
-    // success: "✅",
+    success: "✅",
     error: "⚠️",
   };
 

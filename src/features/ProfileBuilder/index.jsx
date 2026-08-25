@@ -8,7 +8,7 @@ import {
 } from "../../store/profile/selectors";
 import { updateProfile } from "../../store/profile/actions";
 import { applyTheme, isAuthenticated } from "../../utils";
-import { Footer, ConfirmModal, Loader } from "../../components";
+import { Footer, ConfirmModal, Loader, useToast } from "../../components";
 import { ContactCard, SocialMediaCard, ThemeCard } from "./components";
 import Profiles from "../profiles";
 import "./ProfileBuilder.scss";
@@ -16,6 +16,7 @@ import "./ProfileBuilder.scss";
 function ProfileBuilder({ type }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const username = useParams().username;
   const editScrollPosition = useRef(0);
@@ -71,9 +72,17 @@ function ProfileBuilder({ type }) {
   };
 
   const handleUpdate = () => {
-    dispatch(updateProfile({ username, data: builderProfile }));
     setShowConfirmModal(false);
-    navigate(`/${username}`);
+
+    dispatch(updateProfile({ username, data: builderProfile }))
+      .unwrap()
+      .then(() => {
+        showToast("Profile updated successfully", "success");
+        navigate(`/${username}`);
+      })
+      .catch(() => {
+        showToast("Failed to update profile", "error");
+      });
   };
 
   const handleCancel = () => {
