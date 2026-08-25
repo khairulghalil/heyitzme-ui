@@ -6,7 +6,15 @@ function ThemeCard({
   showThemeList = false,
   setShowThemeList,
 }) {
-  const fontFamily = ["Afacad", "Sofia", "Aclonica", "Alex Brush"];
+  const fontFamily = [
+    "Afacad",
+    "Aclonica",
+    "Alex Brush",
+    "Croissant One",
+    "Lobster",
+    "Nova Square",
+    "Sofia",
+  ];
 
   return (
     <Accordion defaultActiveKey={showThemeList ? "1" : "0"} className="mb-3">
