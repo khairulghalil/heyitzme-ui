@@ -126,16 +126,27 @@
 }
 
 .builder-banner {
+  display: flex;
   background-color: black;
-  padding: 10px;
-  text-align: center;
+  padding: 10px 330px;
+  align-items: center;
 
-  p {
-    color: white !important;
+  span {
     font-size: 15px;
     margin: 0;
-    cursor: pointer;
-    width: fit-content;
+    flex: 1;
+    text-align: right;
+  }
+
+  .preview-text {
+    flex: 1;
+    color: gray !important;
+    justify-content: center;
+  }
+}
+@media (max-width: 991.98px) {
+  .builder-banner {
+    padding: 10px;
   }
 }
 

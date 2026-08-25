@@ -191,7 +191,6 @@ header .navbar-toggler {
   background: var(--accent-app-color);
   color: black;
   border: none;
-  /* border-radius: 15px; */
 }
 .btn-primary.accent-theme:focus,
 .btn-primary.accent-theme:hover {
