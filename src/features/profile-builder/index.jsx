@@ -11,7 +11,7 @@ import { applyTheme, isAuthenticated } from "../../utils";
 import { Footer, ConfirmModal, Loader, useToast } from "../../components";
 import { ContactCard, SocialMediaCard, ThemeCard } from "./components";
 import Profiles from "../profiles";
-import "./profileBuilder.scss";
+import "./profile-builder.scss";
 
 function ProfileBuilder({ type }) {
   const dispatch = useDispatch();

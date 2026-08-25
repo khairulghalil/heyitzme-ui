@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./features/home";
 import Profiles from "./features/profiles";
-import ProfileBuilder from "./features/ProfileBuilder";
+import ProfileBuilder from "./features/profile-builder";
 import { ScrollToTop } from "./components";
 import "./App.css";
 
