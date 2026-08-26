@@ -47,9 +47,14 @@ function Profiles({ previewData = null, backAction = null }) {
 
   useEffect(() => {
     if (profileData) {
-      setProfilePictureUrl(
-        `https://images.heyitzme.com/profiles/${profileData.profileImage}?v=${profileData.profileImageVer}`,
-      );
+      if (profileData.blobUrl) {
+        setProfilePictureUrl(profileData.blobUrl);
+      } else {
+        setProfilePictureUrl(
+          `https://images.heyitzme.com/${profileData.profileImage}`,
+        );
+      }
+
       setProfileUrl(`https://heyitzme.com/${profileData.username}`);
       applyTheme(profileData.theme);
     }

@@ -7,9 +7,14 @@ import {
   selectUpdProfileLoading,
 } from "../../store/profile/selectors";
 import { updateProfile } from "../../store/profile/actions";
-import { applyTheme, isAuthenticated } from "../../utils";
+import { applyTheme, isAuthenticated, getCroppedImageFile } from "../../utils";
 import { Footer, ConfirmModal, Loader, useToast } from "../../components";
-import { ContactCard, SocialMediaCard, ThemeCard } from "./components";
+import {
+  ContactCard,
+  SocialMediaCard,
+  ThemeCard,
+  PhotoCropModal,
+} from "./components";
 import Profiles from "../profiles";
 import "./profile-builder.scss";
 
@@ -20,12 +25,16 @@ function ProfileBuilder({ type }) {
 
   const username = useParams().username;
   const editScrollPosition = useRef(0);
+  const photoInputRef = useRef(null);
 
   const profile = useSelector(selectProfile);
   const updLoading = useSelector(selectUpdProfileLoading);
 
   const [builderProfile, setBuilderProfile] = useState(null);
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  const [profilePictureFile, setProfilePictureFile] = useState(null);
+  const [cropImageSrc, setCropImageSrc] = useState(null);
+  const [showCropModal, setShowCropModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [modalText, setModalText] = useState("");
   const [action, setAction] = useState(null);
@@ -57,6 +66,44 @@ function ProfileBuilder({ type }) {
     });
   };
 
+  const handlePhotoChange = (e) => {
+    const file = e.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    setCropImageSrc(URL.createObjectURL(file));
+    setShowCropModal(true);
+    e.target.value = "";
+  };
+
+  const handleCropCancel = () => {
+    setShowCropModal(false);
+    setCropImageSrc(null);
+  };
+
+  const handleCropSave = async (croppedAreaPixels) => {
+    const imgVer = builderProfile?.profileImageVer + 1 || 1;
+    const filename = `${username}-${imgVer}.png`;
+    const file = await getCroppedImageFile(
+      cropImageSrc,
+      croppedAreaPixels,
+      filename,
+    );
+
+    setProfilePictureFile(file);
+    setProfilePictureUrl(URL.createObjectURL(file));
+    setShowCropModal(false);
+    setBuilderProfile({
+      ...builderProfile,
+      blobUrl: URL.createObjectURL(file),
+      profileImage: filename,
+      profileImageVer: imgVer,
+    });
+    setCropImageSrc(null);
+  };
+
   const handleConfirmCancel = () => {
     setModalText(
       "Are you sure you want to cancel the changes? Any unsaved changes will be discarded.",
@@ -74,7 +121,13 @@ function ProfileBuilder({ type }) {
   const handleUpdate = () => {
     setShowConfirmModal(false);
 
-    dispatch(updateProfile({ username, data: builderProfile }))
+    dispatch(
+      updateProfile({
+        username,
+        data: builderProfile,
+        imageFile: profilePictureFile,
+      }),
+    )
       .unwrap()
       .then(() => {
         showToast("Profile updated", "success");
@@ -99,9 +152,9 @@ function ProfileBuilder({ type }) {
       }
 
       if (profile) {
-        setBuilderProfile(profile);
+        setBuilderProfile({ ...profile, blobUrl: null });
         setProfilePictureUrl(
-          `https://images.heyitzme.com/profiles/${profile.profileImage}?v=${profile.profileImageVer}`,
+          `https://images.heyitzme.com/${profile.profileImage}`,
         );
         applyTheme(profile.theme, builder);
       }
@@ -120,17 +173,35 @@ function ProfileBuilder({ type }) {
 
   return (
     <>
-      <Loader show={updLoading} showLogo opacity={1} />
+      <Loader show={updLoading} showLogo />
       {!showCard && (
         <div className="builder-wrapper">
           <div className="builder-card p-4">
             <div className="text-center">
-              <img
-                id="profile-picture"
-                className="profile-picture rounded-circle img-fluid"
-                alt="Profile"
-                src={profilePictureUrl || null}
-              />
+              <div className="profile-picture-wrapper">
+                <img
+                  id="profile-picture"
+                  className="profile-picture rounded-circle img-fluid"
+                  alt="Profile"
+                  src={profilePictureUrl || null}
+                />
+
+                <button
+                  type="button"
+                  className="upload-photo-btn"
+                  onClick={() => photoInputRef.current?.click()}
+                >
+                  <i className="bi bi-camera-fill"></i>
+                </button>
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={photoInputRef}
+                  className="d-none"
+                  onChange={handlePhotoChange}
+                />
+              </div>
             </div>
 
             <Form.Group className="mb-3 mt-5" controlId="name">
@@ -226,6 +297,19 @@ function ProfileBuilder({ type }) {
         className="confirmModal"
       >
         <ConfirmModal text={modalText} action={action} />
+      </Modal>
+
+      <Modal
+        show={showCropModal}
+        onHide={handleCropCancel}
+        centered
+        className="photoCropModal"
+      >
+        <PhotoCropModal
+          imageSrc={cropImageSrc}
+          onCancel={handleCropCancel}
+          onSave={handleCropSave}
+        />
       </Modal>
     </>
   );

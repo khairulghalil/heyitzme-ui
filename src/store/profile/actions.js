@@ -32,15 +32,16 @@ export const getProfile = createAsyncThunk(
 
 export const updateProfile = createAsyncThunk(
   "profile/updateProfile",
-  async ({ username, data }, { dispatch, rejectWithValue }) => {
+  async ({ username, data, imageFile }, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setUpdProfileLoading(true));
 
-      await updateProfileApi(username, data);
+      const response = await updateProfileApi(username, { ...data, imageFile });
+      const profile = extractResponseData(response);
 
-      dispatch(setProfile(data));
+      dispatch(setProfile(profile));
 
-      return;
+      return profile;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to update profile",
