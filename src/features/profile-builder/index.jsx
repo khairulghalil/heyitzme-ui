@@ -173,7 +173,7 @@ function ProfileBuilder({ type }) {
 
   return (
     <>
-      <Loader show={updLoading} showLogo opacity={1} />
+      <Loader show={updLoading} showLogo />
       {!showCard && (
         <div className="builder-wrapper">
           <div className="builder-card p-4">
