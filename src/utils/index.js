@@ -3,6 +3,7 @@ import { applyTheme } from "./theme";
 import { copyToClipboard } from "./clipboard";
 import { extractResponseData } from "./extractResponse";
 import { setToken, getToken, removeToken, isAuthenticated } from "./token";
+import { getCroppedImageFile } from "./image";
 
 export {
   saveContact,
@@ -13,4 +14,5 @@ export {
   getToken,
   removeToken,
   isAuthenticated,
+  getCroppedImageFile,
 };
