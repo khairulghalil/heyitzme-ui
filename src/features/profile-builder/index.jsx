@@ -181,10 +181,6 @@ function ProfileBuilder({ type }) {
     }
   }, [showCard]);
 
-  useEffect(() => {
-    console.log("builderProfile updated:", builderProfile);
-  }, [builderProfile]);
-
   return (
     <>
       <Loader show={updLoading} showLogo />
