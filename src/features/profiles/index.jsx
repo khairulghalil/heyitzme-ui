@@ -27,7 +27,6 @@ function Profiles({ previewData = null, backAction = null }) {
   const loading = useSelector(selectProfileLoading);
 
   const [showShareModal, setShowShareModal] = useState(false);
-  const [showAboutModal, setShowAboutModal] = useState(false);
   const [profileUrl, setProfileUrl] = useState("");
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
   const [profileData, setProfileData] = useState(null);
@@ -45,6 +44,7 @@ function Profiles({ previewData = null, backAction = null }) {
   }, [username, previewData, profile]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (profileData) {
       if (profileData.blobUrl) {
         setProfilePictureUrl(profileData.blobUrl);
@@ -66,7 +66,7 @@ function Profiles({ previewData = null, backAction = null }) {
     },
     {
       label: "Settings",
-      action: () => showAbout(),
+      action: () => showSetting(),
     },
   ];
 
@@ -81,7 +81,7 @@ function Profiles({ previewData = null, backAction = null }) {
     navigate(`/edit/${profileData.username}`);
   };
 
-  const showAbout = () => {
+  const showSetting = () => {
     if (!isAuthenticated(profileData.username)) {
       showLogin(profileData.username, () => {
         navigate(`/settings/${profileData.username}`);

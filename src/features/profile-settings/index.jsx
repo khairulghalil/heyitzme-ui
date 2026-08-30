@@ -157,7 +157,7 @@ function ProfileSettings() {
                 </div>
 
                 <div className="d-flex align-items-center justify-content-center gap-2">
-                  <div className="setting-list w-100">
+                  <div className="setting-list w-100 py-4">
                     <p>
                       <i className="bi bi-person me-2"></i>
                       Username
@@ -165,10 +165,10 @@ function ProfileSettings() {
                     <span>{profile.username}</span>
                   </div>
 
-                  <div className="setting-list w-100">
+                  <div className="setting-list w-100 py-4">
                     <p>
                       <i className="bi bi-info-circle me-2"></i>
-                      Status
+                      Account Status
                     </p>
                     <span className="text-uppercase">{profile.status}</span>
                   </div>
@@ -193,11 +193,12 @@ function ProfileSettings() {
                   <span>{`https://heyitzme.com/${profile.username}`}</span>
                 </div>
 
-                <div className="setting-list mt-5">
+                <hr className="my-4" />
+                <div className="setting-list">
                   <div className="d-flex align-items-center justify-content-between">
                     <p>
                       <i className="bi bi-envelope me-2"></i>
-                      Registered email
+                      Registered Email
                     </p>
                     <Dropdown item={emailOptions} vertical />
                   </div>
@@ -298,7 +299,8 @@ function ProfileSettings() {
                   )}
                 </div>
 
-                <div className="setting-list mt-5">
+                <hr className="my-4" />
+                <div className="setting-list">
                   <p>
                     <i className="bi bi-calendar-plus me-2"></i>
                     Date Joined
@@ -310,7 +312,7 @@ function ProfileSettings() {
                   <div className="d-flex align-items-center justify-content-between">
                     <p>
                       <i className="bi bi-calendar-check me-2"></i>
-                      Valid until
+                      Valid Until
                     </p>
 
                     <Dropdown item={validOptions} vertical />
@@ -320,6 +322,12 @@ function ProfileSettings() {
                 </div>
               </div>
             </div>
+            <button
+              className="btn btn-primary mb-4"
+              onClick={() => navigate(`/${profile.username}`)}
+            >
+              <span className="me-2">◂</span>Back to Profile
+            </button>
           </div>
           <Footer />
         </>
