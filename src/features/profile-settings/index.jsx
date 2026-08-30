@@ -7,12 +7,13 @@ import {
   selectProfile,
   selectUpdProfileLoading,
 } from "../../store/profile/selectors";
-import { Footer, Dropdown, BackButton } from "../../components";
-import { isAuthenticated } from "../../utils";
+import { Footer, Dropdown, BackButton, useToast } from "../../components";
+import { isAuthenticated, copyToClipboard } from "../../utils";
 
 import "./profile-settings.scss";
 function ProfileSettings() {
   const username = useParams().username;
+  const { showToast } = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -43,6 +44,15 @@ function ProfileSettings() {
     },
   ];
 
+  const handleCopyLink = async () => {
+    const profileUrl = `https://heyitzme.com/${profile.username}`;
+    const copied = await copyToClipboard(profileUrl);
+
+    if (copied) {
+      showToast("Link copied", "success");
+    }
+  };
+
   useEffect(() => {
     if (!isAuthenticated(username) || !profile) {
       navigate(`/${username}`);
@@ -68,26 +78,50 @@ function ProfileSettings() {
             </svg>
             <div className="setting-wrapper">
               <div className="setting-card p-2 mx-3 mt-5 text-start">
-                <div className="setting-header my-4 text-start">
+                <div className="setting-header my-4 mb-5 text-start">
                   <BackButton action={() => navigate(`/${profile.username}`)} />
                   <h2 className="mb-0 me-2 text-end">PROFILE SETTINGS</h2>
                 </div>
-                <div className="setting-list mt-4">
-                  <p>
-                    <i className="bi bi-person me-2"></i>
-                    Username
-                  </p>
-                  <span>{profile.username}</span>
+
+                <div className="d-flex align-items-center justify-content-center gap-2">
+                  <div className="setting-list w-100">
+                    <p>
+                      <i className="bi bi-person me-2"></i>
+                      Username
+                    </p>
+                    <span>{profile.username}</span>
+                  </div>
+
+                  <div className="setting-list w-100">
+                    <p>
+                      <i className="bi bi-info-circle me-2"></i>
+                      Status
+                    </p>
+                    <span className="text-uppercase">{profile.status}</span>
+                  </div>
                 </div>
 
                 <div className="setting-list">
-                  <p>
-                    <i className="bi bi-link-45deg me-2"></i>Profile URL
-                  </p>
+                  <div className="d-flex align-items-center justify-content-between mb-1">
+                    <p className="mb-0">
+                      <i className="bi bi-link-45deg me-2"></i>
+                      Profile URL
+                    </p>
+
+                    <button
+                      type="button"
+                      className="btn p-0 copy-btn text-end"
+                      onClick={handleCopyLink}
+                    >
+                      {/* Copy */}
+                      <i className="bi bi-copy"></i>
+                    </button>
+                  </div>
+
                   <span>{`https://heyitzme.com/${profile.username}`}</span>
                 </div>
 
-                <div className="setting-list">
+                <div className="setting-list mt-5">
                   <div className="d-flex align-items-center justify-content-between">
                     <p>
                       <i className="bi bi-envelope me-2"></i>
@@ -177,15 +211,7 @@ function ProfileSettings() {
                   )}
                 </div>
 
-                <div className="setting-list">
-                  <p>
-                    <i className="bi bi-info-circle me-2"></i>
-                    Status
-                  </p>
-                  <span>{profile.status}</span>
-                </div>
-
-                <div className="setting-list">
+                <div className="setting-list mt-5">
                   <div className="d-flex align-items-center justify-content-between">
                     <p>
                       <i className="bi bi-calendar-check me-2"></i>

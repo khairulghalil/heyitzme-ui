@@ -96,11 +96,15 @@
         font-size: 14px;
         min-width: 70px;
       }
-      .edit-btn {
-        background-color: var(--accent-app-color);
-        color: black;
+      .copy-btn {
+        color: var(--font-color);
+        min-width: 27px !important;
         border: none;
       }
+      .copy-btn:active {
+        border: none;
+      }
+
       .dropdown-item {
         color: white;
         font-size: 15px;
