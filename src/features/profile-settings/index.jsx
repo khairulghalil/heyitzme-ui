@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { Form, Modal } from "react-bootstrap";
 import moment from "moment";
 import {
   selectProfile,
@@ -19,7 +20,7 @@ function ProfileSettings() {
   const updLoading = useSelector(selectUpdProfileLoading);
 
   const [editRegisteredEmail, setEditRegisteredEmail] = useState(false);
-  const [editValidUntil, setEditValidUntil] = useState(false);
+  const [editPassword, setEditPassword] = useState(false);
 
   const emailOptions = [
     {
@@ -32,6 +33,13 @@ function ProfileSettings() {
     {
       label: "Renew Subscription",
       action: () => setEditValidUntil(true),
+    },
+  ];
+
+  const passwordOptions = [
+    {
+      label: "Change Password",
+      action: () => setEditPassword(true),
     },
   ];
 
@@ -113,11 +121,60 @@ function ProfileSettings() {
                 </div>
 
                 <div className="setting-list">
-                  <p>
-                    <i className="bi bi-envelope me-2"></i>
-                    Password
-                  </p>
-                  <span>********</span>
+                  <div className="d-flex align-items-center justify-content-between">
+                    <p>
+                      <i className="bi bi-lock me-2"></i>
+                      Password
+                    </p>
+                    <Dropdown item={passwordOptions} vertical />
+                  </div>
+
+                  {editPassword ? (
+                    <div className="mt-2 d-flex flex-column gap-2">
+                      <Form.Group className="mb-2" controlId="currentPassword">
+                        <Form.Label>Current Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          name="currentPassword"
+                          onChange={null}
+                        />
+                      </Form.Group>
+
+                      <Form.Group className="mb-2" controlId="newPassword">
+                        <Form.Label>New Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          name="newPassword"
+                          onChange={null}
+                        />
+                      </Form.Group>
+
+                      <Form.Group
+                        className="mb-2"
+                        controlId="confirmNewPassword"
+                      >
+                        <Form.Label>Confirm New Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          name="confirmNewPassword"
+                          onChange={null}
+                        />
+                      </Form.Group>
+
+                      <div className="d-flex gap-2 align-self-end">
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => setEditPassword(false)}
+                        >
+                          Cancel
+                        </button>
+
+                        <button className="btn btn-primary">Save</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <span>*******************</span>
+                  )}
                 </div>
 
                 <div className="setting-list">

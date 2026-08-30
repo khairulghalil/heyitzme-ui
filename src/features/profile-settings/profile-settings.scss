@@ -12,7 +12,6 @@
 
   width: 100%;
   height: 100%;
-
   color: var(--primary-color);
   z-index: 0;
 }
@@ -106,6 +105,21 @@
         color: white;
         font-size: 15px;
         padding: 0 15px;
+      }
+      label {
+        color: var(--font-color);
+        font-weight: 600;
+      }
+      .form-control {
+        border-radius: 5px;
+        border: 0.5px solid #a3a3a3f5;
+        background-color: transparent;
+        color: var(--font-builder-color);
+      }
+
+      .form-control:focus {
+        border: 0.5px solid #a3a3a3f5;
+        box-shadow: none;
       }
     }
   }
