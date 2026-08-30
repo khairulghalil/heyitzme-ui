@@ -1,13 +1,20 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { updateProfile } from "../../store/profile/actions";
 import { Form, Modal } from "react-bootstrap";
 import moment from "moment";
 import {
   selectProfile,
   selectUpdProfileLoading,
 } from "../../store/profile/selectors";
-import { Footer, Dropdown, BackButton, useToast } from "../../components";
+import {
+  Footer,
+  Dropdown,
+  BackButton,
+  useToast,
+  Loader,
+} from "../../components";
 import { isAuthenticated, copyToClipboard } from "../../utils";
 
 import "./profile-settings.scss";
@@ -21,7 +28,11 @@ function ProfileSettings() {
   const updLoading = useSelector(selectUpdProfileLoading);
 
   const [editRegisteredEmail, setEditRegisteredEmail] = useState(false);
+  const [newRegisteredEmail, setNewRegisteredEmail] = useState("");
   const [editPassword, setEditPassword] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   const emailOptions = [
     {
@@ -53,9 +64,70 @@ function ProfileSettings() {
     }
   };
 
+  const handleChangeRegisteredEmail = () => {
+    if (!newRegisteredEmail) {
+      showToast("Please enter a new email", "error");
+      return;
+    }
+
+    dispatch(
+      updateProfile({
+        username: profile.username,
+        data: { registeredEmail: newRegisteredEmail },
+      }),
+    )
+      .unwrap()
+      .then(() => {
+        showToast("Registered email updated", "success");
+        handleCloseRegisteredEmail();
+      })
+      .catch(() => {
+        showToast("Failed to update profile", "error");
+      });
+  };
+
+  const handleCloseRegisteredEmail = () => {
+    setEditRegisteredEmail(false);
+    setNewRegisteredEmail(profile.registeredEmail);
+  };
+
+  const handleChangePassword = () => {
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      showToast("Please fill in all password fields", "error");
+      return;
+    } else if (newPassword !== confirmNewPassword) {
+      showToast("New password and confirm password do not match", "error");
+      return;
+    }
+
+    dispatch(
+      updateProfile({
+        username: profile.username,
+        data: { currentPassword, newPassword },
+      }),
+    )
+      .unwrap()
+      .then(() => {
+        showToast("Password updated", "success");
+        handleClosePassword();
+      })
+      .catch(() => {
+        showToast("Failed to update profile", "error");
+      });
+  };
+
+  const handleClosePassword = () => {
+    setEditPassword(false);
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmNewPassword("");
+  };
+
   useEffect(() => {
     if (!isAuthenticated(username) || !profile) {
       navigate(`/${username}`);
+    } else {
+      setNewRegisteredEmail(profile.registeredEmail);
     }
   }, []);
 
@@ -63,20 +135,21 @@ function ProfileSettings() {
     <>
       {profile && (
         <>
+          <Loader show={updLoading} showLogo />
           <div className="containers text-center">
             <svg
               className="background"
-              viewBox="0 0 780 410"
+              viewBox="100 0 780 410"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="xMaxYMin slice"
+              preserveAspectRatio="xMinYMin slice"
             >
               <path
                 d="M420.739 171.709C152.117 176.988 69.3602 62.4165 0 0H880V336C880 275.833 689.361 166.43 420.739 171.709Z"
                 fill={profile.theme.primaryColor || "var(--primary-app-color)"}
               />
             </svg>
-            <div className="setting-wrapper">
+            <div className="setting-wrapper mb-5">
               <div className="setting-card p-2 mx-3 mt-5 text-start">
                 <div className="setting-header my-4 mb-5 text-start">
                   <BackButton action={() => navigate(`/${profile.username}`)} />
@@ -113,7 +186,6 @@ function ProfileSettings() {
                       className="btn p-0 copy-btn text-end"
                       onClick={handleCopyLink}
                     >
-                      {/* Copy */}
                       <i className="bi bi-copy"></i>
                     </button>
                   </div>
@@ -135,22 +207,27 @@ function ProfileSettings() {
                       <input
                         type="email"
                         className="form-control w-100 mt-1"
-                        value={profile.contact.email}
-                        onChange={(e) => setEditRegisteredEmail(e.target.value)}
+                        value={newRegisteredEmail}
+                        onChange={(e) => setNewRegisteredEmail(e.target.value)}
                       />
 
                       <div className="d-flex gap-2">
                         <button
                           className="btn btn-secondary w-100"
-                          onClick={() => setEditRegisteredEmail(false)}
+                          onClick={handleCloseRegisteredEmail}
                         >
                           Cancel
                         </button>
-                        <button className="btn btn-primary w-100">Save</button>
+                        <button
+                          className="btn btn-primary w-100"
+                          onClick={handleChangeRegisteredEmail}
+                        >
+                          Save
+                        </button>
                       </div>
                     </div>
                   ) : (
-                    <span>{profile.contact.email}</span>
+                    <span>{profile.registeredEmail}</span>
                   )}
                 </div>
 
@@ -170,7 +247,8 @@ function ProfileSettings() {
                         <Form.Control
                           type="password"
                           name="currentPassword"
-                          onChange={null}
+                          value={currentPassword}
+                          onChange={(e) => setCurrentPassword(e.target.value)}
                         />
                       </Form.Group>
 
@@ -179,7 +257,8 @@ function ProfileSettings() {
                         <Form.Control
                           type="password"
                           name="newPassword"
-                          onChange={null}
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
                         />
                       </Form.Group>
 
@@ -191,19 +270,27 @@ function ProfileSettings() {
                         <Form.Control
                           type="password"
                           name="confirmNewPassword"
-                          onChange={null}
+                          value={confirmNewPassword}
+                          onChange={(e) =>
+                            setConfirmNewPassword(e.target.value)
+                          }
                         />
                       </Form.Group>
 
                       <div className="d-flex gap-2 align-self-end">
                         <button
                           className="btn btn-secondary"
-                          onClick={() => setEditPassword(false)}
+                          onClick={handleClosePassword}
                         >
                           Cancel
                         </button>
 
-                        <button className="btn btn-primary">Save</button>
+                        <button
+                          className="btn btn-primary"
+                          onClick={handleChangePassword}
+                        >
+                          Save
+                        </button>
                       </div>
                     </div>
                   ) : (
@@ -212,6 +299,14 @@ function ProfileSettings() {
                 </div>
 
                 <div className="setting-list mt-5">
+                  <p>
+                    <i className="bi bi-calendar-plus me-2"></i>
+                    Date Joined
+                  </p>
+                  <span>{moment(profile.createdAt).format("DD MMM YYYY")}</span>
+                </div>
+
+                <div className="setting-list">
                   <div className="d-flex align-items-center justify-content-between">
                     <p>
                       <i className="bi bi-calendar-check me-2"></i>
