@@ -12,7 +12,6 @@ import {
 import {
   SocialLink,
   SocialMedia,
-  AboutModal,
   ShareModal,
   ProfileNotFound,
 } from "./components";
@@ -74,12 +73,12 @@ function Profiles({ previewData = null, backAction = null }) {
   const showAbout = () => {
     if (!isAuthenticated(profileData.username)) {
       showLogin(profileData.username, () => {
-        setShowAboutModal(true);
+        navigate(`/settings/${profileData.username}`);
       });
       return;
     }
 
-    setShowAboutModal(true);
+    navigate(`/settings/${profileData.username}`);
   };
 
   return (
@@ -114,11 +113,11 @@ function Profiles({ previewData = null, backAction = null }) {
 
             <Dropdown.Menu align="end">
               <Dropdown.Item as="button" onClick={() => editProfile()}>
-                Edit Profile
+                Edit Card
               </Dropdown.Item>
 
               <Dropdown.Item as="button" onClick={() => showAbout()}>
-                About
+                Settings
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -180,15 +179,6 @@ function Profiles({ previewData = null, backAction = null }) {
               className="shareModal"
             >
               <ShareModal profileUrl={profileUrl || null} />
-            </Modal>
-
-            <Modal
-              show={showAboutModal}
-              onHide={() => setShowAboutModal(false)}
-              centered
-              className="aboutModal"
-            >
-              <AboutModal profileData={profileData} />
             </Modal>
           </div>
         </>

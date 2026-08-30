@@ -175,112 +175,114 @@ function ProfileBuilder({ type }) {
     <>
       <Loader show={updLoading} showLogo />
       {!showCard && (
-        <div className="builder-wrapper">
-          <div className="builder-card p-4">
-            <div className="text-center">
-              <div className="profile-picture-wrapper">
-                <img
-                  id="profile-picture"
-                  className="profile-picture rounded-circle img-fluid"
-                  alt="Profile"
-                  src={profilePictureUrl || null}
-                />
+        <>
+          <div className="builder-wrapper">
+            <div className="builder-card p-4">
+              <div className="text-center">
+                <div className="profile-picture-wrapper">
+                  <img
+                    id="profile-picture"
+                    className="profile-picture rounded-circle img-fluid"
+                    alt="Profile"
+                    src={profilePictureUrl || null}
+                  />
 
+                  <button
+                    type="button"
+                    className="upload-photo-btn"
+                    onClick={() => photoInputRef.current?.click()}
+                  >
+                    <i className="bi bi-camera-fill"></i>
+                  </button>
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={photoInputRef}
+                    className="d-none"
+                    onChange={handlePhotoChange}
+                  />
+                </div>
+              </div>
+
+              <Form.Group className="mb-3 mt-5" controlId="name">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={builderProfile?.name || ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="bio">
+                <Form.Label>Bio</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="bio"
+                  value={builderProfile?.bio || ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="about">
+                <Form.Label>About</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="about"
+                  value={builderProfile?.about || ""}
+                  onChange={handleChange}
+                  rows={3}
+                />
+              </Form.Group>
+
+              <ContactCard
+                builderProfile={builderProfile}
+                handleChange={handleChange}
+                showContactList={showContactList}
+                setShowContactList={setShowContactList}
+              />
+              <SocialMediaCard
+                builderProfile={builderProfile}
+                handleChange={handleChange}
+                showSocMedList={showSocMedList}
+                setShowSocMedList={setShowSocMedList}
+              />
+              <ThemeCard
+                builderProfile={builderProfile}
+                handleChange={handleChange}
+                showThemeList={showThemeList}
+                setShowThemeList={setShowThemeList}
+              />
+
+              <button
+                className="btn btn-primary accent-theme my-4 w-100"
+                onClick={() => {
+                  editScrollPosition.current = window.scrollY;
+                  setShowCard(true);
+                }}
+              >
+                Preview Card <span className="ms-2">▸</span>
+              </button>
+
+              <div className="confirm-section text-center">
                 <button
-                  type="button"
-                  className="upload-photo-btn"
-                  onClick={() => photoInputRef.current?.click()}
+                  className="btn btn-secondary mt-4 me-2 w-100"
+                  onClick={handleConfirmCancel}
                 >
-                  <i className="bi bi-camera-fill"></i>
+                  Cancel
                 </button>
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={photoInputRef}
-                  className="d-none"
-                  onChange={handlePhotoChange}
-                />
+                <button
+                  className="btn btn-primary mt-4 w-100"
+                  onClick={handleConfirmUpdate}
+                >
+                  Update
+                </button>
               </div>
             </div>
-
-            <Form.Group className="mb-3 mt-5" controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={builderProfile?.name || ""}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="bio">
-              <Form.Label>Bio</Form.Label>
-              <Form.Control
-                type="text"
-                name="bio"
-                value={builderProfile?.bio || ""}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="about">
-              <Form.Label>About</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="about"
-                value={builderProfile?.about || ""}
-                onChange={handleChange}
-                rows={3}
-              />
-            </Form.Group>
-
-            <ContactCard
-              builderProfile={builderProfile}
-              handleChange={handleChange}
-              showContactList={showContactList}
-              setShowContactList={setShowContactList}
-            />
-            <SocialMediaCard
-              builderProfile={builderProfile}
-              handleChange={handleChange}
-              showSocMedList={showSocMedList}
-              setShowSocMedList={setShowSocMedList}
-            />
-            <ThemeCard
-              builderProfile={builderProfile}
-              handleChange={handleChange}
-              showThemeList={showThemeList}
-              setShowThemeList={setShowThemeList}
-            />
-
-            <button
-              className="btn btn-primary accent-theme my-4 w-100"
-              onClick={() => {
-                editScrollPosition.current = window.scrollY;
-                setShowCard(true);
-              }}
-            >
-              Preview Card <span className="ms-2">▸</span>
-            </button>
-
-            <div className="confirm-section text-center">
-              <button
-                className="btn btn-secondary mt-4 me-2 w-100"
-                onClick={handleConfirmCancel}
-              >
-                Cancel
-              </button>
-              <button
-                className="btn btn-primary mt-4 w-100"
-                onClick={handleConfirmUpdate}
-              >
-                Update
-              </button>
-            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
+        </>
       )}
 
       {showCard && (
