@@ -50,25 +50,29 @@ function ProfileBuilder({ type }) {
   const [showThemeList, setShowThemeList] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
-    if (name.includes(".")) {
-      const [parent, child] = name.split(".");
+    const newValue = type === "checkbox" ? checked : value;
 
-      setBuilderProfile({
-        ...builderProfile,
-        [parent]: {
-          ...builderProfile?.[parent],
-          [child]: value,
-        },
+    setBuilderProfile((prev) => {
+      const keys = name.split(".");
+
+      const updated = { ...prev };
+      let current = updated;
+
+      keys.forEach((key, index) => {
+        if (index === keys.length - 1) {
+          current[key] = newValue;
+        } else {
+          current[key] = {
+            ...current[key],
+          };
+
+          current = current[key];
+        }
       });
 
-      return;
-    }
-
-    setBuilderProfile({
-      ...builderProfile,
-      [name]: value,
+      return updated;
     });
   };
 
@@ -176,6 +180,10 @@ function ProfileBuilder({ type }) {
       });
     }
   }, [showCard]);
+
+  useEffect(() => {
+    console.log("builderProfile updated:", builderProfile);
+  }, [builderProfile]);
 
   return (
     <>

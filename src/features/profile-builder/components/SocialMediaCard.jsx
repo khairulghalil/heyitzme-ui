@@ -14,65 +14,136 @@ function SocialMediaCard({
         </Accordion.Header>
         <Accordion.Body>
           <Form.Group className="mb-3" controlId="facebook">
-            <Form.Label>Facebook</Form.Label>
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <Form.Label className="mb-0">Facebook</Form.Label>
+
+              <Form.Check
+                type="switch"
+                id="facebook-toggle"
+                name="socialMedia.facebook.show"
+                checked={builderProfile?.socialMedia?.facebook?.show || false}
+                onChange={handleChange}
+              />
+            </div>
+
             <Form.Control
               type="text"
-              name="socialMedia.facebook"
-              value={builderProfile?.socialMedia?.facebook || ""}
+              name="socialMedia.facebook.item"
+              value={builderProfile?.socialMedia?.facebook?.item || ""}
               onChange={handleChange}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="tiktok">
-            <Form.Label>Tiktok</Form.Label>
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <Form.Label className="mb-0">Tiktok</Form.Label>
+
+              <Form.Check
+                type="switch"
+                id="tiktok-toggle"
+                name="socialMedia.tiktok.show"
+                checked={builderProfile?.socialMedia?.tiktok?.show || false}
+                onChange={handleChange}
+              />
+            </div>
             <Form.Control
               type="text"
-              name="socialMedia.tiktok"
-              value={builderProfile?.socialMedia?.tiktok || ""}
+              name="socialMedia.tiktok.item"
+              value={builderProfile?.socialMedia?.tiktok?.item || ""}
               onChange={handleChange}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="instagram">
-            <Form.Label>Instagram</Form.Label>
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <Form.Label className="mb-0">Instagram</Form.Label>
+
+              <Form.Check
+                type="switch"
+                id="instagram-toggle"
+                name="socialMedia.instagram.show"
+                checked={builderProfile?.socialMedia?.instagram?.show || false}
+                onChange={handleChange}
+              />
+            </div>
             <Form.Control
               type="text"
-              name="socialMedia.instagram"
-              value={builderProfile?.socialMedia?.instagram || ""}
+              name="socialMedia.instagram.item"
+              value={builderProfile?.socialMedia?.instagram?.item || ""}
               onChange={handleChange}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="x">
-            <Form.Label>X</Form.Label>
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <Form.Label className="mb-0">X</Form.Label>
+
+              <Form.Check
+                type="switch"
+                id="x-toggle"
+                name="socialMedia.x.show"
+                checked={builderProfile?.socialMedia?.x?.show || false}
+                onChange={handleChange}
+              />
+            </div>
             <Form.Control
               type="text"
-              name="socialMedia.x"
-              value={builderProfile?.socialMedia?.x || ""}
+              name="socialMedia.x.item"
+              value={builderProfile?.socialMedia?.x?.item || ""}
               onChange={handleChange}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="threads">
-            <Form.Label>Threads</Form.Label>
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <Form.Label className="mb-0">Threads</Form.Label>
+
+              <Form.Check
+                type="switch"
+                id="threads-toggle"
+                name="socialMedia.threads.show"
+                checked={builderProfile?.socialMedia?.threads?.show || false}
+                onChange={handleChange}
+              />
+            </div>
             <Form.Control
               type="text"
-              name="socialMedia.threads"
-              value={builderProfile?.socialMedia?.threads || ""}
+              name="socialMedia.threads.item"
+              value={builderProfile?.socialMedia?.threads?.item || ""}
               onChange={handleChange}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="youtube">
-            <Form.Label>Youtube</Form.Label>
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <Form.Label className="mb-0">Youtube</Form.Label>
+
+              <Form.Check
+                type="switch"
+                id="youtube-toggle"
+                name="socialMedia.youtube.show"
+                checked={builderProfile?.socialMedia?.youtube?.show || false}
+                onChange={handleChange}
+              />
+            </div>
             <Form.Control
               type="text"
-              name="socialMedia.youtube"
-              value={builderProfile?.socialMedia?.youtube || ""}
+              name="socialMedia.youtube.item"
+              value={builderProfile?.socialMedia?.youtube?.item || ""}
               onChange={handleChange}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="discord">
-            <Form.Label>Discord</Form.Label>
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <Form.Label className="mb-0">Discord</Form.Label>
+
+              <Form.Check
+                type="switch"
+                id="discord-toggle"
+                name="socialMedia.discord.show"
+                checked={builderProfile?.socialMedia?.discord?.show || false}
+                onChange={handleChange}
+              />
+            </div>
             <Form.Control
               type="text"
-              name="socialMedia.discord"
-              value={builderProfile?.socialMedia?.discord || ""}
+              name="socialMedia.discord.item"
+              value={builderProfile?.socialMedia?.discord?.item || ""}
               onChange={handleChange}
             />
           </Form.Group>

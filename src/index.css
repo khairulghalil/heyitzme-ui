@@ -210,3 +210,28 @@ header .navbar-toggler {
   background: var(--accent-app-color) !important;
   color: black !important;
 }
+
+/*  */
+
+.form-switch {
+  .form-check-input {
+    background-color: white;
+    border: 1px solid #a3a3a3ac;
+
+    &:checked {
+      background-color: green;
+      border: 1px solid green;
+    }
+
+    &:not(:checked) {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='lightgrey' stroke='%23a3a3a3' stroke-width='0.1'/%3e%3c/svg%3e");
+      background-color: transparent;
+      border: 1px solid #a3a3a354;
+    }
+
+    &:focus {
+      box-shadow: none;
+      border: 1px solid #a3a3a3ac;
+    }
+  }
+}

@@ -79,13 +79,13 @@
 
     .form-control {
       border-radius: 5px;
-      border: 0.1px solid #a3a3a3ac;
+      border: 0.7px solid #a3a3a356;
       background-color: transparent;
       color: var(--font-builder-color);
     }
 
     .form-control:focus {
-      border: 0.1px solid #a3a3a3ac;
+      border: 0.7px solid #a3a3a356;
       box-shadow: none;
     }
 
@@ -93,7 +93,7 @@
       display: flex;
       justify-content: center;
       gap: 10px;
-      border-top: 0.1px solid #a3a3a3ac;
+      border-top: 0.7px solid #a3a3a356;
     }
 
     .accordion {
