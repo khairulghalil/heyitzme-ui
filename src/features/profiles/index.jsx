@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { Modal, Dropdown } from "react-bootstrap";
-import { Footer, useLogin, Loader } from "../../components";
+import { Modal } from "react-bootstrap";
+import { Footer, useLogin, Loader, Dropdown } from "../../components";
 import { applyTheme, saveContact, isAuthenticated } from "../../utils";
 import { getProfile } from "../../store/profile/actions";
 import {
@@ -59,6 +59,17 @@ function Profiles({ previewData = null, backAction = null }) {
     }
   }, [profileData]);
 
+  const menuOptions = [
+    {
+      label: "Edit Card",
+      action: () => editProfile(),
+    },
+    {
+      label: "Settings",
+      action: () => showAbout(),
+    },
+  ];
+
   const editProfile = () => {
     if (!isAuthenticated(profileData.username)) {
       showLogin(profileData.username, () => {
@@ -99,28 +110,13 @@ function Profiles({ previewData = null, backAction = null }) {
               </span>
             </div>
           )}
-          <Dropdown
+
+          <span
             className={`profile-header text-left ${previewData ? "d-none" : ""}`}
           >
-            <Dropdown.Toggle
-              variant="link"
-              id="profile-dropdown"
-              className="p-0 border-0 text-end"
-              bsPrefix="dropdown-toggle-no-caret"
-            >
-              <i className="bi bi-three-dots"></i>
-            </Dropdown.Toggle>
+            <Dropdown item={menuOptions} />
+          </span>
 
-            <Dropdown.Menu align="end">
-              <Dropdown.Item as="button" onClick={() => editProfile()}>
-                Edit Card
-              </Dropdown.Item>
-
-              <Dropdown.Item as="button" onClick={() => showAbout()}>
-                Settings
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
           <div className="profile-wrapper">
             <div className="profile-card">
               <img

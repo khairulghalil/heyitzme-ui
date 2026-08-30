@@ -6,7 +6,7 @@ import {
   selectProfile,
   selectUpdProfileLoading,
 } from "../../store/profile/selectors";
-import { Footer } from "../../components";
+import { Footer, Dropdown, BackButton } from "../../components";
 import { isAuthenticated } from "../../utils";
 
 import "./profile-settings.scss";
@@ -19,6 +19,21 @@ function ProfileSettings() {
   const updLoading = useSelector(selectUpdProfileLoading);
 
   const [editRegisteredEmail, setEditRegisteredEmail] = useState(false);
+  const [editValidUntil, setEditValidUntil] = useState(false);
+
+  const emailOptions = [
+    {
+      label: "Change email",
+      action: () => setEditRegisteredEmail(true),
+    },
+  ];
+
+  const validOptions = [
+    {
+      label: "Renew Subscription",
+      action: () => setEditValidUntil(true),
+    },
+  ];
 
   useEffect(() => {
     if (!isAuthenticated(username) || !profile) {
@@ -33,7 +48,7 @@ function ProfileSettings() {
           <div className="containers text-center">
             <svg
               className="background"
-              viewBox="0 0 880 510"
+              viewBox="0 0 780 410"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="xMaxYMin slice"
@@ -44,17 +59,12 @@ function ProfileSettings() {
               />
             </svg>
             <div className="setting-wrapper">
-              <div className="setting-header mt-5 text-start">
-                <span
-                  className="back-button"
-                  onClick={() => navigate(`/${profile.username}`)}
-                >
-                  <i className="bi bi-arrow-left"></i>
-                </span>
-                <h2 className="mb-0 text-end">PROFILE SETTINGS</h2>
-              </div>
               <div className="setting-card p-2 mx-3 mt-5 text-start">
-                <div className="setting-list mt-3">
+                <div className="setting-header my-4 text-start">
+                  <BackButton action={() => navigate(`/${profile.username}`)} />
+                  <h2 className="mb-0 me-2 text-end">PROFILE SETTINGS</h2>
+                </div>
+                <div className="setting-list mt-4">
                   <p>
                     <i className="bi bi-person me-2"></i>
                     Username
@@ -75,16 +85,7 @@ function ProfileSettings() {
                       <i className="bi bi-envelope me-2"></i>
                       Registered email
                     </p>
-
-                    <button
-                      type="button"
-                      className={`btn p-0 btn-sm btn-outline-secondary edit-btn ${editRegisteredEmail ? "d-none" : ""}`}
-                      onClick={() =>
-                        setEditRegisteredEmail(!editRegisteredEmail)
-                      }
-                    >
-                      Edit
-                    </button>
+                    <Dropdown item={emailOptions} vertical />
                   </div>
 
                   {editRegisteredEmail ? (
@@ -127,11 +128,16 @@ function ProfileSettings() {
                   <span>{profile.status}</span>
                 </div>
 
-                <div className="setting-list mb-3">
-                  <p>
-                    <i className="bi bi-calendar-check me-2"></i>
-                    Valid until
-                  </p>
+                <div className="setting-list">
+                  <div className="d-flex align-items-center justify-content-between">
+                    <p>
+                      <i className="bi bi-calendar-check me-2"></i>
+                      Valid until
+                    </p>
+
+                    <Dropdown item={validOptions} vertical />
+                  </div>
+
                   <span>{moment(profile.expiresAt).format("DD MMM YYYY")}</span>
                 </div>
               </div>

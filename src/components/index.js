@@ -4,6 +4,8 @@ import Footer from "./footer";
 import Loader from "./loader";
 import ScrollToTop from "./scrollToTop";
 import ConfirmModal from "./confirmModal";
+import Dropdown from "./dropdown";
+import BackButton from "./backButton";
 
 export {
   ToastProvider,
@@ -14,4 +16,6 @@ export {
   Loader,
   ScrollToTop,
   ConfirmModal,
+  Dropdown,
+  BackButton,
 };

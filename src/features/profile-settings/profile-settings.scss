@@ -27,39 +27,15 @@
 
   flex-direction: column;
   align-items: center;
-  margin: 0 15px;
+  margin: 0 350px;
 
   .setting-header {
     position: relative;
     width: 100%;
-    margin: 0 15px;
 
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
-    .back-button {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-
-      width: 40px;
-      height: 40px;
-      padding: 0;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      cursor: pointer;
-      color: white;
-      background: transparent;
-      border: 1px solid white;
-      border-radius: 50%;
-      transition: 0.2s;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
 
     h2 {
       margin: 0;
@@ -69,16 +45,23 @@
   }
 
   .setting-card {
-    background: rgba(94, 92, 92, 0.15);
+    background: rgba(242, 241, 241, 0.15);
 
     border-radius: 8px;
     border: 0.5px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 
     padding: 1rem;
     width: 100%;
+
+    h2 {
+      color: white;
+      font-weight: bolder;
+      font-size: 22px;
+    }
 
     .setting-list {
       border: 0.5px solid rgb(144, 144, 144);
@@ -106,20 +89,29 @@
         padding: 5px 15px 5px 25px;
         color: color-mix(in srgb, var(--font-color) 70%, transparent);
       }
+      i {
+        color: var(--font-color);
+        margin-right: 5px;
+      }
       .btn {
         font-size: 14px;
         min-width: 70px;
       }
-
       .edit-btn {
         background-color: var(--accent-app-color);
         color: black;
         border: none;
       }
+      .dropdown-item {
+        color: white;
+        font-size: 15px;
+        padding: 0 15px;
+      }
     }
-    .about-footer {
-      border: none;
-      box-shadow: none;
-    }
+  }
+}
+@media (max-width: 991.98px) {
+  .setting-wrapper {
+    margin: 0 15px;
   }
 }
