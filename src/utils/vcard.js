@@ -89,9 +89,7 @@ function generateVCard(toSave, photoData) {
     .replace(/-/g, " ")
     .toLowerCase()
     .replace(/(^|[\s'])\p{L}/gu, (match) => match.toUpperCase());
-  const formattedPosition = (toSave.position || "")
-    .toLowerCase()
-    .replace(/(^|[.!?\n]\s*)\p{L}/gu, (match) => match.toUpperCase());
+  const formattedPosition = (toSave.position || "").toUpperCase();
 
   const nameParts = formattedName.trim().split(" ");
 
