@@ -2,7 +2,13 @@ import { useState, useCallback } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Cropper from "react-easy-crop";
 
-function PhotoCropModal({ imageSrc, onCancel, onSave }) {
+function PhotoCropModal({
+  imageSrc,
+  onCancel,
+  onSave,
+  aspect = 1,
+  cropShape = "round",
+}) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
@@ -23,8 +29,8 @@ function PhotoCropModal({ imageSrc, onCancel, onSave }) {
             image={imageSrc}
             crop={crop}
             zoom={zoom}
-            aspect={1}
-            cropShape="round"
+            aspect={aspect}
+            cropShape={cropShape}
             showGrid={false}
             onCropChange={setCrop}
             onZoomChange={setZoom}

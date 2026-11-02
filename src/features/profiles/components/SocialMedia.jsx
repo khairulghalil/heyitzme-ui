@@ -6,6 +6,8 @@ function SocialMedia({ links }) {
   return (
     <>
       <div className="social-media-links mt-3 pb-5">
+        <p>FIND ME ONLINE</p>
+
         <a
           href={facebook.item}
           target="_blank"

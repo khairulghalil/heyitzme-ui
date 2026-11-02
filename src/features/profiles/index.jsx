@@ -1,10 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { Modal } from "react-bootstrap";
+import { Offcanvas } from "react-bootstrap";
+import * as brandLogo from "../../assets/img/logo";
 import { Footer, useLogin, Loader, Dropdown } from "../../components";
 import { applyTheme, saveContact, isAuthenticated } from "../../utils";
 import { getProfile } from "../../store/profile/actions";
+import { bannerThumbnail } from "../../constants";
 import {
   selectProfile,
   selectProfileLoading,
@@ -29,7 +31,15 @@ function Profiles({ previewData = null, backAction = null }) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [profileUrl, setProfileUrl] = useState("");
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  const [bannerBgUrl, setBannerBgUrl] = useState("");
+  const [logoImageUrl, setLogoImageUrl] = useState("");
   const [profileData, setProfileData] = useState(null);
+  const isDefaultBanner =
+    !profileData?.bannerBg ||
+    profileData.bannerBg.startsWith("banners/default/");
+  const bannerPreset =
+    bannerThumbnail.find((banner) => banner.path === profileData?.bannerBg) ||
+    bannerThumbnail.find((banner) => banner.name === "Circuit");
 
   useEffect(() => {
     if (previewData) {
@@ -53,6 +63,16 @@ function Profiles({ previewData = null, backAction = null }) {
           `https://images.heyitzme.com/${profileData.profileImage}`,
         );
       }
+
+      setBannerBgUrl(
+        profileData.bannerBlobUrl ||
+          `https://images.heyitzme.com/${profileData.bannerBg}`,
+      );
+
+      setLogoImageUrl(
+        profileData.logoBlobUrl ||
+          `https://images.heyitzme.com/${profileData.logoImage}`,
+      );
 
       setProfileUrl(`https://heyitzme.com/${profileData.username}`);
       applyTheme(profileData.theme);
@@ -111,72 +131,184 @@ function Profiles({ previewData = null, backAction = null }) {
             </div>
           )}
 
-          <span
-            className={`profile-header text-left ${previewData ? "d-none" : ""}`}
-          >
-            <Dropdown item={menuOptions} />
-          </span>
-
           <div className="profile-wrapper">
             <div className="profile-card">
-              <img
-                id="profile-picture"
-                className="profile-picture rounded-circle img-fluid"
-                alt="Profile"
-                src={profilePictureUrl || null}
-              />
+              <div className="header-banner">
+                {!isDefaultBanner ? (
+                  <img
+                    className="banner-background-image"
+                    src={bannerBgUrl || undefined}
+                    alt=""
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <span
+                    className="banner-pattern"
+                    style={{
+                      "--banner-mask": `url(${bannerPreset?.src || ""})`,
+                    }}
+                    aria-hidden="true"
+                  />
+                )}
+                <div className="profile-picture-wrapper">
+                  <img
+                    id="profile-picture"
+                    className="profile-picture rounded-circle img-fluid"
+                    alt="Profile"
+                    src={profilePictureUrl || null}
+                  />
+                  <span
+                    className={`verified-badge ${profileData.theme.verifiedEnable ? "" : "d-none"}`}
+                    role="img"
+                    aria-label="Verified profile"
+                    title="Verified profile"
+                  >
+                    <i
+                      className="bi bi-patch-check-fill badge-shape"
+                      aria-hidden="true"
+                    />
+                    <i
+                      className="bi bi-circle-fill badge-hide"
+                      aria-hidden="true"
+                    />
+                    <i
+                      className="bi bi-check-lg badge-check"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </div>
+              </div>
 
               <div
                 className={`profile-content text-center mt-3 ${previewData ? "pe-none" : ""}`}
               >
-                <h2 id="name">{profileData.name}</h2>
-                <p id="bio">{profileData.bio}</p>
+                <div className="options-wrapper">
+                  <div
+                    className={`logo-wrapper ${profileData.theme.logoEnable ? "" : "d-none"}`}
+                  >
+                    <img
+                      src={logoImageUrl || null}
+                      className="logo img-fluid"
+                      alt="HeyItzMe"
+                    />
+                  </div>
+                  <Dropdown item={menuOptions} vertical />
+                </div>
+                <h2 id="name" className="profile-name">
+                  <span>{profileData.name}</span>
+                  {profileData.username === "khairul-ghalil" && (
+                    <img
+                      className="username-mark"
+                      src={brandLogo.icon}
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  )}
+                </h2>
+                <p id="bio" className="bio mb-0">
+                  {profileData.bio}
+                </p>
+                {profileData.description?.enable &&
+                  profileData.description.item && (
+                    <p className="description mt-1">
+                      {profileData.description.item}
+                    </p>
+                  )}
                 <SocialLink contact={profileData.contact} />
 
-                <button
-                  className="btn btn-primary profile-theme mt-2 mx-1"
-                  onClick={() => saveContact(profileData)}
-                >
-                  <i className="bi bi-bookmark-fill me-1"></i>
-                  Save
-                </button>
-                <button
-                  className="btn btn-secondary profile-theme mt-2 mx-1"
-                  onClick={() => setShowShareModal(true)}
-                >
-                  <i className="bi bi-share me-1"></i>
-                  Share
-                </button>
+                <div className="d-flex justify-content-start btn-wrapper">
+                  <button
+                    className="btn btn-primary save profile-theme mt-2 ms-0 me-1"
+                    onClick={() => saveContact(profileData)}
+                  >
+                    <i className="bi bi-bookmark-fill me-1"></i>
+                    Save Contact
+                  </button>
+                  <button
+                    className="btn btn-secondary share profile-theme mt-2 ms-1 me-0 "
+                    onClick={() => setShowShareModal(true)}
+                  >
+                    <i className="bi bi-share me-1"></i>
+                    Share
+                  </button>
+                </div>
 
-                <p id="about" className="about">
+                <p id="about" className="section">
+                  <span className="section-title">ABOUT</span>
                   {profileData.about}
                 </p>
+
+                {(Array.isArray(profileData.additionalSection?.item)
+                  ? profileData.additionalSection.item
+                  : profileData.additionalSection?.item &&
+                      typeof profileData.additionalSection.item === "object"
+                    ? [profileData.additionalSection.item]
+                    : []
+                )
+                  .filter((item) => item.enable)
+                  .map((item, index) => (
+                    <p
+                      key={index}
+                      className="section additional-section-content"
+                    >
+                      <span className="section-title">{item.title}</span>
+                      {(item.content || "")
+                        .split(/\r?\n/)
+                        .map((line, lineIndex) => {
+                          const bulletLine = line.match(/^\s*-\s+(.*)$/);
+
+                          return (
+                            <span
+                              className="additional-section-line"
+                              key={lineIndex}
+                            >
+                              {bulletLine ? (
+                                <>
+                                  <i
+                                    className="bi bi-circle-fill additional-section-bullet"
+                                    aria-hidden="true"
+                                  />
+                                  {bulletLine[1]}
+                                </>
+                              ) : (
+                                line
+                              )}
+                            </span>
+                          );
+                        })}
+                    </p>
+                  ))}
 
                 <SocialMedia links={profileData.socialMedia} />
               </div>
             </div>
-
-            {!previewData && (
-              <div className="profile-banner">
-                <p>
-                  Like this Business Card? Get yours now at
-                  <a href="https://heyitzme.com" className="ps-1">
-                    HeyItzMe.com
-                  </a>
-                </p>
-              </div>
-            )}
-            <Footer />
-
-            <Modal
-              show={showShareModal}
-              onHide={() => setShowShareModal(false)}
-              centered
-              className="shareModal"
-            >
-              <ShareModal profileUrl={profileUrl || null} />
-            </Modal>
           </div>
+
+          {!previewData && (
+            <div className="profile-banner">
+              <p>
+                Like this Business Card? Get yours now at
+                <a href="https://heyitzme.com" className="ps-1">
+                  HeyItzMe.com
+                </a>
+              </p>
+            </div>
+          )}
+          <Footer />
+
+          <Offcanvas
+            show={showShareModal}
+            onHide={() => setShowShareModal(false)}
+            placement="end"
+            className="share-offcanvas w-100"
+          >
+            <Offcanvas.Header closeButton closeVariant="white" />
+            <ShareModal
+              profileUrl={profileUrl || null}
+              profilePictureUrl={profilePictureUrl}
+              profileName={profileData.name}
+            />
+          </Offcanvas>
         </>
       ) : (
         <ProfileNotFound />

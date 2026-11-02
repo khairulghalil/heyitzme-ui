@@ -18,10 +18,12 @@ import {
 import {
   ContactCard,
   SocialMediaCard,
+  AdditionalSectionCard,
   ThemeCard,
   PhotoCropModal,
 } from "./components";
 import Profiles from "../profiles";
+import { bannerThumbnail } from "../../constants";
 import "./profile-builder.scss";
 
 function ProfileBuilder({ type }) {
@@ -32,6 +34,9 @@ function ProfileBuilder({ type }) {
   const username = useParams().username;
   const editScrollPosition = useRef(0);
   const photoInputRef = useRef(null);
+  const bannerInputRef = useRef(null);
+  const logoInputRef = useRef(null);
+  const bannerPreviewRef = useRef(null);
 
   const profile = useSelector(selectProfile);
   const updLoading = useSelector(selectUpdProfileLoading);
@@ -39,6 +44,11 @@ function ProfileBuilder({ type }) {
   const [builderProfile, setBuilderProfile] = useState(null);
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
   const [profilePictureFile, setProfilePictureFile] = useState(null);
+  const [bannerBgUrl, setBannerBgUrl] = useState("");
+  const [bannerFile, setBannerFile] = useState(null);
+  const [logoFile, setLogoFile] = useState(null);
+  const [bannerCropAspect, setBannerCropAspect] = useState(16 / 5);
+  const [cropTarget, setCropTarget] = useState("photo");
   const [cropImageSrc, setCropImageSrc] = useState(null);
   const [showCropModal, setShowCropModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -47,16 +57,26 @@ function ProfileBuilder({ type }) {
   const [showCard, setShowCard] = useState(false);
   const [showContactList, setShowContactList] = useState(false);
   const [showSocMedList, setShowSocMedList] = useState(false);
+  const [showAdditionalSectionList, setShowAdditionalSectionList] =
+    useState(false);
   const [showThemeList, setShowThemeList] = useState(false);
+  const isDefaultBanner =
+    !builderProfile?.bannerBg ||
+    builderProfile.bannerBg.startsWith("banners/default/");
+  const isCustomBanner =
+    !!bannerFile || (!!builderProfile?.bannerBg && !isDefaultBanner);
+  const bannerPreset =
+    bannerThumbnail.find(
+      (banner) => banner.path === builderProfile?.bannerBg,
+    ) || bannerThumbnail.find((banner) => banner.name === "Circuit");
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     const newValue = type === "checkbox" ? checked : value;
+    const keys = name.split(".");
 
     setBuilderProfile((prev) => {
-      const keys = name.split(".");
-
       const updated = { ...prev };
       let current = updated;
 
@@ -64,9 +84,14 @@ function ProfileBuilder({ type }) {
         if (index === keys.length - 1) {
           current[key] = newValue;
         } else {
-          current[key] = {
-            ...current[key],
-          };
+          const nextKey = keys[index + 1];
+          const currentValue = current[key];
+          current[key] = Array.isArray(currentValue)
+            ? [...currentValue]
+            : {
+                ...(currentValue ||
+                  (Number.isInteger(Number(nextKey)) ? [] : {})),
+              };
 
           current = current[key];
         }
@@ -76,16 +101,28 @@ function ProfileBuilder({ type }) {
     });
   };
 
-  const handlePhotoChange = (e) => {
+  const handlePhotoChange = (e, target = "photo") => {
     const file = e.target.files?.[0];
 
     if (!file) {
       return;
     }
 
+    setCropTarget(target);
     setCropImageSrc(URL.createObjectURL(file));
     setShowCropModal(true);
     e.target.value = "";
+  };
+
+  const handleBannerSelect = ({ path, src }) => {
+    setBannerFile(null);
+    setBannerBgUrl(src);
+    setBuilderProfile((prev) => ({
+      ...prev,
+      bannerBg: path,
+      bannerBgCustom: false,
+      bannerBlobUrl: null,
+    }));
   };
 
   const handleCropCancel = () => {
@@ -94,6 +131,58 @@ function ProfileBuilder({ type }) {
   };
 
   const handleCropSave = async (croppedAreaPixels) => {
+    if (cropTarget === "banner") {
+      const bannerVer = builderProfile?.bannerBgVer + 1 || 1;
+      const filename = `${username}-banner-${bannerVer}.png`;
+      const file = await getCroppedImageFile(
+        cropImageSrc,
+        croppedAreaPixels,
+        filename,
+        1200,
+      );
+      const blobUrl = URL.createObjectURL(file);
+
+      setBannerFile(file);
+      setBannerBgUrl(blobUrl);
+      setShowCropModal(false);
+      setBuilderProfile({
+        ...builderProfile,
+        bannerBg: filename,
+        bannerBgVer: bannerVer,
+        bannerBgCustom: true,
+        bannerBlobUrl: blobUrl,
+      });
+      setCropImageSrc(null);
+      return;
+    }
+
+    if (cropTarget === "logo") {
+      const logoVer = builderProfile?.logoImageVer + 1 || 1;
+      const filename = `${username}-logo-${logoVer}.png`;
+      const file = await getCroppedImageFile(
+        cropImageSrc,
+        croppedAreaPixels,
+        filename,
+        600,
+      );
+      const blobUrl = URL.createObjectURL(file);
+
+      setLogoFile(file);
+      setShowCropModal(false);
+      setBuilderProfile({
+        ...builderProfile,
+        logoImage: filename,
+        logoImageVer: logoVer,
+        logoBlobUrl: blobUrl,
+        theme: {
+          ...builderProfile.theme,
+          logoEnable: true,
+        },
+      });
+      setCropImageSrc(null);
+      return;
+    }
+
     const imgVer = builderProfile?.profileImageVer + 1 || 1;
     const filename = `${username}-${imgVer}.png`;
     const file = await getCroppedImageFile(
@@ -136,6 +225,8 @@ function ProfileBuilder({ type }) {
         username,
         data: builderProfile,
         imageFile: profilePictureFile,
+        bannerFile,
+        logoFile,
       }),
     )
       .unwrap()
@@ -162,13 +253,35 @@ function ProfileBuilder({ type }) {
       }
 
       if (profile) {
-        setBuilderProfile({ ...profile, blobUrl: null });
+        console.log(profile);
+        setBuilderProfile({
+          ...profile,
+          blobUrl: null,
+          bannerBlobUrl: null,
+          logoBlobUrl: null,
+        });
         setProfilePictureUrl(
           `https://images.heyitzme.com/${profile.profileImage}`,
         );
         applyTheme(profile.theme, builder);
+        setBannerBgUrl(`https://images.heyitzme.com/${profile.bannerBg}`);
       }
     }
+  }, []);
+
+  useEffect(() => {
+    const banner = bannerPreviewRef.current;
+    if (!banner || typeof ResizeObserver === "undefined") return;
+
+    const updateAspect = () => {
+      const { width, height } = banner.getBoundingClientRect();
+      if (width > 0 && height > 0) setBannerCropAspect(width / height);
+    };
+
+    updateAspect();
+    const observer = new ResizeObserver(updateAspect);
+    observer.observe(banner);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -190,8 +303,27 @@ function ProfileBuilder({ type }) {
             <BackButton action={() => navigate(`/${username}`)} />
           </span>
           <div className="builder-wrapper">
-            <div className="builder-card p-4">
-              <div className="text-center">
+            <div className="builder-card">
+              <div
+                className={`header-banner ${builderProfile?.bannerBgCustom ? "custom-banner" : "preset-banner"}`}
+                ref={bannerPreviewRef}
+              >
+                {isCustomBanner ? (
+                  <img
+                    className="banner-background-image"
+                    src={bannerBgUrl || undefined}
+                    alt=""
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <span
+                    className="banner-pattern"
+                    style={{
+                      "--banner-mask": `url(${bannerPreset?.src || ""})`,
+                    }}
+                    aria-hidden="true"
+                  />
+                )}
                 <div className="profile-picture-wrapper">
                   <img
                     id="profile-picture"
@@ -199,7 +331,6 @@ function ProfileBuilder({ type }) {
                     alt="Profile"
                     src={profilePictureUrl || null}
                   />
-
                   <button
                     type="button"
                     className="upload-photo-btn"
@@ -219,7 +350,7 @@ function ProfileBuilder({ type }) {
               </div>
 
               <div className="form-wrapper">
-                <Form.Group className="mb-3 mt-5" controlId="name">
+                <Form.Group className="mb-3 mt-1" controlId="name">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     type="text"
@@ -239,6 +370,31 @@ function ProfileBuilder({ type }) {
                   />
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="description">
+                  <div className="d-flex align-items-center justify-content-between mb-2">
+                    <Form.Label className="mb-0">Description</Form.Label>
+                    <Form.Check
+                      type="switch"
+                      id="description-toggle"
+                      name="description.enable"
+                      checked={builderProfile?.description?.enable ?? false}
+                      onChange={handleChange}
+                      aria-label="Enable description"
+                      className="text-end"
+                    />
+                  </div>
+                  <Form.Control
+                    as="textarea"
+                    name="description.item"
+                    value={builderProfile?.description?.item || ""}
+                    onChange={handleChange}
+                    rows={2}
+                    className={
+                      builderProfile?.description?.enable ? "" : "d-none"
+                    }
+                  />
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="about">
                   <Form.Label>About</Form.Label>
                   <Form.Control
@@ -250,6 +406,12 @@ function ProfileBuilder({ type }) {
                   />
                 </Form.Group>
 
+                <AdditionalSectionCard
+                  builderProfile={builderProfile}
+                  handleChange={handleChange}
+                  showAdditionalSectionList={showAdditionalSectionList}
+                  setShowAdditionalSectionList={setShowAdditionalSectionList}
+                />
                 <ContactCard
                   builderProfile={builderProfile}
                   handleChange={handleChange}
@@ -265,12 +427,18 @@ function ProfileBuilder({ type }) {
                 <ThemeCard
                   builderProfile={builderProfile}
                   handleChange={handleChange}
+                  bannerThumbnail={bannerThumbnail}
+                  handleBannerSelect={handleBannerSelect}
+                  bannerInputRef={bannerInputRef}
+                  handleBannerFileChange={(e) => handlePhotoChange(e, "banner")}
+                  logoInputRef={logoInputRef}
+                  handleLogoFileChange={(e) => handlePhotoChange(e, "logo")}
                   showThemeList={showThemeList}
                   setShowThemeList={setShowThemeList}
                 />
 
                 <button
-                  className="btn btn-primary accent-theme my-4 w-100"
+                  className="btn btn-primary accent-theme my-4 py-2 w-100"
                   onClick={() => {
                     editScrollPosition.current = window.scrollY;
                     setShowCard(true);
@@ -326,6 +494,14 @@ function ProfileBuilder({ type }) {
           imageSrc={cropImageSrc}
           onCancel={handleCropCancel}
           onSave={handleCropSave}
+          aspect={
+            cropTarget === "banner"
+              ? bannerCropAspect
+              : cropTarget === "logo"
+                ? 3
+                : 1
+          }
+          cropShape={cropTarget === "photo" ? "round" : "rect"}
         />
       </Modal>
     </>

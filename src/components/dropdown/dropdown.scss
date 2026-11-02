@@ -2,6 +2,7 @@
   background: rgba(58, 58, 58, 0.92) !important;
   border: none;
   min-width: 10px;
+  margin-right: 10px !important;
 
   .dropdown-item {
     color: white;
@@ -14,4 +15,8 @@
       color: white;
     }
   }
+}
+
+.dropdown-menu-vertical {
+  margin-right: 0 !important;
 }

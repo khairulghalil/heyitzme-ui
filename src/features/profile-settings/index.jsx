@@ -137,72 +137,65 @@ function ProfileSettings() {
         <>
           <Loader show={updLoading} showLogo />
           <div className="containers text-center">
-            <svg
-              className="background"
-              viewBox="100 0 780 410"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="xMinYMin slice"
-            >
-              <path
-                d="M420.739 171.709C152.117 176.988 69.3602 62.4165 0 0H880V336C880 275.833 689.361 166.43 420.739 171.709Z"
-                fill={profile.theme.primaryColor || "var(--primary-app-color)"}
-              />
-            </svg>
-            <div className="setting-wrapper mb-5">
-              <div className="setting-card p-2 mx-3 mt-5 text-start">
-                <div className="setting-header my-4 mb-5 text-start">
-                  <BackButton action={() => navigate(`/${profile.username}`)} />
-                  <h2 className="mb-0 me-2 text-end">PROFILE SETTINGS</h2>
-                </div>
-
-                <div className="d-flex align-items-center justify-content-center gap-2">
-                  <div className="setting-list w-100 py-4">
+            <div className="setting-header">
+              <BackButton action={() => navigate(`/${profile.username}`)} />
+              <div className="title text-start">
+                <span>Account</span>
+                <h2>Profile Settings</h2>
+              </div>
+              <div className="setting-list w-100 px-4 py-3 my-4 text-start">
+                <div className="row">
+                  <div className="col">
                     <p>
                       <i className="bi bi-person me-2"></i>
                       Username
                     </p>
                     <span>{profile.username}</span>
                   </div>
-
-                  <div className="setting-list w-100 py-4">
-                    <p>
-                      <i className="bi bi-info-circle me-2"></i>
-                      Account Status
-                    </p>
-                    <span className="text-uppercase">{profile.status}</span>
+                  <div className="col text-end align-items-center d-flex justify-content-end">
+                    <span
+                      className={`badge rounded-pill ${profile.status === "active" ? "bg-success" : "bg-danger"}`}
+                    >
+                      {profile.status}
+                    </span>
                   </div>
                 </div>
+              </div>
+            </div>
 
-                <div className="setting-list">
-                  <div className="d-flex align-items-center justify-content-between mb-1">
-                    <p className="mb-0">
-                      <i className="bi bi-link-45deg me-2"></i>
-                      Profile URL
-                    </p>
-
-                    <button
-                      type="button"
-                      className="btn p-0 copy-btn text-end"
-                      onClick={handleCopyLink}
-                    >
-                      <i className="bi bi-copy"></i>
-                    </button>
-                  </div>
-
+            <div className="setting-content">
+              <div className="setting-card profile d-flex mb-5 mt-3">
+                <div className="col-10 text-start">
+                  <p className="mb-0 fw-bold">Your Public Profile URL</p>
                   <span>{`https://heyitzme.com/${profile.username}`}</span>
                 </div>
-
-                <hr className="my-4" />
-                <div className="setting-list">
-                  <div className="d-flex align-items-center justify-content-between">
-                    <p>
-                      <i className="bi bi-envelope me-2"></i>
-                      Registered Email
-                    </p>
-                    <Dropdown item={emailOptions} vertical />
+                <div className="col text-end align-items-center d-flex justify-content-end">
+                  <button
+                    type="button"
+                    className="btn p-0 copy-btn text-end"
+                    onClick={handleCopyLink}
+                  >
+                    <i className="bi bi-copy"></i>
+                  </button>
+                </div>
+              </div>
+              <div className="d-flex content-header">
+                <p>Account and Security </p>
+              </div>
+              <div className="setting-card d-flex flex-wrap mb-5">
+                <div className="icon col-2">
+                  <i className="bi bi-envelope"></i>
+                </div>
+                <div className="input text-start col-10">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p>Registered Email</p>
+                    <span
+                      className={`action ${editRegisteredEmail ? "d-none" : ""}`}
+                      onClick={() => setEditRegisteredEmail(true)}
+                    >
+                      Edit
+                    </span>
                   </div>
-
                   {editRegisteredEmail ? (
                     <div className="d-flex flex-column align-items-end gap-2">
                       <input
@@ -232,17 +225,25 @@ function ProfileSettings() {
                   )}
                 </div>
 
-                <div className="setting-list">
-                  <div className="d-flex align-items-center justify-content-between">
-                    <p>
-                      <i className="bi bi-lock me-2"></i>
-                      Password
-                    </p>
-                    <Dropdown item={passwordOptions} vertical />
-                  </div>
+                <div className="w-100">
+                  <hr />
+                </div>
 
+                <div className="icon col-2">
+                  <i className="bi bi-lock"></i>
+                </div>
+                <div className="input text-start col-10">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p>Password</p>
+                    <span
+                      className={`action ${editPassword ? "d-none" : ""}`}
+                      onClick={() => setEditPassword(true)}
+                    >
+                      Change
+                    </span>
+                  </div>
                   {editPassword ? (
-                    <div className="mt-2 d-flex flex-column gap-2">
+                    <div className="form-input mt-2 d-flex flex-column gap-2">
                       <Form.Group className="mb-2" controlId="currentPassword">
                         <Form.Label>Current Password</Form.Label>
                         <Form.Control
@@ -298,36 +299,48 @@ function ProfileSettings() {
                     <span>*******************</span>
                   )}
                 </div>
-
-                <hr className="my-4" />
-                <div className="setting-list">
-                  <p>
-                    <i className="bi bi-calendar-plus me-2"></i>
-                    Date Joined
-                  </p>
+              </div>
+              <div className="d-flex content-header membership">
+                <p>Membership</p>
+                <span className={`badge ms-auto rounded-pill bg-warning`}>
+                  Premium
+                </span>
+              </div>
+              <div className="setting-card d-flex flex-wrap">
+                <div className="icon col-2">
+                  <i className="bi bi-calendar-plus"></i>
+                </div>
+                <div className="input text-start col-10">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p>Date Joined</p>
+                  </div>
                   <span>{moment(profile.createdAt).format("DD MMM YYYY")}</span>
                 </div>
 
-                <div className="setting-list">
-                  <div className="d-flex align-items-center justify-content-between">
-                    <p>
-                      <i className="bi bi-calendar-check me-2"></i>
-                      Valid Until
-                    </p>
+                <div className="w-100">
+                  <hr />
+                </div>
 
-                    <Dropdown item={validOptions} vertical />
+                <div className="icon col-2">
+                  <i className="bi bi-calendar-check"></i>
+                </div>
+                <div className="input text-start col-10">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p>Valid Until</p>
+                    <span className={`action`} onClick={() => null}>
+                      Renew Subscription
+                    </span>
                   </div>
-
                   <span>{moment(profile.expiresAt).format("DD MMM YYYY")}</span>
                 </div>
               </div>
+              <div className="info text-centre mt-4">
+                <i className="bi bi-info-circle me-1"></i>
+                <span>
+                  Your account information is private and only visible to you.
+                </span>
+              </div>
             </div>
-            <button
-              className="btn btn-primary mb-4"
-              onClick={() => navigate(`/${profile.username}`)}
-            >
-              <span className="me-2">◂</span>Back to Profile
-            </button>
           </div>
           <Footer />
         </>

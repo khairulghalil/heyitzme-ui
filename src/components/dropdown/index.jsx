@@ -16,7 +16,10 @@ function Dropdown({ item, vertical = false }) {
         )}
       </DropdownComponent.Toggle>
 
-      <DropdownComponent.Menu align="end" className="dropdown-menu">
+      <DropdownComponent.Menu
+        align="end"
+        className={`dropdown-menu ${!vertical ? "dropdown-menu-vertical" : ""}`}
+      >
         {item.map((option, index) => (
           <DropdownComponent.Item
             key={index}

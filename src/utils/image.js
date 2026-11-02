@@ -14,17 +14,18 @@ export async function getCroppedImageFile(
   imageSrc,
   croppedAreaPixels,
   fileName,
+  maxWidth = MAX_OUTPUT_SIZE,
 ) {
   const image = await loadImage(imageSrc);
 
-  const outputSize = Math.min(
-    MAX_OUTPUT_SIZE,
-    Math.round(croppedAreaPixels.width),
+  const outputWidth = Math.min(maxWidth, Math.round(croppedAreaPixels.width));
+  const outputHeight = Math.round(
+    (outputWidth * croppedAreaPixels.height) / croppedAreaPixels.width,
   );
 
   const canvas = document.createElement("canvas");
-  canvas.width = outputSize;
-  canvas.height = outputSize;
+  canvas.width = outputWidth;
+  canvas.height = outputHeight;
 
   const ctx = canvas.getContext("2d");
   ctx.drawImage(
@@ -35,8 +36,8 @@ export async function getCroppedImageFile(
     croppedAreaPixels.height,
     0,
     0,
-    outputSize,
-    outputSize,
+    outputWidth,
+    outputHeight,
   );
 
   const blob = await new Promise((resolve) =>

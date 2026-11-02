@@ -13,53 +13,83 @@
 
 .builder-wrapper {
   min-height: 100vh;
-  background: linear-gradient(
-    to bottom,
-    var(--primary-builder-color) 0 62%,
-    black 62% 100%
-  );
+  background: var(--background-builder-color);
   position: relative;
-  padding-top: 35vh;
 
   .builder-card {
     position: relative;
     background: var(--background-builder-color);
     min-height: 25vh;
-    padding-top: 45px;
+
+    .header-banner {
+      position: relative;
+      height: 200px;
+      margin-bottom: 20px;
+      background-color: var(--primary-builder-color);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+
+      .banner-background-image {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        pointer-events: none;
+      }
+
+      .banner-pattern {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background-color: var(--secondary-builder-color);
+        -webkit-mask-image: var(--banner-mask);
+        -webkit-mask-position: center;
+        -webkit-mask-size: cover;
+        -webkit-mask-repeat: no-repeat;
+        mask-image: var(--banner-mask);
+        mask-position: center;
+        mask-size: cover;
+        mask-repeat: no-repeat;
+        pointer-events: none;
+      }
+    }
 
     .form-wrapper {
-      padding: 0 350px;
+      padding: 80px 350px 24px;
     }
     @media (max-width: 991.98px) {
       .form-wrapper {
-        padding: 0px;
+        padding: 80px 20px 24px;
       }
     }
 
     .profile-picture-wrapper {
       position: absolute;
       z-index: 2;
-      width: 230px;
-      height: 230px;
-      top: -200px;
-      left: 50%;
-      transform: translateX(-50%);
+      width: 140px;
+      height: 140px;
+      top: 130px;
+      left: 20px;
     }
 
     .profile-picture {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border: 10px solid var(--secondary-builder-color);
+      border: 6px solid var(--background-builder-color);
+      background-color: lightgray;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
 
     .upload-photo-btn {
       position: absolute;
-      bottom: 8px;
-      right: 8px;
+      bottom: 4px;
+      right: 0px;
       z-index: 3;
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -71,10 +101,117 @@
       cursor: pointer;
     }
 
+    .banner-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+
+      .banner-option {
+        position: relative;
+        min-width: 0;
+        height: 62px;
+        overflow: hidden;
+        padding: 0;
+        border: 2px solid var(--primary-builder-color);
+        border-radius: 6px;
+        background-color: var(--primary-builder-color);
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+
+        .banner-option-pattern {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          background-color: var(--secondary-builder-color);
+          -webkit-mask-image: var(--banner-mask);
+          -webkit-mask-position: center;
+          -webkit-mask-size: cover;
+          -webkit-mask-repeat: no-repeat;
+          mask-image: var(--banner-mask);
+          mask-position: center;
+          mask-size: cover;
+          mask-repeat: no-repeat;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          z-index: 1;
+          inset: 45% 0 0;
+          background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
+        }
+
+        > span:not(.banner-option-pattern),
+        i {
+          position: absolute;
+          z-index: 2;
+          bottom: 5px;
+          left: 8px;
+          color: white;
+          font-size: 12px;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        &.active {
+          border-color: var(--primary-builder-color);
+          box-shadow: 0 0 0 1px var(--primary-builder-color);
+        }
+      }
+
+      .banner-upload {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        isolation: isolate;
+
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          background: var(--primary-builder-color);
+          opacity: 0.5;
+          pointer-events: none;
+        }
+
+        i {
+          top: 8px;
+          bottom: auto;
+          left: 8px;
+          font-size: 18px;
+        }
+      }
+    }
+
+    .logo-options {
+      grid-template-columns: minmax(150px, 220px);
+
+      .banner-upload {
+        background-position: center;
+        background-size: cover;
+      }
+    }
+
     label {
       font-weight: bold;
       font-size: 17px;
       color: var(--font-builder-color);
+    }
+
+    .location-info-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--font-builder-color);
+      cursor: pointer;
+
+      i {
+        font-size: 15px;
+      }
     }
 
     .form-control {
@@ -82,6 +219,11 @@
       border: 0.7px solid #a3a3a356;
       background-color: transparent;
       color: var(--font-builder-color);
+
+      &::placeholder {
+        color: #a3a3a3;
+        opacity: 1;
+      }
     }
 
     .form-control:focus {
@@ -125,6 +267,19 @@
           border: 0.1px solid #a3a3a3ac !important;
           color: var(--font-builder-color) !important;
         }
+
+        .delete-section-btn {
+          min-width: fit-content;
+          border: 0.7px solid #a3a3a356;
+        }
+
+        .delete-section-btn:focus,
+        .delete-section-btn:hover {
+          background: none !important;
+          color: #dc3545;
+          border: 0.7px solid #a3a3a356;
+          box-shadow: none;
+        }
       }
 
       .accordion-button {
@@ -166,15 +321,30 @@
       }
     }
   }
-  .builder-card::before {
-    content: "";
-    position: absolute;
-    top: -80px;
-    left: -10%;
-    width: 120%;
-    height: 160px;
-    background: var(--background-builder-color);
-    border-radius: 50% 50% 0 0;
+}
+
+.popover.google-maps-help-popover {
+  --bs-popover-bg: white;
+  --bs-popover-border-color: rgba(255, 255, 255, 0.18);
+  --bs-popover-body-color: #2b2b2b;
+  --bs-popover-max-width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+
+  .popover-body {
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.55;
+    margin-left: 10px;
+
+    ol {
+      display: grid;
+      gap: 5px;
+    }
+
+    strong {
+      color: #2b2b2b;
+    }
   }
 }
 

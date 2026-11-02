@@ -87,7 +87,11 @@ function foldVCardLine(line, maxLength = 74) {
 function generateVCard(toSave, photoData) {
   const formattedName = toSave.name
     .replace(/-/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+    .toLowerCase()
+    .replace(/(^|[\s'])\p{L}/gu, (match) => match.toUpperCase());
+  const formattedPosition = (toSave.position || "")
+    .toLowerCase()
+    .replace(/(^|[.!?\n]\s*)\p{L}/gu, (match) => match.toUpperCase());
 
   const nameParts = formattedName.trim().split(" ");
 
@@ -107,7 +111,7 @@ function generateVCard(toSave, photoData) {
     "VERSION:3.0",
     `FN:${formattedName}`,
     `N:${lastName};${firstName};;;`,
-    `TITLE:${toSave.position || ""}`,
+    `TITLE:${formattedPosition}`,
     `TEL;TYPE=CELL:${toSave.phone || ""}`,
     `EMAIL;TYPE=INTERNET:${toSave.email || ""}`,
     `URL:${toSave.website || ""}`,
@@ -121,10 +125,10 @@ function generateVCard(toSave, photoData) {
 
 export async function saveContact(profile) {
   const toSave = {
-    name: profile.username,
+    name: profile.name || profile.username,
     position: profile.bio,
-    phone: profile.contact?.phone,
-    email: profile.contact?.email,
+    phone: profile.contact?.phone?.item || "",
+    email: profile.contact?.email?.item || "",
     website: `https://heyitzme.com/${profile.username}`,
     photo: profile.profileImage
       ? `https://images.heyitzme.com/profiles/${profile.profileImage}?v=${profile.profileImageVer}`
