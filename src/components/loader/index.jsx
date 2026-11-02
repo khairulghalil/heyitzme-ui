@@ -6,7 +6,7 @@ function Loader({ showLogo = false, show = true, opacity = 0.8 }) {
   return (
     <div
       className={`loader ${!show ? "hide" : ""}`}
-      style={{ backgroundColor: `rgba(2, 21, 26, ${opacity})` }}
+      style={{ backgroundColor: `rgba(0, 0, 0, ${opacity})` }}
     >
       <div className="loader-content">
         {showLogo && (
