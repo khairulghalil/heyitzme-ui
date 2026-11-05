@@ -8,6 +8,8 @@
 
   --primary-app-color: #067e9c;
   --secondary-app-color: #cbf0ff;
+  --primary-app-color-dark: #045e74;
+  --secondary-app-color-dark: #067e9c;
   --background-app-color: #ffffff;
   --font-app-color: #c2c2c2;
   --font-app-family: "Afacad";
@@ -116,25 +118,25 @@ header .navbar-toggler {
 }
 
 .btn-primary {
-  background: var(--primary-app-color);
+  background: var(--primary-app-color-dark);
   color: white;
   border: none;
 }
 .btn-primary:focus,
 .btn-primary:hover {
-  background: var(--primary-app-color) !important;
+  background: var(--primary-app-color-dark) !important;
 }
 
 .btn-secondary {
   background: none;
   color: var(--primary-app-color);
-  border: 1px solid var(--primary-app-color);
+  border: 1px solid var(--secondary-app-color-dark);
 }
 .btn-secondary:focus,
 .btn-secondary:hover {
   background: none !important;
   color: var(--primary-app-color);
-  border: 1px solid var(--primary-app-color) !important;
+  border: 1px solid var(--secondary-app-color-dark) !important;
   box-shadow: none;
 }
 

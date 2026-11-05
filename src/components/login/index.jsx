@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Offcanvas } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useToast, Loader } from "../../components";
 import { login } from "../../store/auth/actions";
@@ -58,6 +59,7 @@ function LoginModal({
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     setUsername(uname || "");
@@ -99,52 +101,93 @@ function LoginModal({
   return (
     <>
       <Loader show={loading} showLogo />
-      <Modal show={show} onHide={handleClose} centered className="loginModal">
-        <Modal.Body className="login-body text-center">
-          <img src={logo.logo} className="logo img-fluid my-5" alt="HeyItzMe" />
 
-          <div className="text-start my-3 mx-3">
+      <Offcanvas
+        show={show}
+        onHide={handleClose}
+        placement="end"
+        className="login-offcanvas w-100"
+      >
+        <Offcanvas.Header closeButton closeVariant="white" />
+        <Offcanvas.Body className="login-body text-center">
+          <div className="login-title d-flex flex-column align-items-center mb-4">
+            <span>Member Access</span>
+            <img className="login-logo" src={logo.logo} alt="HeyItzMe" />
+            <p>
+              Sign in to manage your profile and keep your connections up to
+              date.
+            </p>
+          </div>
+          <div className="login-form text-start my-3 mx-3">
             <label htmlFor="login-username" className="form-label fw-bold">
-              <i className="bi bi-person me-2"></i>
               Username
             </label>
 
-            <input
-              type="text"
-              className="form-control"
-              id="login-username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              readOnly={uname !== ""}
-            />
-          </div>
+            <div className="input-group">
+              <span className="input-group-text">
+                <i className="bi bi-person" aria-hidden="true"></i>
+              </span>
+              <input
+                type="text"
+                className="form-control"
+                id="login-username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                readOnly={uname !== ""}
+              />
+            </div>
 
-          <div className="text-start my-4 mx-3">
-            <label htmlFor="login-password" className="form-label fw-bold">
-              <i className="bi bi-lock me-2"></i>
+            <label htmlFor="login-username" className="form-label fw-bold mt-3">
               Password
             </label>
 
-            <input
-              type="password"
-              className="form-control"
-              id="login-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
+            <div className="input-group">
+              <span className="input-group-text">
+                <i className="bi bi-lock" aria-hidden="true"></i>
+              </span>
+              <input
+                type={showPassword ? "text" : "password"}
+                className="form-control border-end-0"
+                id="login-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="input-group-text password-visibility-toggle"
+                onClick={() => setShowPassword((visible) => !visible)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                <i
+                  className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
+                  aria-hidden="true"
+                ></i>
+              </button>
+            </div>
             <p className="text-end mt-2">Forgot Password?</p>
+            <div className="submit-form d-grid mt-3">
+              <button
+                type="button"
+                className="btn btn-primary py-3 d-flex align-items-center justify-content-between text-start"
+                onClick={() => handleLogin()}
+              >
+                Sign In
+                <i className="bi bi-arrow-right-short" aria-hidden="true"></i>
+              </button>
+              <div className="no-profile d-flex align-items-center gap-3 my-3">
+                <hr className="flex-grow-1 my-0" />
+                <span className="text-muted small">
+                  Dont have a profile yet?
+                </span>
+                <hr className="flex-grow-1 my-0" />
+              </div>
+              <button type="button" className="btn btn-secondary py-2">
+                Create Profile
+              </button>
+            </div>
           </div>
-
-          <button
-            type="button"
-            className="btn btn-primary profile-theme my-4"
-            onClick={() => handleLogin()}
-          >
-            Login
-          </button>
-        </Modal.Body>
-      </Modal>
+        </Offcanvas.Body>
+      </Offcanvas>
     </>
   );
 }

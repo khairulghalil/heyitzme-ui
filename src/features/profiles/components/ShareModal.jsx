@@ -31,7 +31,7 @@ function ShareModal({
   };
 
   const handleSavePdf = async () => {
-    const element = document.getElementById("test-export");
+    const element = document.getElementById("export-pdf");
     if (!element) return;
 
     const primaryColor =
@@ -192,7 +192,7 @@ function ShareModal({
 
   return (
     <Offcanvas.Body
-      id="test-export"
+      id="export-pdf"
       className="export-pdf share-body text-center"
     >
       <div className="share-title d-flex flex-column align-items-center mb-4">

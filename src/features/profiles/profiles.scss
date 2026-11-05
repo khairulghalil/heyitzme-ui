@@ -316,7 +316,7 @@
 }
 
 .share-offcanvas {
-  --bs-offcanvas-border-width: 0;
+  --bs-offcanvas-border-width: 0 !important;
 
   .offcanvas-header {
     background-color: var(--primary-color);
