@@ -5,7 +5,12 @@ import { useToast } from "../../../components";
 import { copyToClipboard } from "../../../utils";
 import * as logo from "../../../assets/img/logo";
 
-function ShareModal({ profileUrl, profilePictureUrl, profileName }) {
+function ShareModal({
+  profileUrl,
+  profilePictureUrl,
+  proxyProfileImageUrl,
+  profileName,
+}) {
   const { showToast } = useToast();
   const darkenHex = (hex, factor = 0.4) => {
     const normalized = hex.replace("#", "");
@@ -39,7 +44,7 @@ function ShareModal({ profileUrl, profilePictureUrl, profileName }) {
 
     if (profilePictureUrl) {
       try {
-        const response = await fetch(profilePictureUrl, {
+        const response = await fetch(proxyProfileImageUrl, {
           mode: "cors",
           cache: "reload",
         });

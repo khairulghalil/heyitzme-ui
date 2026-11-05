@@ -8,7 +8,6 @@ function AdditionalSectionCard({
 }) {
   const sectionData = builderProfile?.additionalSection?.item;
   const sectionLimit = builderProfile?.additionalSection?.limit || 1;
-  console.log("sectionLimit:", sectionLimit);
   const sections = Array.isArray(sectionData)
     ? sectionData
     : sectionData && typeof sectionData === "object"

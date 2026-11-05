@@ -253,7 +253,6 @@ function ProfileBuilder({ type }) {
       }
 
       if (profile) {
-        console.log(profile);
         setBuilderProfile({
           ...profile,
           blobUrl: null,

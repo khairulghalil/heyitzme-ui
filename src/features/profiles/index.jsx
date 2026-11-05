@@ -305,7 +305,8 @@ function Profiles({ previewData = null, backAction = null }) {
             <Offcanvas.Header closeButton closeVariant="white" />
             <ShareModal
               profileUrl={profileUrl || null}
-              profilePictureUrl={profileData.proxyProfileImageUrl}
+              profilePictureUrl={profilePictureUrl}
+              proxyProfileImageUrl={profileData.proxyProfileImageUrl}
               profileName={profileData.name}
             />
           </Offcanvas>
