@@ -38,10 +38,11 @@
   }
 
   .login-form {
-    background: #f5f9f6;
+    // background: #f5f9f6;
+    background: color-mix(in srgb, var(--primary-color) 4%, white);
     border-radius: 8px;
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.4);
-    padding: 20px;
+    padding: 15px 20px 20px;
 
     .form-label {
       font-size: 14px;

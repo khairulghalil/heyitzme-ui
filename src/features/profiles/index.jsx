@@ -54,6 +54,36 @@ function Profiles({ previewData = null, backAction = null }) {
   }, [username, previewData, profile]);
 
   useEffect(() => {
+    if (!showShareModal) return undefined;
+
+    const scrollY = window.scrollY;
+    const body = document.body;
+    const html = document.documentElement;
+    const previousStyles = {
+      bodyPosition: body.style.position,
+      bodyTop: body.style.top,
+      bodyWidth: body.style.width,
+      bodyOverflow: body.style.overflow,
+      htmlOverflow: html.style.overflow,
+    };
+
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+    html.style.overflow = "hidden";
+
+    return () => {
+      body.style.position = previousStyles.bodyPosition;
+      body.style.top = previousStyles.bodyTop;
+      body.style.width = previousStyles.bodyWidth;
+      body.style.overflow = previousStyles.bodyOverflow;
+      html.style.overflow = previousStyles.htmlOverflow;
+      window.scrollTo(0, scrollY);
+    };
+  }, [showShareModal]);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
     if (profileData) {
       if (profileData.blobUrl) {
