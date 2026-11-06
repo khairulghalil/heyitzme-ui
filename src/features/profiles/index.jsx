@@ -106,6 +106,10 @@ function Profiles({ previewData = null, backAction = null }) {
 
       setProfileUrl(`https://heyitzme.com/${profileData.username}`);
       applyTheme(profileData.theme);
+
+      return () => {
+        document.title = "HeyItzMe ◦ " + profileData.username;
+      };
     }
   }, [profileData]);
 
@@ -318,7 +322,7 @@ function Profiles({ previewData = null, backAction = null }) {
             <div className="profile-banner">
               <p>
                 Like this Business Card? Get yours now at
-                <a href="https://heyitzme.com" className="ps-1">
+                <a href="#" className="ps-1">
                   HeyItzMe.com
                 </a>
               </p>
