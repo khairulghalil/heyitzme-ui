@@ -106,10 +106,6 @@ function Profiles({ previewData = null, backAction = null }) {
 
       setProfileUrl(`https://heyitzme.com/${profileData.username}`);
       applyTheme(profileData.theme);
-
-      return () => {
-        document.title = "HeyItzMe ◦ " + profileData.username;
-      };
     }
   }, [profileData]);
 

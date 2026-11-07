@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/assets/*",
+    "/favicon.png",
+    "/login",
+    "/login/*",
+    "/register",
+    "/register/*",
+    "/settings",
+    "/settings/*",
+    "/edit",
+    "/edit/*",
+    "/auth/*",
+    "/profile/*",
+    "/api/*"
+  ]
+}
