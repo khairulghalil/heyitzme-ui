@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Form, Modal } from "react-bootstrap";
+import { Form, Modal, OverlayTrigger, Popover } from "react-bootstrap";
 import {
   selectProfile,
   selectUpdProfileLoading,
@@ -395,7 +395,29 @@ function ProfileBuilder({ type }) {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="about">
-                  <Form.Label>About</Form.Label>
+                  <div className="d-flex align-items-center gap-2">
+                    <Form.Label className="mb-0">About</Form.Label>
+                    <OverlayTrigger
+                      trigger="click"
+                      placement="top"
+                      rootClose
+                      overlay={
+                        <Popover id="about-formatting-help">
+                          <Popover.Body>
+                            Use *text* for bold and _text_ for italic.
+                          </Popover.Body>
+                        </Popover>
+                      }
+                    >
+                      <button
+                        type="button"
+                        className="btn btn-link text-info p-0"
+                        aria-label="About text formatting help"
+                      >
+                        <i className="bi bi-info-circle" aria-hidden="true" />
+                      </button>
+                    </OverlayTrigger>
+                  </div>
                   <Form.Control
                     as="textarea"
                     name="about"

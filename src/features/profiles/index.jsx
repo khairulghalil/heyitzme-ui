@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Offcanvas } from "react-bootstrap";
 import * as brandLogo from "../../assets/img/logo";
+import { FormattedText } from "../../components/RichText";
 import { Footer, useLogin, Loader, Dropdown } from "../../components";
 import { applyTheme, saveContact, isAuthenticated } from "../../utils";
 import { getProfile } from "../../store/profile/actions";
@@ -265,7 +266,7 @@ function Profiles({ previewData = null, backAction = null }) {
 
                 <p id="about" className="section">
                   <span className="section-title">ABOUT</span>
-                  {profileData.about}
+                  <FormattedText>{profileData.about}</FormattedText>
                 </p>
 
                 {(Array.isArray(profileData.additionalSection?.item)
@@ -292,16 +293,18 @@ function Profiles({ previewData = null, backAction = null }) {
                               className="additional-section-line"
                               key={lineIndex}
                             >
-                              {bulletLine ? (
+                              {line.length === 0 ? (
+                                <br />
+                              ) : bulletLine ? (
                                 <>
                                   <i
                                     className="bi bi-circle-fill additional-section-bullet"
                                     aria-hidden="true"
                                   />
-                                  {bulletLine[1]}
+                                  <FormattedText>{bulletLine[1]}</FormattedText>
                                 </>
                               ) : (
-                                line
+                                <FormattedText>{line}</FormattedText>
                               )}
                             </span>
                           );

@@ -193,6 +193,7 @@
       }
 
       .section {
+        white-space: pre-wrap;
         color: var(--font-color);
         font-weight: 500;
         margin: 25px 0 35px;
@@ -200,7 +201,7 @@
       }
 
       .additional-section-content {
-        white-space: pre-line;
+        white-space: pre-wrap;
 
         .additional-section-line {
           display: block;
