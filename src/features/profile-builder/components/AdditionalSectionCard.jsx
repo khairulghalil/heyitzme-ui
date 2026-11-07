@@ -78,27 +78,32 @@ function AdditionalSectionCard({
               </Popover>
             }
           >
-            <button
-              type="button"
+            <span
+              role="button"
+              tabIndex={0}
               className="info-button"
               aria-label="Additional section text formatting help"
               onClick={(event) => event.stopPropagation()}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  event.currentTarget.click();
+                }
+              }}
             >
               <i className="bi bi-info-circle ms-2" aria-hidden="true" />
-            </button>
+            </span>
           </OverlayTrigger>
         </Accordion.Header>
         <Accordion.Body>
           {sections.map((section, index) => (
-            <Form.Group
-              className="mb-3"
-              controlId={`additional-section-${index}`}
-              key={index}
-            >
+            <Form.Group className="mb-3" key={index}>
               <div className="d-flex align-items-center gap-2 mb-2">
                 <Form.Control
                   type="text"
                   className="mb-2"
+                  id={`additional-section-${index}-title`}
                   name={`additionalSection.item.${index}.title`}
                   value={section.title || ""}
                   onChange={handleChange}
@@ -128,6 +133,7 @@ function AdditionalSectionCard({
               </div>
               <Form.Control
                 as="textarea"
+                id={`additional-section-${index}-content`}
                 name={`additionalSection.item.${index}.content`}
                 value={section.content || ""}
                 onChange={handleChange}

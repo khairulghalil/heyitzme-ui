@@ -334,7 +334,7 @@ function ProfileSettings() {
                   <span>{moment(profile.expiresAt).format("DD MMM YYYY")}</span>
                 </div>
               </div>
-              <div className="setting-card d-flex sign-out border-0 flex-wrap mt-5">
+              <div className="setting-card d-flex sign-out flex-wrap mt-5">
                 <div className="icon col-2">
                   <i className="bi bi-box-arrow-right"></i>
                 </div>
