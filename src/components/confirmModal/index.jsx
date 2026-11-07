@@ -12,15 +12,15 @@ function ConfirmModal({ title, text, action, onClose }) {
       </div>
       <p>{text}</p>
       <span>
-        <i className="bi bi-exclamation-triangle-fill me-2"></i>This action
-        cannot be undone.
+        <i className="bi bi-exclamation-circle-fill me-2"></i>This action cannot
+        be undone.
       </span>
       <div className="d-flex justify-content-center gap-2">
-        <button className="btn btn-primary my-2 mt-3" onClick={action}>
-          Yes
-        </button>
         <button className="btn btn-secondary my-2 mt-3" onClick={onClose}>
           No
+        </button>
+        <button className="btn btn-primary my-2 mt-3" onClick={action}>
+          Yes
         </button>
       </div>
     </Modal.Body>
