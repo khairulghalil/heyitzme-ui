@@ -79,7 +79,6 @@ function ThemeCard({
           <Form.Group className="mb-3" controlId="fontFamily">
             <div className="d-flex align-items-center justify-content-between">
               <label className="mb-0">Font</label>
-              {/* <Form.Label className="mb-0">Font</Form.Label> */}
 
               <Dropdown>
                 <Dropdown.Toggle className="text-end" variant="light">
