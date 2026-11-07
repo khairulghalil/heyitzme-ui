@@ -409,18 +409,19 @@ function ProfileBuilder({ type }) {
                           <Popover.Body className="p-2">
                             Markdown syntax supported
                             <p className="m-0 mt-2">
-                              <strong>Bold</strong> :{" "}
-                              <span className="text-muted">*text*</span>
+                              <strong className="me-5">Bold</strong> :{" "}
+                              <span className="text-muted ms-2">*text*</span>
                             </p>
                             <p className="m-0">
-                              <em>Italic</em> :{" "}
-                              <span className="text-muted">_text_</span>
+                              <em className="me-5">Italic</em> :{" "}
+                              <span className="text-muted ms-2">_text_</span>
                             </p>
                             <p className="m-0">
                               <strong>
-                                <em>Bold Italic</em>
+                                <em className="b-italic">Bold Italic</em>
                               </strong>{" "}
-                              : <span className="text-muted">*_text_*</span>
+                              :{" "}
+                              <span className="text-muted ms-2">*_text_*</span>
                             </p>
                           </Popover.Body>
                         </Popover>
