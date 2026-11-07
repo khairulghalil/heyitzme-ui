@@ -32,6 +32,9 @@ export async function onRequest(context) {
   let username;
   try {
     username = decodeURIComponent(pathSegments[0]);
+    username = username
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   } catch {
     return response;
   }
