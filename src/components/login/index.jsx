@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Offcanvas } from "react-bootstrap";
-import Modal from "react-bootstrap/Modal";
 import { useToast, Loader } from "../../components";
 import { login } from "../../store/auth/actions";
 import { selectAuthLoading } from "../../store/auth/selectors";
@@ -120,7 +119,7 @@ function LoginModal({
         setLoginSuccessCallback(null);
       }
 
-      showToast("Login successful", "success");
+      showToast("Signed In successfully", "success");
 
       handleClose();
     } catch (error) {

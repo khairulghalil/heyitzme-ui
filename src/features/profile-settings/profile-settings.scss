@@ -94,6 +94,32 @@
         border-left: 7px solid var(--primary-color) !important;
       }
 
+      &.sign-out {
+        background-color: rgb(243, 212, 212) !important;
+
+        p {
+          font-size: 16px;
+          color: black;
+        }
+
+        span {
+          font-size: 13px;
+          color: rgb(73, 73, 73);
+        }
+
+        .icon {
+          background-color: rgb(242, 191, 191);
+          i {
+            color: rgb(189, 2, 2);
+          }
+        }
+
+        .btn-secondary {
+          color: rgb(189, 2, 2);
+          border: 1px solid rgb(189, 2, 2) !important;
+        }
+      }
+
       p {
         font-size: 13px;
         color: var(--font-color);

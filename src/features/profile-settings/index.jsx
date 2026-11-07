@@ -1,21 +1,15 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { updateProfile } from "../../store/profile/actions";
-import { Form, Modal } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import moment from "moment";
+import { updateProfile } from "../../store/profile/actions";
 import {
   selectProfile,
   selectUpdProfileLoading,
 } from "../../store/profile/selectors";
-import {
-  Footer,
-  Dropdown,
-  BackButton,
-  useToast,
-  Loader,
-} from "../../components";
-import { isAuthenticated, copyToClipboard } from "../../utils";
+import { Footer, BackButton, useToast, Loader } from "../../components";
+import { isAuthenticated, copyToClipboard, removeToken } from "../../utils";
 
 import "./profile-settings.scss";
 function ProfileSettings() {
@@ -62,6 +56,12 @@ function ProfileSettings() {
     if (copied) {
       showToast("Link copied", "success");
     }
+  };
+
+  const handleSignOut = () => {
+    removeToken();
+    navigate(`/${username}`);
+    showToast("Signed out successfully", "success");
   };
 
   const handleChangeRegisteredEmail = () => {
@@ -332,6 +332,25 @@ function ProfileSettings() {
                     </span>
                   </div>
                   <span>{moment(profile.expiresAt).format("DD MMM YYYY")}</span>
+                </div>
+              </div>
+              <div className="setting-card d-flex sign-out border-0 flex-wrap mt-5">
+                <div className="icon col-2">
+                  <i className="bi bi-box-arrow-right"></i>
+                </div>
+                <div className="input text-start col-9">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p>Sign Out</p>
+                  </div>
+                  <span>End your session on this device</span>
+                </div>
+                <div className="col-3 d-flex justify-content-end">
+                  <button
+                    className="btn btn-secondary p-0"
+                    onClick={handleSignOut}
+                  >
+                    Sign Out
+                  </button>
                 </div>
               </div>
               <div className="info text-centre mt-4">
