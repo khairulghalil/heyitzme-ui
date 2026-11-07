@@ -39,7 +39,7 @@ export async function onRequest(context) {
     return response;
   }
 
-  const title = `HeyItzMe  ┃  ${username}`;
+  const title = `HeyItzMe  ∙  ${username}`;
   const profileUrl = `https://heyitzme.com/${encodeURIComponent(username)}`;
 
   return new HTMLRewriter()
