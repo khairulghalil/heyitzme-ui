@@ -1,4 +1,10 @@
-import { Accordion, Button, Form } from "react-bootstrap";
+import {
+  Accordion,
+  Button,
+  Form,
+  OverlayTrigger,
+  Popover,
+} from "react-bootstrap";
 
 function AdditionalSectionCard({
   builderProfile,
@@ -43,6 +49,43 @@ function AdditionalSectionCard({
           }
         >
           Additional Section
+          <OverlayTrigger
+            trigger="click"
+            placement="top"
+            rootClose
+            overlay={
+              <Popover
+                id="additional-section-formatting-help"
+                className="help-popover"
+              >
+                <Popover.Body className="p-2">
+                  Markdown syntax supported
+                  <p className="m-0 mt-2">
+                    <strong>Bold</strong> :{" "}
+                    <span className="text-muted">*text*</span>
+                  </p>
+                  <p className="m-0">
+                    <em>Italic</em> : <span className="text-muted">_text_</span>
+                  </p>
+                  <p className="m-0">
+                    <strong>
+                      <em>Bold Italic</em>
+                    </strong>{" "}
+                    : <span className="text-muted">*_text_*</span>
+                  </p>
+                </Popover.Body>
+              </Popover>
+            }
+          >
+            <button
+              type="button"
+              className="info-button"
+              aria-label="Additional section text formatting help"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <i className="bi bi-info-circle ms-2" aria-hidden="true" />
+            </button>
+          </OverlayTrigger>
         </Accordion.Header>
         <Accordion.Body>
           {sections.map((section, index) => (

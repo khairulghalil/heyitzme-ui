@@ -2,6 +2,14 @@ function formatInlineText(text) {
   return String(text || "")
     .split(/(\*[^*]+\*|_[^_]+_)/g)
     .map((part, index) => {
+      if (part.startsWith("*_") && part.endsWith("_*")) {
+        return (
+          <strong key={index}>
+            <em>{part.slice(2, -2)}</em>
+          </strong>
+        );
+      }
+
       if (part.startsWith("*") && part.endsWith("*")) {
         return <strong key={index}>{part.slice(1, -1)}</strong>;
       }

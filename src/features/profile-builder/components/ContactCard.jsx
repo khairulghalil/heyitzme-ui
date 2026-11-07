@@ -100,7 +100,7 @@ function ContactCard({
                   overlay={
                     <Popover
                       id="google-maps-link-help"
-                      className="google-maps-help-popover"
+                      className="help-popover"
                     >
                       <Popover.Body>
                         <ol className="mb-0 ps-3">
@@ -120,7 +120,7 @@ function ContactCard({
                 >
                   <button
                     type="button"
-                    className="location-info-button"
+                    className="info-button"
                     aria-label="How to copy a Google Maps link"
                   >
                     <i className="bi bi-info-circle" aria-hidden="true" />

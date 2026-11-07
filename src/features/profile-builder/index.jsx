@@ -396,25 +396,45 @@ function ProfileBuilder({ type }) {
 
                 <Form.Group className="mb-3" controlId="about">
                   <div className="d-flex align-items-center gap-2">
-                    <Form.Label className="mb-0">About</Form.Label>
+                    <Form.Label className="mb-2">About</Form.Label>
                     <OverlayTrigger
                       trigger="click"
-                      placement="top"
+                      placement="right"
                       rootClose
                       overlay={
-                        <Popover id="about-formatting-help">
-                          <Popover.Body>
-                            Use *text* for bold and _text_ for italic.
+                        <Popover
+                          id="about-formatting-help"
+                          className="help-popover"
+                        >
+                          <Popover.Body className="p-2">
+                            Markdown syntax supported
+                            <p className="m-0 mt-2">
+                              <strong>Bold</strong> :{" "}
+                              <span className="text-muted">*text*</span>
+                            </p>
+                            <p className="m-0">
+                              <em>Italic</em> :{" "}
+                              <span className="text-muted">_text_</span>
+                            </p>
+                            <p className="m-0">
+                              <strong>
+                                <em>Bold Italic</em>
+                              </strong>{" "}
+                              : <span className="text-muted">*_text_*</span>
+                            </p>
                           </Popover.Body>
                         </Popover>
                       }
                     >
                       <button
                         type="button"
-                        className="btn btn-link text-info p-0"
+                        className="info-button"
                         aria-label="About text formatting help"
                       >
-                        <i className="bi bi-info-circle" aria-hidden="true" />
+                        <i
+                          className="bi bi-info-circle mb-2"
+                          aria-hidden="true"
+                        />
                       </button>
                     </OverlayTrigger>
                   </div>
