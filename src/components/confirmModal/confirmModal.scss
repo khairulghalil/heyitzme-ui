@@ -1,14 +1,44 @@
 .confirm-body {
+  border-left: 10px solid var(--primary-app-color);
+  border-radius: 7px;
+
   p {
-    background-color: transparent;
-    border: 1px solid #a4a4a4;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    color: white;
-    border-radius: 7px;
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 15px;
-    transition: 0.2s;
-    margin: 10px 30px;
+    color: rgb(89, 88, 88);
+    line-height: 1.2;
+    font-size: 16px;
+    margin-top: 15px;
+  }
+
+  span {
+    display: block;
+    align-items: center;
+    color: darkred;
+    margin-top: 25px;
+    font-size: 13px;
+    font-style: italic;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  h2 {
+    color: var(--primary-app-color);
+    margin: 0;
+  }
+
+  .header-wrapper {
+    border-bottom: 0.5px solid darkgrey;
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary-app-color);
+      color: white;
+      font-size: 30px;
+    }
   }
 }

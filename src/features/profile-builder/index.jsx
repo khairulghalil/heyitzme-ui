@@ -52,7 +52,7 @@ function ProfileBuilder({ type }) {
   const [cropImageSrc, setCropImageSrc] = useState(null);
   const [showCropModal, setShowCropModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [modalText, setModalText] = useState("");
+  const [modalText, setModalText] = useState({ title: "", text: "" });
   const [action, setAction] = useState(null);
   const [showCard, setShowCard] = useState(false);
   const [showContactList, setShowContactList] = useState(false);
@@ -204,15 +204,19 @@ function ProfileBuilder({ type }) {
   };
 
   const handleConfirmCancel = () => {
-    setModalText(
-      "Are you sure you want to cancel the changes? Any unsaved changes will be discarded.",
-    );
+    setModalText({
+      title: "Cancel Changes",
+      text: "Are you sure you want to cancel the changes? Any unsaved changes will be discarded.",
+    });
     setAction(() => handleCancel);
     setShowConfirmModal(true);
   };
 
   const handleConfirmUpdate = () => {
-    setModalText("Are you sure you want to update your profile?");
+    setModalText({
+      title: "Confirm Action",
+      text: "Are you sure you want to update your profile?",
+    });
     setAction(() => handleUpdate);
     setShowConfirmModal(true);
   };
@@ -523,7 +527,12 @@ function ProfileBuilder({ type }) {
         centered
         className="confirmModal"
       >
-        <ConfirmModal text={modalText} action={action} />
+        <ConfirmModal
+          title={modalText.title}
+          text={modalText.text}
+          action={action}
+          onClose={() => setShowConfirmModal(false)}
+        />
       </Modal>
 
       <Modal
