@@ -23,6 +23,18 @@ function PhotoCropModal({
 
   return (
     <Modal.Body className="text-center">
+      <div className="photo-modal-header mb-2 d-flex justify-content-start">
+        <div className="icon me-3">
+          <i className="bi bi-image"></i>
+        </div>
+        <h2 className="fw-bold mb-0 text-start align-self-center ">
+          Crop Image
+        </h2>
+      </div>
+      <p className="text-start">
+        Drag to reposition. Pinch or use slider to scale.
+      </p>
+      <hr />
       <div className="photo-crop-area">
         {imageSrc && (
           <Cropper
@@ -49,7 +61,12 @@ function PhotoCropModal({
         className="form-range my-3"
       />
 
-      <div>
+      <p className="text-start save-info">
+        <i className="bi bi-check-circle-fill me-2"></i>
+        Save your changes once the image is ready.
+      </p>
+
+      <div className="d-flex justify-content-center gap-2">
         <Button variant="secondary" className="mx-1" onClick={onCancel}>
           Cancel
         </Button>

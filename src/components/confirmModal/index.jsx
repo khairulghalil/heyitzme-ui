@@ -5,7 +5,7 @@ function ConfirmModal({ title, text, action, onClose }) {
   return (
     <Modal.Body className="confirm-body text-start p-4">
       <div className="d-flex header-wrapper justify-content-start mb-4 pb-3">
-        <div className="icon me-2">
+        <div className="icon me-3">
           <i className="bi bi-info"></i>
         </div>
         <h2 className="modal-app-header align-self-center fw-bold">{title}</h2>

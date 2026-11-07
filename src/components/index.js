@@ -6,6 +6,7 @@ import ScrollToTop from "./scrollToTop";
 import ConfirmModal from "./confirmModal";
 import Dropdown from "./dropdown";
 import BackButton from "./backButton";
+import RichText from "./richText";
 
 export {
   ToastProvider,
@@ -18,4 +19,5 @@ export {
   ConfirmModal,
   Dropdown,
   BackButton,
+  RichText,
 };

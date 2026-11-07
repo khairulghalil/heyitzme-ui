@@ -22,7 +22,7 @@ function formatInlineText(text) {
     });
 }
 
-export function FormattedText({ children }) {
+export default function RichText({ children }) {
   return String(children || "")
     .split(/(\r?\n)/g)
     .map((part, index) =>
