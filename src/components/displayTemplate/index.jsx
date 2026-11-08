@@ -12,7 +12,7 @@ export const printDisplayTemplate = () => {
   const gradientEndColor = darkenHex(primaryColor);
 
   if (element) {
-    html2pdf()
+    return html2pdf()
       .set({
         margin: 0,
         filename: "heyitzme-display-template.pdf",

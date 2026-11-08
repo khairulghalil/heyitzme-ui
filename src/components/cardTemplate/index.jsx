@@ -7,7 +7,7 @@ export const printCardTemplate = () => {
   const element = document.querySelector(".card-print-area");
 
   if (element) {
-    html2pdf()
+    return html2pdf()
       .set({
         margin: 0,
         filename: "heyitzme-card-template.pdf",

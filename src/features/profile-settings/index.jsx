@@ -24,6 +24,7 @@ function ProfileSettings() {
   const profile = useSelector(selectProfile);
   const updLoading = useSelector(selectUpdProfileLoading);
 
+  const [printLoading, setPrintLoading] = useState(false);
   const [editRegisteredEmail, setEditRegisteredEmail] = useState(false);
   const [newRegisteredEmail, setNewRegisteredEmail] = useState("");
   const [editPassword, setEditPassword] = useState(false);
@@ -46,6 +47,18 @@ function ProfileSettings() {
     showToast("Signed out successfully", "success");
   };
 
+  const handlePrint = async (printTemplate) => {
+    setPrintLoading(true);
+    try {
+      await printTemplate();
+    } catch (error) {
+      console.error("Could not generate PDF:", error);
+      showToast("Could not generate PDF. Please try again.", "error");
+    } finally {
+      setPrintLoading(false);
+    }
+  };
+
   const handleChangeRegisteredEmail = () => {
     if (!newRegisteredEmail) {
       showToast("Please enter a new email", "error");
@@ -61,16 +74,20 @@ function ProfileSettings() {
       .unwrap()
       .then(() => {
         showToast("Registered email updated", "success");
-        handleCloseRegisteredEmail();
+        setNewRegisteredEmail(newRegisteredEmail);
+        handleCloseRegisteredEmail(true);
       })
       .catch(() => {
         showToast("Failed to update profile", "error");
       });
   };
 
-  const handleCloseRegisteredEmail = () => {
+  const handleCloseRegisteredEmail = (updated) => {
+    console.log("Closing registered email edit, updated:", updated);
     setEditRegisteredEmail(false);
-    setNewRegisteredEmail(profile.registeredEmail);
+    if (!updated) {
+      setNewRegisteredEmail(profile.registeredEmail);
+    }
   };
 
   const handleChangePassword = () => {
@@ -117,7 +134,7 @@ function ProfileSettings() {
     <>
       {profile && (
         <>
-          <Loader show={updLoading} showLogo />
+          <Loader show={updLoading || printLoading} showLogo />
           <div
             aria-hidden="true"
             style={{
@@ -203,7 +220,7 @@ function ProfileSettings() {
                       <div className="d-flex gap-2">
                         <button
                           className="btn btn-secondary w-100"
-                          onClick={handleCloseRegisteredEmail}
+                          onClick={() => handleCloseRegisteredEmail(false)}
                         >
                           Cancel
                         </button>
@@ -343,7 +360,7 @@ function ProfileSettings() {
                 <div className="col-3 d-flex justify-content-end">
                   <button
                     className="btn btn-primary p-0"
-                    onClick={printDisplayTemplate}
+                    onClick={() => handlePrint(printDisplayTemplate)}
                   >
                     Save
                   </button>
@@ -362,7 +379,7 @@ function ProfileSettings() {
                 <div className="col-3 d-flex justify-content-end">
                   <button
                     className="btn btn-primary p-0"
-                    onClick={printCardTemplate}
+                    onClick={() => handlePrint(printCardTemplate)}
                   >
                     Save
                   </button>
