@@ -11,11 +11,10 @@ export const printCardTemplate = () => {
         margin: 0,
         filename: "heyitzme-card-template.pdf",
         image: {
-          type: "jpeg",
-          quality: 1,
+          type: "png",
         },
         html2canvas: {
-          scale: 2,
+          scale: 4,
           useCORS: true,
         },
         jsPDF: {
