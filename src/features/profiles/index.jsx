@@ -338,8 +338,8 @@ function Profiles({ previewData = null, backAction = null }) {
             <ShareModal
               profileUrl={profileUrl || null}
               profilePictureUrl={profilePictureUrl}
-              proxyProfileImageUrl={profileData.proxyProfileImageUrl}
               profileName={profileData.name}
+              profileBio={profileData.bio}
             />
           </Offcanvas>
         </>

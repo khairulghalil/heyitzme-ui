@@ -395,6 +395,7 @@
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+    max-width: 280px;
 
     .qr-code-wrapper {
       position: relative;
@@ -403,19 +404,6 @@
       border-radius: 10px 10px 0 0;
       box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.22);
       background-color: white;
-
-      .qr-center-logo {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        z-index: 2;
-        display: block;
-        width: 40px;
-        height: 40px;
-        object-fit: contain;
-        background: white;
-        transform: translate(-50%, -50%);
-      }
     }
 
     .qr-footer {
@@ -446,23 +434,6 @@
         overflow-wrap: anywhere;
       }
 
-      button.copy {
-        min-width: 0 !important;
-        width: fit-content;
-        height: fit-content;
-        padding: 0 !important;
-        display: inline-flex;
-        align-items: center;
-        justify-content: flex-end;
-        background: transparent !important;
-        color: black;
-
-        i {
-          font-size: 16px;
-          background: transparent !important;
-        }
-      }
-
       p {
         color: var(--primary-app-color);
         margin-bottom: 1px;
@@ -477,21 +448,12 @@
       }
     }
   }
-  .powered-by {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 16px;
-    color: white;
-
-    .desc {
-      font-weight: 600;
-      color: orange;
-    }
-  }
 
   .share-footer {
     background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 5px solid var(--primary-color) !important;
+    border-radius: 5px;
     width: 95%;
     margin-top: 35px !important;
     max-width: 350px;

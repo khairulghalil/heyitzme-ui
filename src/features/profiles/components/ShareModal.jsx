@@ -1,6 +1,5 @@
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { QRCodeSVG } from "qrcode.react";
-import html2pdf from "html2pdf.js";
 import { useToast } from "../../../components";
 import { copyToClipboard } from "../../../utils";
 import * as logo from "../../../assets/img/logo";
@@ -8,8 +7,8 @@ import * as logo from "../../../assets/img/logo";
 function ShareModal({
   profileUrl,
   profilePictureUrl,
-  proxyProfileImageUrl,
   profileName,
+  profileBio,
 }) {
   const { showToast } = useToast();
   const handleCopyLink = async () => {
@@ -52,22 +51,12 @@ function ShareModal({
             <img
               className="img-fluid qr-profile-picture"
               src={profilePictureUrl || undefined}
-              alt=""
+              alt={profileName}
               aria-hidden="true"
             />
             <div className="qr-link-details p-0 d-flex flex-column align-items-start justify-content-start text-start">
               <p className="profile-link-label">{profileName}</p>
-              <span id="profile-url">
-                {profileUrl.replace(/^https?:\/\//, "")}
-              </span>
-            </div>
-            <div className="qr-link-copy p-0 d-flex align-items-center ms-auto">
-              <button
-                className="btn btn-primary copy profile-theme"
-                onClick={() => handleCopyLink()}
-              >
-                <i className="bi bi-copy no-pdf"></i>
-              </button>
+              <span>{profileBio}</span>
             </div>
           </div>
         </div>
@@ -75,15 +64,17 @@ function ShareModal({
       <div className="share-footer no-pdf d-flex flex-column align-items-center m-auto">
         <div className="row w-100 px-1">
           <div className="col-8 p-0 d-flex flex-column align-items-start justify-content-center">
-            <p className="profile-link-label">Save and share</p>
-            <span id="profile-url">Download this QR for easy sharing</span>
+            <p className="profile-link-label fw-bold">Profile Link</p>
+            <span id="profile-url">
+              {profileUrl.replace(/^https?:\/\//, "")}
+            </span>
           </div>
           <div className="col-4 p-0 d-flex align-items-center justify-content-end">
             <button
               className="btn btn-primary share profile-theme"
-              onClick={() => handleSavePdf()}
+              onClick={() => handleCopyLink()}
             >
-              Save
+              Copy
             </button>
           </div>
         </div>
