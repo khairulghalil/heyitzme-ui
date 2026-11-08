@@ -3,19 +3,13 @@ import html2pdf from "html2pdf.js";
 import * as logo from "../../assets/img/logo";
 import "./displayTemplate.scss";
 
-const profilePictureUrl =
-  "https://images.heyitzme.com/profiles/khairul-ghalil/khairul-ghalil-8.png";
-const profileName = "Khairul Ghalil";
-const profileUrl = "https://heyitzme.com/khairul-ghalil";
-
-const primaryColor =
-  getComputedStyle(document.documentElement)
-    .getPropertyValue("--primary-color")
-    .trim() || "#1c7188";
-const gradientEndColor = darkenHex(primaryColor);
-
 export const printDisplayTemplate = () => {
   const element = document.querySelector(".display-print-area");
+  const primaryColor =
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--primary-color")
+      .trim() || "#1c7188";
+  const gradientEndColor = darkenHex(primaryColor);
 
   if (element) {
     html2pdf()
@@ -26,7 +20,7 @@ export const printDisplayTemplate = () => {
           type: "png",
         },
         html2canvas: {
-          scale: 2,
+          scale: 4,
           useCORS: true,
 
           onclone: async (clonedDocument) => {
@@ -68,7 +62,7 @@ function darkenHex(hex, factor = 0.4) {
   return `#${channels.join("")}`;
 }
 
-function displayTemplate() {
+function displayTemplate({ profile }) {
   return (
     <>
       <div className="display-print-area text-center d-flex flex-column justify-content-center">
@@ -85,7 +79,7 @@ function displayTemplate() {
             <div className="qr-code-wrapper">
               <QRCodeSVG
                 id="qrcode"
-                value={profileUrl}
+                value={`https://heyitzme.com/${profile.username}`}
                 size={220}
                 imageSettings={{
                   src: logo.icon,
@@ -105,13 +99,13 @@ function displayTemplate() {
               <div className="qr-link-row d-flex align-items-center w-100">
                 <img
                   className="img-fluid qr-profile-picture"
-                  src={profilePictureUrl || undefined}
+                  src={profile.proxyProfileImageUrl || undefined}
                   alt=""
                   aria-hidden="true"
                 />
                 <div className="qr-link-details p-0 d-flex flex-column align-items-start justify-content-start text-start">
-                  <p className="profile-link-label">{profileName}</p>
-                  <span>{profileUrl.replace(/^https?:\/\//, "")}</span>
+                  <p className="profile-link-label">{profile.username}</p>
+                  <span>{`heyitzme.com/${profile.username}`}</span>
                 </div>
               </div>
             </div>

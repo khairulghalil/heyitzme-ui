@@ -128,7 +128,7 @@ function ProfileSettings() {
               pointerEvents: "none",
             }}
           >
-            <DisplayTemplate />
+            <DisplayTemplate profile={profile} />
             <CardTemplate username={profile.username} />
           </div>
           <div className="containers text-center">
