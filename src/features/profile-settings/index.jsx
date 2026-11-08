@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import moment from "moment";
 import { updateProfile } from "../../store/profile/actions";
+import { printCardTemplate } from "../../components/cardTemplate";
 import ShareModal, {
   generateProfilePdf,
 } from "../profiles/components/ShareModal";
@@ -134,8 +135,19 @@ function ProfileSettings() {
     <>
       {profile && (
         <>
-          <CardTemplate username={profile.username} />
-          {/* <Loader show={updLoading} showLogo />
+          <Loader show={updLoading} showLogo />
+          <div
+            aria-hidden="true"
+            style={{
+              position: "fixed",
+              top: 0,
+              left: "-10000px",
+              width: "210mm",
+              pointerEvents: "none",
+            }}
+          >
+            <CardTemplate username={profile.username} />
+          </div>
           <div
             className="profile-pdf-template"
             aria-hidden="true"
@@ -386,7 +398,10 @@ function ProfileSettings() {
                   <span>Print your NFC card template</span>
                 </div>
                 <div className="col-3 d-flex justify-content-end">
-                  <button className="btn btn-primary p-0" onClick={() => null}>
+                  <button
+                    className="btn btn-primary p-0"
+                    onClick={printCardTemplate}
+                  >
                     Save
                   </button>
                 </div>
@@ -419,7 +434,7 @@ function ProfileSettings() {
               </div>
             </div>
           </div>
-          <Footer /> */}
+          <Footer />
         </>
       )}
     </>
