@@ -1,9 +1,10 @@
 import { QRCodeSVG } from "qrcode.react";
 import html2pdf from "html2pdf.js";
-import * as logo from "../../../assets/img/logo";
+import * as logo from "../../assets/img/logo";
+import "./cardTemplate.scss";
 
 export const printCardTemplate = () => {
-  const element = document.querySelector(".print-area");
+  const element = document.querySelector(".card-print-area");
 
   if (element) {
     html2pdf()
@@ -28,10 +29,10 @@ export const printCardTemplate = () => {
   }
 };
 
-function CardTemplate() {
+function CardTemplate({ username }) {
   return (
     <>
-      <div className="card-template print-area text-center d-flex flex-column justify-content-center">
+      <div className="card-template card-print-area text-center d-flex flex-column justify-content-center">
         <div className="business-card front-side d-flex flex-column align-items-center mb-5 text-center">
           <div className="nfc-logo">
             <img className="img-fluid" src={logo.nfc} alt="Logo" width="25" />
@@ -50,7 +51,7 @@ function CardTemplate() {
           <div className="qr-code-container">
             <QRCodeSVG
               id="qrcode"
-              value={"https://heyitzme.com"}
+              value={`https://heyitzme.com/${username}`}
               size={70}
               bgColor="#cfcfcf09"
               fgColor="#f8f3f3"
@@ -68,7 +69,7 @@ function CardTemplate() {
               aria-hidden="true"
             />
           </div>
-          <p>heyitzme.com/khairul-ghalil</p>
+          <p>heyitzme.com/{username}</p>
         </div>
       </div>
 

@@ -11,7 +11,7 @@ import {
   selectProfile,
   selectUpdProfileLoading,
 } from "../../store/profile/selectors";
-import { CardTemplate } from "./components";
+import { CardTemplate } from "../../components";
 import { Footer, BackButton, useToast, Loader } from "../../components";
 import { isAuthenticated, copyToClipboard, removeToken } from "../../utils";
 
@@ -134,7 +134,7 @@ function ProfileSettings() {
     <>
       {profile && (
         <>
-          <CardTemplate />
+          <CardTemplate username={profile.username} />
           {/* <Loader show={updLoading} showLogo />
           <div
             className="profile-pdf-template"

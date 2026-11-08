@@ -7,6 +7,7 @@ import ConfirmModal from "./confirmModal";
 import Dropdown from "./dropdown";
 import BackButton from "./backButton";
 import RichText from "./richText";
+import CardTemplate from "./cardTemplate";
 
 export {
   ToastProvider,
@@ -20,4 +21,5 @@ export {
   Dropdown,
   BackButton,
   RichText,
+  CardTemplate,
 };
