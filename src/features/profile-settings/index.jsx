@@ -11,6 +11,7 @@ import {
   selectProfile,
   selectUpdProfileLoading,
 } from "../../store/profile/selectors";
+import { CardTemplate } from "./components";
 import { Footer, BackButton, useToast, Loader } from "../../components";
 import { isAuthenticated, copyToClipboard, removeToken } from "../../utils";
 
@@ -23,9 +24,7 @@ function ProfileSettings() {
 
   const profile = useSelector(selectProfile);
   const updLoading = useSelector(selectUpdProfileLoading);
-  const profileUrl = profile
-    ? `https://heyitzme.com/${profile.username}`
-    : "";
+  const profileUrl = profile ? `https://heyitzme.com/${profile.username}` : "";
   const profilePictureUrl = profile?.profileImage
     ? `https://images.heyitzme.com/${profile.profileImage}`
     : "";
@@ -135,7 +134,8 @@ function ProfileSettings() {
     <>
       {profile && (
         <>
-          <Loader show={updLoading} showLogo />
+          <CardTemplate />
+          {/* <Loader show={updLoading} showLogo />
           <div
             className="profile-pdf-template"
             aria-hidden="true"
@@ -419,7 +419,7 @@ function ProfileSettings() {
               </div>
             </div>
           </div>
-          <Footer />
+          <Footer /> */}
         </>
       )}
     </>
