@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import moment from "moment";
 import { updateProfile } from "../../store/profile/actions";
+import ShareModal, {
+  generateProfilePdf,
+} from "../profiles/components/ShareModal";
 import {
   selectProfile,
   selectUpdProfileLoading,
@@ -20,6 +23,14 @@ function ProfileSettings() {
 
   const profile = useSelector(selectProfile);
   const updLoading = useSelector(selectUpdProfileLoading);
+  const profileUrl = profile
+    ? `https://heyitzme.com/${profile.username}`
+    : "";
+  const profilePictureUrl = profile?.profileImage
+    ? `https://images.heyitzme.com/${profile.profileImage}`
+    : "";
+  const proxyProfileImageUrl =
+    profile?.proxyProfileImageUrl || profilePictureUrl;
 
   const [editRegisteredEmail, setEditRegisteredEmail] = useState(false);
   const [newRegisteredEmail, setNewRegisteredEmail] = useState("");
@@ -41,6 +52,16 @@ function ProfileSettings() {
     removeToken();
     navigate(`/${username}`);
     showToast("Signed out successfully", "success");
+  };
+
+  const handleFrontDeskPdf = () => {
+    generateProfilePdf({
+      profileUrl,
+      profilePictureUrl,
+      proxyProfileImageUrl,
+      profileName: profile?.name,
+      showToast,
+    });
   };
 
   const handleChangeRegisteredEmail = () => {
@@ -115,6 +136,27 @@ function ProfileSettings() {
       {profile && (
         <>
           <Loader show={updLoading} showLogo />
+          <div
+            className="profile-pdf-template"
+            aria-hidden="true"
+            inert
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              zIndex: -1,
+              width: "417px",
+              opacity: 0,
+              pointerEvents: "none",
+            }}
+          >
+            <ShareModal
+              profileUrl={profileUrl}
+              profilePictureUrl={profilePictureUrl}
+              proxyProfileImageUrl={proxyProfileImageUrl}
+              profileName={profile.name}
+            />
+          </div>
           <div className="containers text-center">
             <div className="setting-header">
               <BackButton action={() => navigate(`/${profile.username}`)} />
@@ -325,7 +367,10 @@ function ProfileSettings() {
                   <span>Showcase your profile at your counter</span>
                 </div>
                 <div className="col-3 d-flex justify-content-end">
-                  <button className="btn btn-primary p-0" onClick={() => null}>
+                  <button
+                    className="btn btn-primary p-0"
+                    onClick={handleFrontDeskPdf}
+                  >
                     Save
                   </button>
                 </div>

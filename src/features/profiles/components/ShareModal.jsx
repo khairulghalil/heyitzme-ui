@@ -5,6 +5,178 @@ import { useToast } from "../../../components";
 import { copyToClipboard } from "../../../utils";
 import * as logo from "../../../assets/img/logo";
 
+function darkenHex(hex, factor = 0.4) {
+  const normalized = hex.replace("#", "");
+  if (!/^[\da-f]{3}([\da-f]{3})?$/i.test(normalized)) return "#000000";
+  const expanded =
+    normalized.length === 3
+      ? normalized
+          .split("")
+          .map((char) => char + char)
+          .join("")
+      : normalized;
+  const channels = expanded.match(/.{2}/g).map((channel) =>
+    Math.round(parseInt(channel, 16) * factor)
+      .toString(16)
+      .padStart(2, "0"),
+  );
+  return `#${channels.join("")}`;
+}
+
+export async function generateProfilePdf({
+  profileUrl,
+  profilePictureUrl,
+  proxyProfileImageUrl,
+  profileName,
+  showToast,
+}) {
+  const element = document.getElementById("export-pdf");
+  if (!element) return;
+
+  const primaryColor =
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--primary-color")
+      .trim() || "#1c7188";
+  const gradientEndColor = darkenHex(primaryColor);
+  const fileName = `HeyItzMe-${(profileName || "profile").replace(/[\\/:"*?<>|]/g, "_")}.pdf`;
+  let profilePictureDataUrl = null;
+
+  if (profilePictureUrl) {
+    try {
+      const response = await fetch(proxyProfileImageUrl, {
+        mode: "cors",
+        cache: "reload",
+      });
+      if (!response.ok) throw new Error("Profile image request failed");
+
+      const imageBlob = await response.blob();
+      profilePictureDataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(imageBlob);
+      });
+    } catch (error) {
+      console.error("Could not load profile photo for PDF:", error);
+      showToast(
+        "Could not load the profile photo. Check the image CORS settings.",
+        "error",
+      );
+      return;
+    }
+  }
+
+  html2pdf()
+    .set({
+      filename: fileName,
+      margin: 0,
+      pagebreak: {
+        mode: [],
+      },
+      html2canvas: {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: null,
+        windowWidth: 417,
+        windowHeight: 445,
+        scrollX: 0,
+        scrollY: 0,
+
+        onclone: async (clonedDocument) => {
+          clonedDocument
+            .querySelector(".profile-pdf-template")
+            ?.style.setProperty("opacity", "1", "important");
+
+          clonedDocument.querySelectorAll(".share-body").forEach((body) => {
+            body.style.setProperty(
+              "background",
+              `linear-gradient(to bottom, ${primaryColor}, ${gradientEndColor})`,
+              "important",
+            );
+          });
+
+          if (profilePictureDataUrl) {
+            const profileImage = clonedDocument.querySelector(
+              ".qr-profile-picture",
+            );
+            if (profileImage) {
+              profileImage.removeAttribute("crossorigin");
+              profileImage.src = profilePictureDataUrl;
+              await profileImage.decode?.().catch(() => {});
+            }
+          }
+
+          clonedDocument.querySelectorAll(".no-pdf").forEach((element) => {
+            element.style.setProperty("display", "none", "important");
+          });
+
+          clonedDocument.querySelectorAll(".powered-by").forEach((element) => {
+            element.style.setProperty("display", "block", "important");
+          });
+
+          clonedDocument.querySelectorAll(".share-body").forEach((element) => {
+            element.style.setProperty(
+              "padding",
+              "60px 70px 100px",
+              "important",
+            );
+          });
+
+          clonedDocument
+            .querySelectorAll(".qr-code-container")
+            .forEach((element) => {
+              element.style.setProperty(
+                "background-color",
+                "transparent",
+                "important",
+              );
+              element.style.setProperty(
+                "box-shadow",
+                "0 8px 28px rgba(0, 0, 0, 0.42)",
+                "important",
+              );
+            });
+
+          clonedDocument
+            .querySelectorAll(".qr-code-wrapper")
+            .forEach((element) => {
+              element.style.setProperty(
+                "box-shadow",
+                "0 6px 22px rgba(0, 0, 0, 0.38)",
+                "important",
+              );
+              element.style.setProperty(
+                "border",
+                "1px solid rgba(0, 0, 0, 0.14)",
+                "important",
+              );
+            });
+        },
+      },
+      jsPDF: {
+        unit: "mm",
+        format: [160.33, 185.74],
+        orientation: "portrait",
+      },
+    })
+    .from(element)
+    .toPdf()
+    .get("pdf")
+    .then((pdf) => {
+      if (pdf.internal.getNumberOfPages() > 1) {
+        for (let page = pdf.internal.getNumberOfPages(); page > 1; page -= 1) {
+          pdf.deletePage(page);
+        }
+      }
+
+      pdf.save(fileName);
+    })
+    .catch((error) => {
+      console.error("Could not create profile PDF:", error);
+      showToast("Could not save the PDF. Please try again.", "error");
+    });
+}
+
 function ShareModal({
   profileUrl,
   profilePictureUrl,
@@ -12,174 +184,14 @@ function ShareModal({
   profileName,
 }) {
   const { showToast } = useToast();
-  const darkenHex = (hex, factor = 0.4) => {
-    const normalized = hex.replace("#", "");
-    if (!/^[\da-f]{3}([\da-f]{3})?$/i.test(normalized)) return "#000000";
-    const expanded =
-      normalized.length === 3
-        ? normalized
-            .split("")
-            .map((char) => char + char)
-            .join("")
-        : normalized;
-    const channels = expanded.match(/.{2}/g).map((channel) =>
-      Math.round(parseInt(channel, 16) * factor)
-        .toString(16)
-        .padStart(2, "0"),
-    );
-    return `#${channels.join("")}`;
-  };
-
-  const handleSavePdf = async () => {
-    const element = document.getElementById("export-pdf");
-    if (!element) return;
-
-    const primaryColor =
-      getComputedStyle(document.documentElement)
-        .getPropertyValue("--primary-color")
-        .trim() || "#1c7188";
-    const gradientEndColor = darkenHex(primaryColor);
-    const fileName = `HeyItzMe-${(profileName || "profile").replace(/[\\/:"*?<>|]/g, "_")}.pdf`;
-    let profilePictureDataUrl = null;
-
-    if (profilePictureUrl) {
-      try {
-        const response = await fetch(proxyProfileImageUrl, {
-          mode: "cors",
-          cache: "reload",
-        });
-        if (!response.ok) throw new Error("Profile image request failed");
-
-        const imageBlob = await response.blob();
-        profilePictureDataUrl = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(imageBlob);
-        });
-      } catch (error) {
-        console.error("Could not load profile photo for PDF:", error);
-        showToast(
-          "Could not load the profile photo. Check the image CORS settings.",
-          "error",
-        );
-        return;
-      }
-    }
-
-    html2pdf()
-      .set({
-        filename: fileName,
-        margin: 0,
-        pagebreak: {
-          mode: [],
-        },
-        html2canvas: {
-          scale: 3,
-          useCORS: true,
-          backgroundColor: null,
-          windowWidth: 417,
-          windowHeight: 445,
-          scrollX: 0,
-          scrollY: 0,
-
-          onclone: async (clonedDocument) => {
-            clonedDocument.querySelectorAll(".share-body").forEach((body) => {
-              body.style.setProperty(
-                "background",
-                `linear-gradient(to bottom, ${primaryColor}, ${gradientEndColor})`,
-                "important",
-              );
-            });
-
-            if (profilePictureDataUrl) {
-              const profileImage = clonedDocument.querySelector(
-                ".qr-profile-picture",
-              );
-              if (profileImage) {
-                profileImage.removeAttribute("crossorigin");
-                profileImage.src = profilePictureDataUrl;
-                await profileImage.decode?.().catch(() => {});
-              }
-            }
-
-            clonedDocument.querySelectorAll(".no-pdf").forEach((element) => {
-              element.style.setProperty("display", "none", "important");
-            });
-
-            clonedDocument
-              .querySelectorAll(".powered-by")
-              .forEach((element) => {
-                element.style.setProperty("display", "block", "important");
-              });
-
-            clonedDocument
-              .querySelectorAll(".share-body")
-              .forEach((element) => {
-                element.style.setProperty(
-                  "padding",
-                  "60px 70px 100px",
-                  "important",
-                );
-              });
-
-            clonedDocument
-              .querySelectorAll(".qr-code-container")
-              .forEach((element) => {
-                element.style.setProperty(
-                  "background-color",
-                  "transparent",
-                  "important",
-                );
-                element.style.setProperty(
-                  "box-shadow",
-                  "0 8px 28px rgba(0, 0, 0, 0.42)",
-                  "important",
-                );
-              });
-
-            clonedDocument
-              .querySelectorAll(".qr-code-wrapper")
-              .forEach((element) => {
-                element.style.setProperty(
-                  "box-shadow",
-                  "0 6px 22px rgba(0, 0, 0, 0.38)",
-                  "important",
-                );
-                element.style.setProperty(
-                  "border",
-                  "1px solid rgba(0, 0, 0, 0.14)",
-                  "important",
-                );
-              });
-          },
-        },
-        jsPDF: {
-          unit: "mm",
-          format: [160.33, 185.74],
-          orientation: "portrait",
-        },
-      })
-      .from(element)
-      .toPdf()
-      .get("pdf")
-      .then((pdf) => {
-        if (pdf.internal.getNumberOfPages() > 1) {
-          for (
-            let page = pdf.internal.getNumberOfPages();
-            page > 1;
-            page -= 1
-          ) {
-            pdf.deletePage(page);
-          }
-        }
-
-        pdf.save(fileName);
-      })
-      .catch((error) => {
-        console.error("Could not create profile PDF:", error);
-        showToast("Could not save the PDF. Please try again.", "error");
-      });
+  const handleSavePdf = () => {
+    generateProfilePdf({
+      profileUrl,
+      profilePictureUrl,
+      proxyProfileImageUrl,
+      profileName,
+      showToast,
+    });
   };
 
   const handleCopyLink = async () => {
