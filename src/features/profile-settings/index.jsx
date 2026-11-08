@@ -28,27 +28,6 @@ function ProfileSettings() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  const emailOptions = [
-    {
-      label: "Change email",
-      action: () => setEditRegisteredEmail(true),
-    },
-  ];
-
-  const validOptions = [
-    {
-      label: "Renew Subscription",
-      action: () => setEditValidUntil(true),
-    },
-  ];
-
-  const passwordOptions = [
-    {
-      label: "Change Password",
-      action: () => setEditPassword(true),
-    },
-  ];
-
   const handleCopyLink = async () => {
     const profileUrl = `https://heyitzme.com/${profile.username}`;
     const copied = await copyToClipboard(profileUrl);
@@ -306,7 +285,7 @@ function ProfileSettings() {
                   Premium
                 </span>
               </div>
-              <div className="setting-card d-flex flex-wrap">
+              <div className="setting-card d-flex flex-wrap mb-5">
                 <div className="icon col-2">
                   <i className="bi bi-calendar-plus"></i>
                 </div>
@@ -334,6 +313,40 @@ function ProfileSettings() {
                   <span>{moment(profile.expiresAt).format("DD MMM YYYY")}</span>
                 </div>
               </div>
+
+              <div className="d-flex content-header membership">
+                <p>Print Your Profile</p>
+              </div>
+              <div className="setting-card print-profile d-flex flex-wrap">
+                <div className="input text-start col-9">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p>Front Desk</p>
+                  </div>
+                  <span>Showcase your profile at your counter</span>
+                </div>
+                <div className="col-3 d-flex justify-content-end">
+                  <button className="btn btn-primary p-0" onClick={() => null}>
+                    Save
+                  </button>
+                </div>
+
+                <div className="w-100">
+                  <hr />
+                </div>
+
+                <div className="input text-start col-9">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p>NFC Card</p>
+                  </div>
+                  <span>Print your NFC card template</span>
+                </div>
+                <div className="col-3 d-flex justify-content-end">
+                  <button className="btn btn-primary p-0" onClick={() => null}>
+                    Save
+                  </button>
+                </div>
+              </div>
+
               <div className="setting-card d-flex sign-out flex-wrap mt-5">
                 <div className="icon col-2">
                   <i className="bi bi-box-arrow-right"></i>

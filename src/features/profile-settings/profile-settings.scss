@@ -118,6 +118,20 @@
         }
       }
 
+      &.print-profile {
+        border-left: 7px solid var(--primary-color) !important;
+
+        p {
+          font-size: 16px;
+          color: var(--font-color);
+        }
+
+        span {
+          font-size: 13px;
+          color: var(--font-color);
+        }
+      }
+
       p {
         font-size: 13px;
         color: var(--font-color);
