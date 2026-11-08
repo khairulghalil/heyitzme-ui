@@ -30,7 +30,7 @@ export const printDisplayTemplate = () => {
           useCORS: true,
 
           onclone: async (clonedDocument) => {
-            clonedDocument.querySelectorAll(".share-body").forEach((body) => {
+            clonedDocument.querySelectorAll(".display-body").forEach((body) => {
               body.style.setProperty(
                 "background",
                 `linear-gradient(to bottom, ${primaryColor}, ${gradientEndColor})`,
@@ -71,11 +71,11 @@ function darkenHex(hex, factor = 0.4) {
 function displayTemplate() {
   return (
     <>
-      <div className="card-template display-print-area text-center d-flex flex-column justify-content-center">
-        <div id="export-pdf" className="export-pdf share-body text-center">
-          <div className="share-title d-flex flex-column align-items-center mb-4">
+      <div className="display-print-area text-center d-flex flex-column justify-content-center">
+        <div className="display-body text-center">
+          <div className="display-title d-flex flex-column align-items-center mb-4">
             <span>Stay Connected</span>
-            <img className="share-logo" src={logo.logo} alt="HeyItzMe" />
+            <img className="display-logo" src={logo.logo} alt="HeyItzMe" />
             <p>
               It's just one scan away! Scan the QR code to instantly connect
               with me.
@@ -111,9 +111,7 @@ function displayTemplate() {
                 />
                 <div className="qr-link-details p-0 d-flex flex-column align-items-start justify-content-start text-start">
                   <p className="profile-link-label">{profileName}</p>
-                  <span id="profile-url">
-                    {profileUrl.replace(/^https?:\/\//, "")}
-                  </span>
+                  <span>{profileUrl.replace(/^https?:\/\//, "")}</span>
                 </div>
               </div>
             </div>

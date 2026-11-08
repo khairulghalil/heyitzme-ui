@@ -5,7 +5,7 @@
   box-sizing: border-box;
   background: #fff;
 
-  .share-body {
+  .display-body {
     background: linear-gradient(
       to bottom,
       var(--primary-color),
@@ -14,7 +14,7 @@
     padding: 70px 0;
     margin: 0 120px;
 
-    .share-title {
+    .display-title {
       text-align: center;
       margin-bottom: 20px;
       max-width: 60%;
@@ -30,7 +30,7 @@
         margin-bottom: 5px;
       }
 
-      .share-logo {
+      .display-logo {
         display: block;
         width: min(220px, 100%);
         height: auto;
@@ -50,6 +50,7 @@
       background-color: white;
       border-radius: 10px;
       box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+      max-width: 280px;
 
       .qr-code-wrapper {
         position: relative;
@@ -101,23 +102,6 @@
           overflow-wrap: anywhere;
         }
 
-        button.copy {
-          min-width: 0 !important;
-          width: fit-content;
-          height: fit-content;
-          padding: 0 !important;
-          display: inline-flex;
-          align-items: center;
-          justify-content: flex-end;
-          background: transparent !important;
-          color: black;
-
-          i {
-            font-size: 16px;
-            background: transparent !important;
-          }
-        }
-
         p {
           color: var(--primary-app-color);
           margin-bottom: 1px;
@@ -132,6 +116,7 @@
         }
       }
     }
+
     .powered-by {
       text-align: center;
       margin-top: 30px;
@@ -141,35 +126,6 @@
       .desc {
         font-weight: 600;
         color: orange;
-      }
-    }
-
-    .share-footer {
-      background-color: rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      width: 95%;
-      margin-top: 35px !important;
-      max-width: 350px;
-      padding: 10px;
-
-      button.share {
-        border-radius: 5px !important;
-        min-width: fit-content !important;
-        padding: 10px 20px !important;
-        margin: 0 !important;
-      }
-
-      p {
-        color: white;
-        margin-bottom: 1px;
-        font-size: 12px;
-        text-transform: uppercase;
-        font-weight: 600;
-      }
-
-      span {
-        color: white;
-        font-size: 13px;
       }
     }
   }
