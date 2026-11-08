@@ -104,7 +104,7 @@ function displayTemplate({ profile }) {
                   aria-hidden="true"
                 />
                 <div className="qr-link-details p-0 d-flex flex-column align-items-start justify-content-start text-start">
-                  <p className="profile-link-label">{profile.username}</p>
+                  <p className="profile-link-label">{profile.name}</p>
                   <span>{`heyitzme.com/${profile.username}`}</span>
                 </div>
               </div>
