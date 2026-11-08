@@ -8,6 +8,7 @@ import Dropdown from "./dropdown";
 import BackButton from "./backButton";
 import RichText from "./richText";
 import CardTemplate from "./cardTemplate";
+import DisplayTemplate from "./displayTemplate";
 
 export {
   ToastProvider,
@@ -22,4 +23,5 @@ export {
   BackButton,
   RichText,
   CardTemplate,
+  DisplayTemplate,
 };
