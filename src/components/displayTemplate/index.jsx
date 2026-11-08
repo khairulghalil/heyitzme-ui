@@ -26,7 +26,7 @@ export const printDisplayTemplate = () => {
           type: "png",
         },
         html2canvas: {
-          scale: 4,
+          scale: 2,
           useCORS: true,
 
           onclone: async (clonedDocument) => {
