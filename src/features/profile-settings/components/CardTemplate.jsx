@@ -35,7 +35,7 @@ function CardTemplate() {
       <div className="card-template print-area text-center d-flex flex-column justify-content-center">
         <div className="business-card front-side d-flex flex-column align-items-center mb-5 text-center">
           <div className="nfc-logo">
-            <img className="img-fluid" src={logo.nfc} alt="Logo" width="20" />
+            <img className="img-fluid" src={logo.nfc} alt="Logo" width="25" />
           </div>
           <img
             className="img-fluid"
