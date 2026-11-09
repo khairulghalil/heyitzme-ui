@@ -361,7 +361,7 @@ function ProfileSettings() {
               <div className="setting-card print-profile d-flex flex-wrap">
                 <div className="input text-start col-9">
                   <div className="d-flex justify-content-between align-items-center">
-                    <p>Front Desk</p>
+                    <p>A6 Size Display</p>
                   </div>
                   <span>Showcase your profile at your counter</span>
                 </div>
