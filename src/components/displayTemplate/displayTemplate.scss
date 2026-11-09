@@ -4,6 +4,7 @@
   align-items: center;
   box-sizing: border-box;
   background: #fff;
+  border: 1px solid #ccc;
 
   .display-body {
     background: linear-gradient(
@@ -11,20 +12,22 @@
       var(--primary-color),
       color-mix(in srgb, var(--primary-color) 40%, black)
     );
-    padding: 70px 0;
-    margin: 0 120px;
+    padding: 35px 0;
+    margin: auto;
+    width: 105mm;
+    height: 148mm;
 
     .display-title {
       text-align: center;
       margin-bottom: 20px;
-      max-width: 60%;
+      max-width: 70%;
       margin: auto;
 
       span {
         display: block;
         text-transform: uppercase;
         letter-spacing: 1px;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
         color: #d5d5d5;
         margin-bottom: 5px;
@@ -32,30 +35,29 @@
 
       .display-logo {
         display: block;
-        width: min(220px, 100%);
+        width: min(160px, 100%);
         height: auto;
         object-fit: contain;
       }
 
       p {
         color: #d5d5d5;
-        font-size: 15px;
-        margin: 10px 0;
+        font-size: 13px;
+        margin: 10px 0 0;
       }
     }
 
     .qr-code-container {
-      width: fit-content;
+      width: 250px;
       margin: auto;
       background-color: white;
       border-radius: 10px;
       box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
-      max-width: 280px;
 
       .qr-code-wrapper {
         position: relative;
         z-index: 1;
-        padding: 25px 30px 25px;
+        padding: 25px 25px;
         border-radius: 10px 10px 0 0;
         box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.22);
         background-color: white;
@@ -66,8 +68,8 @@
           left: 50%;
           z-index: 2;
           display: block;
-          width: 40px;
-          height: 40px;
+          width: 35px;
+          height: 35px;
           object-fit: contain;
           background: white;
           transform: translate(-50%, -50%);
@@ -75,21 +77,22 @@
       }
 
       .qr-footer {
-        background-color: rgb(242, 242, 242) !important;
+        background-color: rgb(236, 235, 235) !important;
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 0 0 10px 10px;
         width: 100%;
         margin: auto;
-        padding: 10px 15px;
+        padding: 10px 12px;
 
         .qr-profile-picture {
           flex: 0 0 auto;
-          width: 35px;
-          height: 35px;
+          width: 30px;
+          height: 30px;
           border-radius: 50%;
           object-fit: cover;
           border: 0.5px solid #ccc;
           margin-right: 10px;
+          margin-top: 3px;
           box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);
         }
 
@@ -112,15 +115,15 @@
 
         span {
           color: black;
-          font-size: 13px;
+          font-size: 11px;
         }
       }
     }
 
     .powered-by {
       text-align: center;
-      margin-top: 30px;
-      font-size: 16px;
+      margin-top: 25px;
+      font-size: 13px;
       color: white;
 
       .desc {

@@ -142,7 +142,9 @@ function ProfileSettings() {
     <>
       {profile && (
         <>
+          <DisplayTemplate profile={profile} />
           <Loader show={updLoading || printLoading} showLogo />
+
           <div
             aria-hidden="true"
             style={{
