@@ -314,38 +314,6 @@
   }
 }
 
-.popover.help-popover {
-  --bs-popover-bg: white;
-  --bs-popover-border-color: rgba(255, 255, 255, 0.18);
-  --bs-popover-body-color: #2b2b2b;
-  --bs-popover-max-width: 250px;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
-
-  .popover-arrow {
-    display: none;
-  }
-
-  .popover-body {
-    margin: 2px 10px;
-    font-size: 13px;
-    line-height: 1.55;
-
-    ol {
-      display: grid;
-      gap: 5px;
-    }
-
-    strong {
-      color: #2b2b2b;
-    }
-
-    p strong em.b-italic {
-      margin-right: 12px;
-    }
-  }
-}
-
 .info-button {
   display: inline-flex;
   align-items: center;

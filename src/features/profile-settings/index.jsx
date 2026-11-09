@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { Form } from "react-bootstrap";
+import { Form, Modal } from "react-bootstrap";
 import moment from "moment";
 import { updateProfile } from "../../store/profile/actions";
 import { printCardTemplate } from "../../components/cardTemplate";
@@ -10,8 +10,15 @@ import {
   selectProfile,
   selectUpdProfileLoading,
 } from "../../store/profile/selectors";
-import { CardTemplate, DisplayTemplate } from "../../components";
-import { Footer, BackButton, useToast, Loader } from "../../components";
+import {
+  CardTemplate,
+  DisplayTemplate,
+  Footer,
+  BackButton,
+  useToast,
+  Loader,
+} from "../../components";
+import { NFCModal } from "./components";
 import { isAuthenticated, copyToClipboard, removeToken } from "../../utils";
 
 import "./profile-settings.scss";
@@ -31,6 +38,7 @@ function ProfileSettings() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   const handleCopyLink = async () => {
     const profileUrl = `https://heyitzme.com/${profile.username}`;
@@ -371,8 +379,19 @@ function ProfileSettings() {
                 </div>
 
                 <div className="input text-start col-9">
-                  <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex justify-content-start align-items-start">
                     <p>NFC Card</p>
+                    <button
+                      type="button"
+                      className="info-button"
+                      aria-label="How to create NFC card"
+                    >
+                      <i
+                        className="bi bi-info-circle nfc-info ms-2"
+                        aria-hidden="true"
+                        onClick={() => setShowInfoModal(true)}
+                      />
+                    </button>
                   </div>
                   <span>Print your NFC card template</span>
                 </div>
@@ -416,6 +435,17 @@ function ProfileSettings() {
           <Footer />
         </>
       )}
+      <Modal
+        show={showInfoModal}
+        onHide={() => setShowInfoModal(false)}
+        centered
+        className="confirmModal"
+      >
+        <NFCModal
+          onClose={() => setShowInfoModal(false)}
+          handleCopyLink={handleCopyLink}
+        />
+      </Modal>
     </>
   );
 }
