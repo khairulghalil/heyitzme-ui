@@ -17,14 +17,14 @@ function NFCModal({ onClose, handleCopyLink }) {
         <li>Save the NFC template.</li>
         <li>
           Purchase custom card sticker
-          <a href="https://my.shp.ee/F2VS4Doh" target="_blank" className="ms-1">
+          <a href="https://my.shp.ee/ejDDgvpx" target="_blank" className="ms-1">
             here
           </a>
           .
         </li>
         <li>
           Purchase a blank NFC card
-          <a href="https://my.shp.ee/ejDDgvpx" target="_blank" className="ms-1">
+          <a href="https://my.shp.ee/F2VS4Doh" target="_blank" className="ms-1">
             here
           </a>
           .

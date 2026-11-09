@@ -425,7 +425,6 @@ function ProfileSettings() {
                 </div>
               </div>
               <div className="info text-centre mt-4">
-                <i className="bi bi-info-circle me-1"></i>
                 <span>
                   Your account information is private and only visible to you.
                 </span>
