@@ -143,7 +143,6 @@ function ProfileSettings() {
       {profile && (
         <>
           <Loader show={updLoading || printLoading} showLogo />
-
           <div
             aria-hidden="true"
             style={{
