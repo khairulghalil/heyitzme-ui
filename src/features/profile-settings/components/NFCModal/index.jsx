@@ -55,12 +55,12 @@ function NFCModal({ onClose, handleCopyLink }) {
         <li>
           Once downloaded, open it and follow below steps:
           <br />
-          <em>
-            1. Write ▸ Add a record <br />
+          <span className="nfc-steps">
+            1. Write → Add a record <br />
             2. Add a URL record <br />
-            3. Paste HeyItzMe URL ▸ Save <br />
+            3. Paste HeyItzMe URL → Save <br />
             4. Write/32 Bytes
-          </em>
+          </span>
         </li>
         <li>
           Test by tapping the NFC card to your phone to ensure it works
