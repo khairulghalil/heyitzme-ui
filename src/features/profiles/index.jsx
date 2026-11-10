@@ -90,18 +90,18 @@ function Profiles({ previewData = null, backAction = null }) {
         setProfilePictureUrl(profileData.blobUrl);
       } else {
         setProfilePictureUrl(
-          `https://images.heyitzme.com/${profileData.profileImage}`,
+          `https://images.heyitzme.com/${profileData.profileImage}?v=${profileData.profileImageVer}`,
         );
       }
 
       setBannerBgUrl(
         profileData.bannerBlobUrl ||
-          `https://images.heyitzme.com/${profileData.bannerBg}`,
+          `https://images.heyitzme.com/${profileData.bannerBg}?v=${profileData.bannerBgVer}`,
       );
 
       setLogoImageUrl(
         profileData.logoBlobUrl ||
-          `https://images.heyitzme.com/${profileData.logoImage}`,
+          `https://images.heyitzme.com/${profileData.logoImage}?v=${profileData.logoImageVer}`,
       );
 
       setProfileUrl(`https://heyitzme.com/${profileData.username}`);

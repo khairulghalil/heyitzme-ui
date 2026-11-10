@@ -128,7 +128,7 @@ function ThemeCard({
                 style={
                   isCustomBanner
                     ? {
-                        backgroundImage: `url(${builderProfile.bannerBlobUrl || `https://images.heyitzme.com/${builderProfile.bannerBg}`})`,
+                        backgroundImage: `url(${builderProfile.bannerBlobUrl || `https://images.heyitzme.com/${builderProfile.bannerBg}?v=${builderProfile.bannerBgVer}`})`,
                       }
                     : undefined
                 }
@@ -170,7 +170,7 @@ function ThemeCard({
                 style={
                   builderProfile?.logoImage
                     ? {
-                        backgroundImage: `url(${builderProfile.logoBlobUrl || `https://images.heyitzme.com/${builderProfile.logoImage}`})`,
+                        backgroundImage: `url(${builderProfile.logoBlobUrl || `https://images.heyitzme.com/${builderProfile.logoImage}?v=${builderProfile.logoImageVer}`})`,
                       }
                     : undefined
                 }

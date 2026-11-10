@@ -264,10 +264,12 @@ function ProfileBuilder({ type }) {
           logoBlobUrl: null,
         });
         setProfilePictureUrl(
-          `https://images.heyitzme.com/${profile.profileImage}`,
+          `https://images.heyitzme.com/${profile.profileImage}?v=${profile.profileImageVer}`,
         );
         applyTheme(profile.theme, builder);
-        setBannerBgUrl(`https://images.heyitzme.com/${profile.bannerBg}`);
+        setBannerBgUrl(
+          `https://images.heyitzme.com/${profile.bannerBg}?v=${profile.bannerBgVer}`,
+        );
       }
     }
   }, []);
