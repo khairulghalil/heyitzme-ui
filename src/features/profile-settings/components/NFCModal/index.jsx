@@ -30,7 +30,7 @@ function NFCModal({ onClose, handleCopyLink }) {
           .
         </li>
         <li>
-          Download NFC writer app {"("}
+          Download NFC Tools {"("}
           <a
             href="https://apps.apple.com/app/nfc/id1252962749"
             target="_blank"
@@ -53,8 +53,14 @@ function NFCModal({ onClose, handleCopyLink }) {
           <i className="bi bi-copy ms-3" onClick={handleCopyLink}></i>
         </li>
         <li>
-          Write data (add website record) to the NFC card using the NFC writer
-          app.
+          Once downloaded, open it and follow below steps:
+          <br />
+          <em>
+            1. Write ▸ Add a record <br />
+            2. Add a URL record <br />
+            3. Paste HeyItzMe URL ▸ Save <br />
+            4. Write/32 Bytes
+          </em>
         </li>
         <li>
           Test by tapping the NFC card to your phone to ensure it works
