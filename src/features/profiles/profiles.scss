@@ -309,6 +309,12 @@
     color: gray !important;
     justify-content: center;
   }
+
+  .preview-icon {
+    display: inline-block;
+    top: -1px;
+    position: relative;
+  }
 }
 @media (max-width: 991.98px) {
   .builder-banner {

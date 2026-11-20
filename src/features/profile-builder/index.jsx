@@ -505,13 +505,13 @@ function ProfileBuilder({ type }) {
                   setShowThemeList={setShowThemeList}
                 />
                 <button
-                  className="btn btn-primary accent-theme my-4 py-2 w-100"
+                  className="btn btn-primary accent-theme my-4 py-3 w-100"
                   onClick={() => {
                     editScrollPosition.current = window.scrollY;
                     setShowCard(true);
                   }}
                 >
-                  Preview Card <span className="ms-2">▸</span>
+                  Preview Card <span className="ms-2 preview-icon">▸</span>
                 </button>
 
                 {builderProfile?.plan !== selectedPlan && (

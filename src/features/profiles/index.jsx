@@ -165,7 +165,7 @@ function Profiles({ previewData = null, backAction = null }) {
                 className="btn btn-primary accent-theme text-decoration-none"
                 onClick={backAction}
               >
-                <span className="me-2">◂</span>Back to Edit
+                <span className="me-2 preview-icon">◂</span>Back to Edit
               </button>
               <span className="text-md-start text-center ms-0 ms-md-4 preview-text">
                 This is only a preview of your card

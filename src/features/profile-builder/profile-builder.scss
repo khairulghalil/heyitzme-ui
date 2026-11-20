@@ -200,6 +200,12 @@
       color: var(--font-builder-color);
     }
 
+    .preview-icon {
+      display: inline-block;
+      top: -0.5px;
+      position: relative;
+    }
+
     .form-control {
       border-radius: 5px;
       border: 0.7px solid #a3a3a356;
