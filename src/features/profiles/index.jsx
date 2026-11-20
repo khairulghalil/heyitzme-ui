@@ -187,25 +187,27 @@ function Profiles({ previewData = null, backAction = null }) {
                     alt="Profile"
                     src={profilePictureUrl || null}
                   />
-                  <span
-                    className={`verified-badge ${profileData.theme.verifiedEnable ? "" : "d-none"}`}
-                    role="img"
-                    aria-label="Verified profile"
-                    title="Verified profile"
-                  >
-                    <i
-                      className="bi bi-patch-check-fill badge-shape"
-                      aria-hidden="true"
-                    />
-                    <i
-                      className="bi bi-circle-fill badge-hide"
-                      aria-hidden="true"
-                    />
-                    <i
-                      className="bi bi-check-lg badge-check"
-                      aria-hidden="true"
-                    />
-                  </span>
+                  {(previewData || profileData.plan === "premium") && (
+                    <span
+                      className={`verified-badge ${profileData.theme.verifiedEnable ? "" : "d-none"}`}
+                      role="img"
+                      aria-label="Verified profile"
+                      title="Verified profile"
+                    >
+                      <i
+                        className="bi bi-patch-check-fill badge-shape"
+                        aria-hidden="true"
+                      />
+                      <i
+                        className="bi bi-circle-fill badge-hide"
+                        aria-hidden="true"
+                      />
+                      <i
+                        className="bi bi-check-lg badge-check"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -213,15 +215,19 @@ function Profiles({ previewData = null, backAction = null }) {
                 className={`profile-content text-center mt-3 ${previewData ? "pe-none" : ""}`}
               >
                 <div className="options-wrapper">
-                  <div
-                    className={`logo-wrapper ${profileData.theme.logoEnable ? "" : "d-none"}`}
-                  >
-                    <img
-                      src={logoImageUrl || null}
-                      className="logo img-fluid"
-                      alt="HeyItzMe"
-                    />
-                  </div>
+                  {(previewData ||
+                    profileData.plan === "premium" ||
+                    profileData.plan === "pro") && (
+                    <div
+                      className={`logo-wrapper ${profileData.theme.logoEnable ? "" : "d-none"}`}
+                    >
+                      <img
+                        src={logoImageUrl || null}
+                        className="logo img-fluid"
+                        alt="HeyItzMe"
+                      />
+                    </div>
+                  )}
                   <Dropdown item={menuOptions} vertical />
                 </div>
                 <h2 id="name" className="profile-name">
@@ -268,48 +274,55 @@ function Profiles({ previewData = null, backAction = null }) {
                   <RichText>{profileData.about}</RichText>
                 </p>
 
-                {(Array.isArray(profileData.additionalSection?.item)
-                  ? profileData.additionalSection.item
-                  : profileData.additionalSection?.item &&
-                      typeof profileData.additionalSection.item === "object"
-                    ? [profileData.additionalSection.item]
-                    : []
-                )
-                  .filter((item) => item.enable)
-                  .map((item, index) => (
-                    <p
-                      key={index}
-                      className="section additional-section-content"
-                    >
-                      <span className="section-title">{item.title}</span>
-                      {(item.content || "")
-                        .split(/\r?\n/)
-                        .map((line, lineIndex) => {
-                          const bulletLine = line.match(/^\s*-\s+(.*)$/);
+                {(previewData ||
+                  profileData.plan === "premium" ||
+                  profileData.plan === "pro") &&
+                  (Array.isArray(profileData.additionalSection?.item)
+                    ? profileData.additionalSection.item
+                    : profileData.additionalSection?.item &&
+                        typeof profileData.additionalSection.item === "object"
+                      ? [profileData.additionalSection.item]
+                      : []
+                  )
+                    .filter((item) => item.enable)
+                    .map((item, index) =>
+                      previewData ||
+                      (profileData.plan === "pro" && index < 2) ||
+                      (profileData.plan === "premium" && index < 5) ? (
+                        <p
+                          key={index}
+                          className="section additional-section-content"
+                        >
+                          <span className="section-title">{item.title}</span>
+                          {(item.content || "")
+                            .split(/\r?\n/)
+                            .map((line, lineIndex) => {
+                              const bulletLine = line.match(/^\s*-\s+(.*)$/);
 
-                          return (
-                            <span
-                              className="additional-section-line"
-                              key={lineIndex}
-                            >
-                              {line.length === 0 ? (
-                                <br />
-                              ) : bulletLine ? (
-                                <>
-                                  <i
-                                    className="bi bi-circle-fill additional-section-bullet"
-                                    aria-hidden="true"
-                                  />
-                                  <RichText>{bulletLine[1]}</RichText>
-                                </>
-                              ) : (
-                                <RichText>{line}</RichText>
-                              )}
-                            </span>
-                          );
-                        })}
-                    </p>
-                  ))}
+                              return (
+                                <span
+                                  className="additional-section-line"
+                                  key={lineIndex}
+                                >
+                                  {line.length === 0 ? (
+                                    <br />
+                                  ) : bulletLine ? (
+                                    <>
+                                      <i
+                                        className="bi bi-circle-fill additional-section-bullet"
+                                        aria-hidden="true"
+                                      />
+                                      <RichText>{bulletLine[1]}</RichText>
+                                    </>
+                                  ) : (
+                                    <RichText>{line}</RichText>
+                                  )}
+                                </span>
+                              );
+                            })}
+                        </p>
+                      ) : null,
+                    )}
 
                 <SocialMedia links={profileData.socialMedia} />
               </div>
