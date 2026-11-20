@@ -6,7 +6,7 @@ import * as brandLogo from "../../assets/img/logo";
 import { Footer, useLogin, Loader, Dropdown, RichText } from "../../components";
 import { applyTheme, saveContact, isAuthenticated } from "../../utils";
 import { getProfile } from "../../store/profile/actions";
-import { bannerThumbnail } from "../../constants";
+import { bannerThumbnail, fontFamily } from "../../constants";
 import {
   selectProfile,
   selectProfileLoading,
@@ -105,9 +105,21 @@ function Profiles({ previewData = null, backAction = null }) {
       );
 
       setProfileUrl(`https://heyitzme.com/${profileData.username}`);
-      applyTheme(profileData.theme);
+      const fontPlan =
+        fontFamily.find((font) => font.value === profileData.theme?.fontFamily)
+          ?.plan || "basic";
+      const planRank = { basic: 0, pro: 1, premium: 2 };
+      const fontAllowed =
+        previewData || planRank[profileData.plan] >= planRank[fontPlan];
+
+      applyTheme({
+        ...profileData.theme,
+        fontFamily: fontAllowed
+          ? profileData.theme?.fontFamily || "Afacad"
+          : "Afacad",
+      });
     }
-  }, [profileData]);
+  }, [profileData, previewData]);
 
   const menuOptions = [
     {
