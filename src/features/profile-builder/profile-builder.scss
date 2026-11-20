@@ -217,6 +217,43 @@
       box-shadow: none;
     }
 
+    .plan-alert {
+      border: 0.7px solid #a3a3a356;
+      border-left: 10px solid var(--primary-app-color);
+      border-radius: 5px;
+      padding: 10px;
+      background-color: transparent;
+      color: var(--font-builder-color);
+
+      p {
+        font-size: 16px;
+      }
+
+      .plan-alert-subtext {
+        display: block;
+        font-size: 14px;
+        line-height: 1.5 !important;
+        font-style: italic;
+      }
+
+      .btn-primary.accent-theme {
+        background: linear-gradient(
+          155deg,
+          var(--accent-app-color) 0%,
+          #ea3f3f 100%
+        ) !important;
+        color: white !important;
+        height: 35.5px !important;
+
+        .premium-icon {
+          display: inline-block !important;
+          font-size: 17px !important;
+          top: -1px !important;
+          position: relative !important;
+        }
+      }
+    }
+
     .confirm-section {
       display: flex;
       justify-content: center;

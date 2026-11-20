@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Accordion,
   Button,
@@ -5,15 +6,18 @@ import {
   OverlayTrigger,
   Popover,
 } from "react-bootstrap";
+import { ProBadge, PremiumBadge } from "../../../components/badge";
 
 function AdditionalSectionCard({
   builderProfile,
   handleChange,
+  onPlanChange,
   showAdditionalSectionList = false,
   setShowAdditionalSectionList,
 }) {
+  const maxSections = 5;
+  const currentPlan = builderProfile?.plan;
   const sectionData = builderProfile?.additionalSection?.item;
-  const sectionLimit = builderProfile?.additionalSection?.limit || 1;
   const sections = Array.isArray(sectionData)
     ? sectionData
     : sectionData && typeof sectionData === "object"
@@ -36,6 +40,20 @@ function AdditionalSectionCard({
   const deleteSection = (indexToDelete) => {
     updateSections(sections.filter((_, index) => index !== indexToDelete));
   };
+
+  useEffect(() => {
+    let updatedTier = "basic";
+    if (builderProfile?.additionalSection?.item?.length > 0) {
+      updatedTier = "pro";
+    }
+    if (builderProfile?.additionalSection?.item?.length > 2) {
+      updatedTier = "premium";
+    }
+
+    const selectedTier = updatedTier;
+
+    onPlanChange?.(selectedTier);
+  }, [builderProfile?.additionalSection?.item, onPlanChange]);
 
   return (
     <Accordion
@@ -142,10 +160,22 @@ function AdditionalSectionCard({
               />
             </Form.Group>
           ))}
-          {sections.length < sectionLimit && (
-            <Button type="button" variant="secondary" onClick={addSection}>
-              Add section
-            </Button>
+          {sections.length < maxSections && (
+            <>
+              <Button
+                type="button"
+                variant="secondary"
+                className="me-3"
+                onClick={addSection}
+              >
+                Add section
+                {currentPlan === "basic" &&
+                  (sections.length < 2 ? <ProBadge /> : <PremiumBadge />)}
+                {currentPlan === "pro" && sections.length > 1 && (
+                  <PremiumBadge />
+                )}
+              </Button>
+            </>
           )}
         </Accordion.Body>
       </Accordion.Item>

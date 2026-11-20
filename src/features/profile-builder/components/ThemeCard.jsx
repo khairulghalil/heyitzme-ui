@@ -1,8 +1,21 @@
+import { useEffect } from "react";
 import { Accordion, Form, Dropdown } from "react-bootstrap";
+import { ProBadge, PremiumBadge } from "../../../components/badge";
+
+const fontFamily = [
+  { name: "Afacad", value: "Afacad", plan: "basic" },
+  { name: "Aclonica", value: "Aclonica", plan: "basic" },
+  { name: "Alex Brush", value: "Alex Brush", plan: "basic" },
+  { name: "Croissant", value: "Croissant One", plan: "pro" },
+  { name: "Lobster", value: "Lobster", plan: "pro" },
+  { name: "Nova Square", value: "Nova Square", plan: "premium" },
+  { name: "Sofia", value: "Sofia", plan: "premium" },
+];
 
 function ThemeCard({
   builderProfile,
   handleChange,
+  onPlanChange,
   bannerThumbnail = [],
   handleBannerSelect,
   bannerInputRef,
@@ -15,15 +28,34 @@ function ThemeCard({
   const isCustomBanner =
     !!builderProfile?.bannerBg &&
     !builderProfile.bannerBg.startsWith("banners/default/");
-  const fontFamily = [
-    "Afacad",
-    "Aclonica",
-    "Alex Brush",
-    "Croissant One",
-    "Lobster",
-    "Nova Square",
-    "Sofia",
-  ];
+
+  const currentPlan = builderProfile?.plan;
+
+  useEffect(() => {
+    const selectedFont = fontFamily.find(
+      (font) => font.value === builderProfile?.theme?.fontFamily,
+    );
+
+    let updatedTier = "basic";
+    if (selectedFont?.plan === "pro" || builderProfile?.theme?.logoEnable) {
+      updatedTier = "pro";
+    }
+    if (
+      selectedFont?.plan === "premium" ||
+      builderProfile?.theme?.verifiedEnable
+    ) {
+      updatedTier = "premium";
+    }
+
+    const selectedTier = updatedTier;
+
+    onPlanChange?.(selectedTier);
+  }, [
+    builderProfile?.theme?.fontFamily,
+    builderProfile?.theme?.logoEnable,
+    builderProfile?.theme?.verifiedEnable,
+    onPlanChange,
+  ]);
 
   return (
     <Accordion defaultActiveKey={showThemeList ? "1" : "0"} className="mb-3">
@@ -82,21 +114,32 @@ function ThemeCard({
 
               <Dropdown>
                 <Dropdown.Toggle className="text-end" variant="light">
-                  {builderProfile?.theme?.fontFamily || "Afacad"}
+                  {fontFamily.find(
+                    (font) => font.value === builderProfile?.theme?.fontFamily,
+                  )?.name || "Afacad"}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
                   {fontFamily.map((font) => (
                     <Dropdown.Item
-                      key={font}
-                      style={{ fontFamily: font }}
+                      key={font.value}
+                      style={{ fontFamily: font.value }}
                       onClick={() =>
                         handleChange({
-                          target: { name: "theme.fontFamily", value: font },
+                          target: {
+                            name: "theme.fontFamily",
+                            value: font.value,
+                          },
                         })
                       }
                     >
-                      {font}
+                      {font.name}
+                      {currentPlan === "basic" && font.plan === "pro" && (
+                        <ProBadge />
+                      )}
+                      {currentPlan !== "premium" && font.plan === "premium" && (
+                        <PremiumBadge />
+                      )}
                     </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
@@ -151,7 +194,9 @@ function ThemeCard({
           </Form.Group>
           <Form.Group className="mb-3">
             <div className="d-flex align-items-center justify-content-between mb-2">
-              <Form.Label className="mb-0">Logo</Form.Label>
+              <Form.Label className="mb-0">
+                Logo {currentPlan === "basic" && <ProBadge />}
+              </Form.Label>
               <Form.Check
                 type="switch"
                 id="logo-toggle"
@@ -191,7 +236,9 @@ function ThemeCard({
           </Form.Group>
           <Form.Group className="mb-1">
             <div className="d-flex align-items-center justify-content-between mb-2">
-              <Form.Label className="mb-0">Verified Badge</Form.Label>
+              <Form.Label className="mb-0">
+                Verified Badge {currentPlan !== "premium" && <PremiumBadge />}
+              </Form.Label>
               <Form.Check
                 type="switch"
                 name="theme.verifiedEnable"

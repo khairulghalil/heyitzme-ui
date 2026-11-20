@@ -122,7 +122,8 @@ header .navbar-toggler {
   font-weight: 600;
 }
 
-.btn-primary {
+.btn-primary,
+.btn-primary.disabled {
   background: var(--primary-app-color-dark);
   color: white;
   border: none;

@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, use } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Modal, OverlayTrigger, Popover } from "react-bootstrap";
 import {
@@ -42,6 +42,10 @@ function ProfileBuilder({ type }) {
   const updLoading = useSelector(selectUpdProfileLoading);
 
   const [builderProfile, setBuilderProfile] = useState(null);
+  const [selectedThemePlan, setSelectedThemePlan] = useState("basic");
+  const [selectedAdditionalSectionPlan, setSelectedAdditionalSectionPlan] =
+    useState("basic");
+  const [selectedPlan, setSelectedPlan] = useState("basic");
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
   const [profilePictureFile, setProfilePictureFile] = useState(null);
   const [bannerBgUrl, setBannerBgUrl] = useState("");
@@ -299,6 +303,24 @@ function ProfileBuilder({ type }) {
     }
   }, [showCard]);
 
+  useEffect(() => {
+    if (
+      selectedThemePlan == "basic" ||
+      selectedAdditionalSectionPlan == "basic"
+    ) {
+      setSelectedPlan("basic");
+    }
+    if (selectedThemePlan == "pro" || selectedAdditionalSectionPlan == "pro") {
+      setSelectedPlan("pro");
+    }
+    if (
+      selectedThemePlan == "premium" ||
+      selectedAdditionalSectionPlan == "premium"
+    ) {
+      setSelectedPlan("premium");
+    }
+  }, [selectedThemePlan, selectedAdditionalSectionPlan]);
+
   return (
     <>
       <Loader show={updLoading} showLogo />
@@ -364,7 +386,6 @@ function ProfileBuilder({ type }) {
                     onChange={handleChange}
                   />
                 </Form.Group>
-
                 <Form.Group className="mb-3" controlId="bio">
                   <Form.Label>Bio</Form.Label>
                   <Form.Control
@@ -374,7 +395,6 @@ function ProfileBuilder({ type }) {
                     onChange={handleChange}
                   />
                 </Form.Group>
-
                 <Form.Group className="mb-3" controlId="description">
                   <div className="d-flex align-items-center justify-content-between mb-2">
                     <Form.Label className="mb-0">Description</Form.Label>
@@ -399,7 +419,6 @@ function ProfileBuilder({ type }) {
                     }
                   />
                 </Form.Group>
-
                 <Form.Group className="mb-3" controlId="about">
                   <div className="d-flex align-items-center gap-2">
                     <Form.Label className="mb-2">About</Form.Label>
@@ -453,10 +472,10 @@ function ProfileBuilder({ type }) {
                     rows={3}
                   />
                 </Form.Group>
-
                 <AdditionalSectionCard
                   builderProfile={builderProfile}
                   handleChange={handleChange}
+                  onPlanChange={setSelectedAdditionalSectionPlan}
                   showAdditionalSectionList={showAdditionalSectionList}
                   setShowAdditionalSectionList={setShowAdditionalSectionList}
                 />
@@ -475,6 +494,7 @@ function ProfileBuilder({ type }) {
                 <ThemeCard
                   builderProfile={builderProfile}
                   handleChange={handleChange}
+                  onPlanChange={setSelectedThemePlan}
                   bannerThumbnail={bannerThumbnail}
                   handleBannerSelect={handleBannerSelect}
                   bannerInputRef={bannerInputRef}
@@ -484,7 +504,6 @@ function ProfileBuilder({ type }) {
                   showThemeList={showThemeList}
                   setShowThemeList={setShowThemeList}
                 />
-
                 <button
                   className="btn btn-primary accent-theme my-4 py-2 w-100"
                   onClick={() => {
@@ -495,6 +514,52 @@ function ProfileBuilder({ type }) {
                   Preview Card <span className="ms-2">▸</span>
                 </button>
 
+                {builderProfile?.plan !== selectedPlan && (
+                  <div className="plan-alert mb-3">
+                    <p>
+                      You are currently on the{" "}
+                      <span className="text-capitalize fw-bold">
+                        {builderProfile?.plan}
+                      </span>{" "}
+                      plan. Some of the feature you use is only available with
+                      the{" "}
+                      <span className="text-capitalize fw-bold">
+                        {selectedPlan}
+                      </span>{" "}
+                      plan. You need to upgrade to{" "}
+                      <span className="text-capitalize fw-bold">
+                        {selectedPlan}
+                      </span>{" "}
+                      plan to update. Upgrade now for only{" "}
+                      <span className="fw-bold">RM 10</span> ?
+                    </p>
+
+                    <span className="plan-alert-subtext">
+                      ** The price above is prorated based on your remaining
+                      current plan validity. Normal price of RM 45 will be
+                      charged upon your next renewal.
+                    </span>
+
+                    <button
+                      className="btn btn-primary accent-theme d-block ms-auto mt-4 mb-1"
+                      onClick={() =>
+                        setBuilderProfile((builderProfile) => ({
+                          ...builderProfile,
+                          plan: selectedPlan,
+                        }))
+                      }
+                    >
+                      Upgrade To
+                      <span className="text-uppercase fw-bold ms-2">
+                        {selectedPlan === "premium" && (
+                          <span className="premium-icon">♛</span>
+                        )}
+                        {selectedPlan === "premium" ? " Premium" : "✦ Pro"}
+                      </span>
+                    </button>
+                  </div>
+                )}
+
                 <div className="confirm-section text-center">
                   <button
                     className="btn btn-secondary mt-4 me-2 w-100"
@@ -503,7 +568,7 @@ function ProfileBuilder({ type }) {
                     Cancel
                   </button>
                   <button
-                    className="btn btn-primary mt-4 w-100"
+                    className={`btn btn-primary ${builderProfile?.plan !== selectedPlan && "disabled"} mt-4 w-100`}
                     onClick={handleConfirmUpdate}
                   >
                     Update

@@ -9,6 +9,7 @@ import BackButton from "./backButton";
 import RichText from "./richText";
 import CardTemplate from "./cardTemplate";
 import DisplayTemplate from "./displayTemplate";
+import { BasicBadge, ProBadge, PremiumBadge } from "./badge";
 
 export {
   ToastProvider,
@@ -24,4 +25,7 @@ export {
   RichText,
   CardTemplate,
   DisplayTemplate,
+  BasicBadge,
+  ProBadge,
+  PremiumBadge,
 };

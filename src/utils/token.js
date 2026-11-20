@@ -35,7 +35,7 @@ export const isTokenExpired = () => {
   try {
     const payload = JSON.parse(atob(token));
 
-    return payload.expiresAt * 1000 <= Date.now();
+    return payload.expiresAt <= Date.now();
   } catch {
     return true;
   }
@@ -43,6 +43,7 @@ export const isTokenExpired = () => {
 
 export const isAuthenticated = (user) => {
   const payload = getTokenPayload();
+
   if (payload && payload.user !== user) {
     return false;
   }
