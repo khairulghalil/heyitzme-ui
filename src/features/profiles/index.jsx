@@ -34,6 +34,7 @@ function Profiles({ previewData = null, backAction = null }) {
   const [bannerBgUrl, setBannerBgUrl] = useState("");
   const [logoImageUrl, setLogoImageUrl] = useState("");
   const [profileData, setProfileData] = useState(null);
+  const [showNotFound, setShowNotFound] = useState(false);
   const isDefaultBanner =
     !profileData?.bannerBg ||
     profileData.bannerBg.startsWith("banners/default/");
@@ -52,6 +53,12 @@ function Profiles({ previewData = null, backAction = null }) {
       }
     }
   }, [username, previewData, profile]);
+
+  useEffect(() => {
+    setShowNotFound(false);
+    const timer = setTimeout(() => setShowNotFound(true), 100);
+    return () => clearTimeout(timer);
+  }, [username]);
 
   useEffect(() => {
     if (!showShareModal) return undefined;
@@ -368,9 +375,9 @@ function Profiles({ previewData = null, backAction = null }) {
             />
           </Offcanvas>
         </>
-      ) : (
+      ) : !loading && showNotFound ? (
         <ProfileNotFound />
-      )}
+      ) : null}
     </>
   );
 }
