@@ -243,11 +243,6 @@
       }
 
       .btn-primary.accent-theme {
-        background: linear-gradient(
-          155deg,
-          var(--accent-app-color) 0%,
-          #ea3f3f 100%
-        ) !important;
         color: white !important;
         height: 35.5px !important;
 
@@ -256,6 +251,22 @@
           font-size: 17px !important;
           top: -1px !important;
           position: relative !important;
+        }
+
+        &.pro {
+          background: linear-gradient(
+            155deg,
+            var(--primary-app-color) 0%,
+            #cb33e2 100%
+          ) !important;
+        }
+
+        &.premium {
+          background: linear-gradient(
+            155deg,
+            var(--accent-app-color) 0%,
+            #d74123 100%
+          ) !important;
         }
       }
     }

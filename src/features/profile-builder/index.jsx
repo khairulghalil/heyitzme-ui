@@ -541,7 +541,7 @@ function ProfileBuilder({ type }) {
                     </span>
 
                     <button
-                      className="btn btn-primary accent-theme d-block ms-auto mt-4 mb-1"
+                      className={`btn btn-primary ${selectedPlan === "premium" ? "premium" : "pro"} accent-theme d-block ms-auto mt-4 mb-1`}
                       onClick={() =>
                         setBuilderProfile((builderProfile) => ({
                           ...builderProfile,
