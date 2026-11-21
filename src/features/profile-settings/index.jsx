@@ -76,7 +76,7 @@ function ProfileSettings() {
     dispatch(
       updateProfile({
         username: profile.username,
-        data: { registeredEmail: newRegisteredEmail },
+        data: { plan: profile.plan, registeredEmail: newRegisteredEmail },
       }),
     )
       .unwrap()
@@ -91,7 +91,6 @@ function ProfileSettings() {
   };
 
   const handleCloseRegisteredEmail = (updated) => {
-    console.log("Closing registered email edit, updated:", updated);
     setEditRegisteredEmail(false);
     if (!updated) {
       setNewRegisteredEmail(profile.registeredEmail);
