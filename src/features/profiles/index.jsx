@@ -34,7 +34,7 @@ function Profiles({ previewData = null, backAction = null }) {
   const [bannerBgUrl, setBannerBgUrl] = useState("");
   const [logoImageUrl, setLogoImageUrl] = useState("");
   const [profileData, setProfileData] = useState(null);
-  const [showNotFound, setShowNotFound] = useState(false);
+  const [loaderDelayComplete, setLoaderDelayComplete] = useState(false);
   const isDefaultBanner =
     !profileData?.bannerBg ||
     profileData.bannerBg.startsWith("banners/default/");
@@ -55,10 +55,12 @@ function Profiles({ previewData = null, backAction = null }) {
   }, [username, previewData, profile]);
 
   useEffect(() => {
-    setShowNotFound(false);
-    const timer = setTimeout(() => setShowNotFound(true), 100);
+    setLoaderDelayComplete(false);
+    if (loading) return undefined;
+
+    const timer = setTimeout(() => setLoaderDelayComplete(true), 1000);
     return () => clearTimeout(timer);
-  }, [username]);
+  }, [loading, username]);
 
   useEffect(() => {
     if (!showShareModal) return undefined;
@@ -163,7 +165,7 @@ function Profiles({ previewData = null, backAction = null }) {
 
   return (
     <>
-      <Loader show={loading} showLogo opacity={1} />
+      <Loader show={loading || !loaderDelayComplete} showLogo opacity={1} />
       {profileData ? (
         <>
           {previewData && (
@@ -375,9 +377,9 @@ function Profiles({ previewData = null, backAction = null }) {
             />
           </Offcanvas>
         </>
-      ) : !loading && showNotFound ? (
+      ) : (
         <ProfileNotFound />
-      ) : null}
+      )}
     </>
   );
 }
