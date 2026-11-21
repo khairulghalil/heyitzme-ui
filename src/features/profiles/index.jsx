@@ -58,7 +58,7 @@ function Profiles({ previewData = null, backAction = null }) {
     setLoaderDelayComplete(false);
     if (loading) return undefined;
 
-    const timer = setTimeout(() => setLoaderDelayComplete(true), 1000);
+    const timer = setTimeout(() => setLoaderDelayComplete(true), 500);
     return () => clearTimeout(timer);
   }, [loading, username]);
 
@@ -165,7 +165,9 @@ function Profiles({ previewData = null, backAction = null }) {
 
   return (
     <>
-      <Loader show={loading || !loaderDelayComplete} showLogo opacity={1} />
+      {!previewData && (
+        <Loader show={loading || !loaderDelayComplete} showLogo opacity={1} />
+      )}
       {profileData ? (
         <>
           {previewData && (
