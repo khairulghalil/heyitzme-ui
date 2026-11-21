@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { extractResponseData } from "../../utils";
-import { loginApi } from "../../api/auth/auth";
+import { loginApi, changePasswordApi } from "../../api/auth/auth";
 import { setAuthLoading } from "./slice";
 import { setToken } from "../../utils/token";
 
@@ -20,6 +20,27 @@ export const login = createAsyncThunk(
     } catch (error) {
       const message =
         error.response?.data?.message || "Invalid username or password";
+
+      return rejectWithValue(message);
+    } finally {
+      dispatch(setAuthLoading(false));
+    }
+  },
+);
+
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+
+  async (data, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(setAuthLoading(true));
+
+      const response = await changePasswordApi(data);
+
+      return extractResponseData(response);
+    } catch (error) {
+      const message =
+        error.response?.data?.message || "Failed to change password";
 
       return rejectWithValue(message);
     } finally {

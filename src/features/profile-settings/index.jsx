@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Form, Modal } from "react-bootstrap";
 import moment from "moment";
 import { updateProfile } from "../../store/profile/actions";
+import { changePassword } from "../../store/auth/actions";
 import { printCardTemplate } from "../../components/cardTemplate";
 import { printDisplayTemplate } from "../../components/displayTemplate";
 import {
@@ -107,9 +108,8 @@ function ProfileSettings() {
     }
 
     dispatch(
-      updateProfile({
-        username: profile.username,
-        data: { currentPassword, newPassword },
+      changePassword({
+        data: { username: profile.username, currentPassword, newPassword },
       }),
     )
       .unwrap()
