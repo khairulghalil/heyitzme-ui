@@ -331,7 +331,6 @@ function ProfileBuilder({ type }) {
       planUsed = "premium";
     }
 
-    console.log("Plan Used:", planUsed);
     setSelectedPlan(planUsed);
   }, [selectedThemePlan, selectedAdditionalSectionPlan]);
 
