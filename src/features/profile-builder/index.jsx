@@ -304,21 +304,35 @@ function ProfileBuilder({ type }) {
   }, [showCard]);
 
   useEffect(() => {
-    if (
-      selectedThemePlan == "basic" ||
-      selectedAdditionalSectionPlan == "basic"
-    ) {
-      setSelectedPlan("basic");
+    let planUsed = "";
+    if (builderProfile?.plan === "basic") {
+      planUsed = "basic";
+      if (
+        selectedThemePlan == "pro" ||
+        selectedAdditionalSectionPlan == "pro"
+      ) {
+        planUsed = "pro";
+      }
+      if (
+        selectedThemePlan == "premium" ||
+        selectedAdditionalSectionPlan == "premium"
+      ) {
+        planUsed = "premium";
+      }
+    } else if (builderProfile?.plan === "pro") {
+      planUsed = "pro";
+      if (
+        selectedThemePlan == "premium" ||
+        selectedAdditionalSectionPlan == "premium"
+      ) {
+        planUsed = "premium";
+      }
+    } else if (builderProfile?.plan === "premium") {
+      planUsed = "premium";
     }
-    if (selectedThemePlan == "pro" || selectedAdditionalSectionPlan == "pro") {
-      setSelectedPlan("pro");
-    }
-    if (
-      selectedThemePlan == "premium" ||
-      selectedAdditionalSectionPlan == "premium"
-    ) {
-      setSelectedPlan("premium");
-    }
+
+    console.log("Plan Used:", planUsed);
+    setSelectedPlan(planUsed);
   }, [selectedThemePlan, selectedAdditionalSectionPlan]);
 
   return (
