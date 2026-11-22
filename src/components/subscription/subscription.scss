@@ -36,4 +36,19 @@
       margin: 10px 0;
     }
   }
+
+  .subscription-card {
+    // background: rgba(1, 1, 1, 0.1);
+    background: linear-gradient(155deg, #54545437 0%, #0707075f 100%);
+    border-radius: 10px;
+    padding: 20px;
+    margin: auto;
+    max-width: 90%;
+
+    p {
+      color: rgb(184, 184, 184);
+      font-size: 15px;
+      margin: 0;
+    }
+  }
 }

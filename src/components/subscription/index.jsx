@@ -54,6 +54,11 @@ function Subscription({ show, onHide }) {
             <img className="subscription-logo" src={logo.logo} alt="HeyItzMe" />
             <p>Make the most of your digital profile.</p>
           </div>
+          <div className="subscription-card">
+            <p>
+              Choose a plan that suits your needs and unlock premium features.
+            </p>
+          </div>
         </Offcanvas.Body>
       </Offcanvas>
     </>
