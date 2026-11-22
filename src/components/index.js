@@ -10,6 +10,7 @@ import RichText from "./richText";
 import CardTemplate from "./cardTemplate";
 import DisplayTemplate from "./displayTemplate";
 import { BasicBadge, ProBadge, PremiumBadge } from "./badge";
+import Subscription from "./subscription";
 
 export {
   ToastProvider,
@@ -28,4 +29,5 @@ export {
   BasicBadge,
   ProBadge,
   PremiumBadge,
+  Subscription,
 };

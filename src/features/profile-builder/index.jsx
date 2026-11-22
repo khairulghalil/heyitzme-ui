@@ -14,6 +14,7 @@ import {
   Loader,
   useToast,
   BackButton,
+  Subscription,
 } from "../../components";
 import {
   ContactCard,
@@ -56,6 +57,7 @@ function ProfileBuilder({ type }) {
   const [cropImageSrc, setCropImageSrc] = useState(null);
   const [showCropModal, setShowCropModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showSubscription, setShowSubscription] = useState(false);
   const [modalText, setModalText] = useState({ title: "", text: "" });
   const [action, setAction] = useState(null);
   const [showCard, setShowCard] = useState(false);
@@ -304,6 +306,8 @@ function ProfileBuilder({ type }) {
   }, [showCard]);
 
   useEffect(() => {
+    if (!builderProfile?.plan) return;
+
     let planUsed = "";
     if (builderProfile?.plan === "basic") {
       planUsed = "basic";
@@ -332,7 +336,7 @@ function ProfileBuilder({ type }) {
     }
 
     setSelectedPlan(planUsed);
-  }, [selectedThemePlan, selectedAdditionalSectionPlan]);
+  }, [builderProfile?.plan, selectedThemePlan, selectedAdditionalSectionPlan]);
 
   return (
     <>
@@ -555,12 +559,7 @@ function ProfileBuilder({ type }) {
 
                     <button
                       className={`btn btn-primary ${selectedPlan === "premium" ? "premium" : "pro"} accent-theme d-block ms-auto mt-4 mb-1`}
-                      onClick={() =>
-                        setBuilderProfile((builderProfile) => ({
-                          ...builderProfile,
-                          plan: selectedPlan,
-                        }))
-                      }
+                      onClick={() => setShowSubscription(true)}
                     >
                       Upgrade To
                       <span className="text-uppercase fw-bold ms-2">
@@ -600,6 +599,11 @@ function ProfileBuilder({ type }) {
           backAction={() => setShowCard(false)}
         />
       )}
+
+      <Subscription
+        show={showSubscription}
+        onHide={() => setShowSubscription(false)}
+      />
 
       <Modal
         show={showConfirmModal}
