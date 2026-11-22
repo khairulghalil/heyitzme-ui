@@ -5,7 +5,7 @@ import { useToast, Loader } from "..";
 import * as logo from "../../assets/img/logo";
 import "./subscription.scss";
 
-function Subscription({ show, onHide }) {
+function Subscription({ show, onHide, type }) {
   const { showToast } = useToast();
   const dispatch = useDispatch();
 
@@ -45,7 +45,7 @@ function Subscription({ show, onHide }) {
         show={show}
         onHide={onHide}
         placement="end"
-        className="subscription-offcanvas w-100"
+        className={`subscription-offcanvas w-100 ${type}`}
       >
         <Offcanvas.Header closeButton closeVariant="white" />
         <Offcanvas.Body className="subscription-body text-center">

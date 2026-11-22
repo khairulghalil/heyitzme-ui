@@ -603,6 +603,7 @@ function ProfileBuilder({ type }) {
       <Subscription
         show={showSubscription}
         onHide={() => setShowSubscription(false)}
+        type="update"
       />
 
       <Modal

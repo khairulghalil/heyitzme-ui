@@ -7,6 +7,14 @@
   );
   padding-top: 5px;
 
+  &.update {
+    background: linear-gradient(
+      to bottom,
+      var(--primary-builder-color),
+      color-mix(in srgb, var(--primary-builder-color) 40%, black)
+    );
+  }
+
   .subscription-title {
     text-align: center;
     margin-bottom: 20px;
