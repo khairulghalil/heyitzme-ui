@@ -87,15 +87,16 @@ function Subscription({ show, onHide, type }) {
   return (
     <>
       <Offcanvas
-        show={show}
-        // show={true}
+        // show={show}
+        show={true}
         onHide={onHide}
         placement="end"
         className={`subscription-offcanvas w-100 ${type}`}
       >
         <Offcanvas.Header closeButton closeVariant="white" />
-        <Offcanvas.Body className="subscription-body text-center">
-          <div className="subscription-title d-flex flex-column align-items-center mb-4">
+        <Offcanvas.Body className="subscription-body text-center pt-0">
+          <div className="subscription-title d-flex flex-column align-items-center mb-3">
+            <span>Subscription Plans</span>
             <img className="subscription-logo" src={logo.logo} alt="HeyItzMe" />
             <p>Choose a plan that suits your needs.</p>
           </div>
