@@ -86,8 +86,8 @@ function Subscription({ show, onHide, type }) {
   return (
     <>
       <Offcanvas
-        // show={show}
-        show={true}
+        show={show}
+        // show={true}
         onHide={onHide}
         placement="end"
         className={`subscription-offcanvas w-100 ${type}`}
@@ -131,85 +131,6 @@ function Subscription({ show, onHide, type }) {
               </div>
             </div>
           ))}
-          {/* <div className="subscription-card mb-3">
-            <div className="subscription-card-header d-flex justify-content-between">
-              <div className="badge-wrapper">
-                <span className="basic">
-                  <i className="badge-icon"></i> Basic Plan
-                </span>
-                <p>Free plan with basic features.</p>
-              </div>
-              <div className="price-wrapper">
-                <h2>RM 35</h2>
-                <p>Per Year</p>
-              </div>
-            </div>
-            <div className="subscription-card-content">
-              <h4 className="text-start fw-bold text-white mt-3">Features</h4>
-              <div className="d-flex justify-content-between">
-                <div className="features-wrapper">
-                  <p>
-                    <i className="bi bi-check-all"></i> Custom banner
-                  </p>
-                  <p>
-                    <i className="bi bi-check-all"></i> Up to 5 font styles to
-                    choose from
-                  </p>
-                  <p>
-                    <i className="bi bi-check-all"></i> Custom profile theme
-                  </p>
-                  <p>
-                    <i className="bi bi-check-all"></i> Unlimited profile
-                    sharing
-                  </p>
-                </div>
-                <div className="align-self-end">
-                  <button className="btn btn-secondary">GET</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="subscription-card">
-            <div className="subscription-card-header d-flex justify-content-between">
-              <div className="badge-wrapper">
-                <span className="pro">
-                  <i className="badge-icon">✦</i> Pro Plan
-                </span>
-                <p>Free plan with basic features.</p>
-              </div>
-              <div className="price-wrapper">
-                <h2>RM 45</h2>
-                <p>Per Year</p>
-              </div>
-            </div>
-            <div className="subscription-card-content">
-              <h4 className="text-start fw-bold text-white mt-3">Features</h4>
-              <div className="d-flex justify-content-between">
-                <div className="features-wrapper">
-                  <p>
-                    <i className="bi bi-check-all"></i> Unlock 2 additional
-                    sections
-                  </p>
-                  <p>
-                    <i className="bi bi-check-all"></i> Up to 10 font styles to
-                    choose from
-                  </p>
-                  <p>
-                    <i className="bi bi-check-all"></i> Upload custom logo
-                    feature
-                  </p>
-                  <p>
-                    <i className="bi bi-check-all"></i> Basic Plan features
-                    included
-                  </p>
-                </div>
-                <div className="align-self-end">
-                  <button className="btn btn-secondary">GET</button>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </Offcanvas.Body>
       </Offcanvas>
     </>
