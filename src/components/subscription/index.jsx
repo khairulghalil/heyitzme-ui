@@ -8,6 +8,7 @@ import "./subscription.scss";
 function Subscription({ show, onHide, type }) {
   const { showToast } = useToast();
   const dispatch = useDispatch();
+  const [expandedPlans, setExpandedPlans] = useState({});
 
   useEffect(() => {
     if (!show) return undefined;
@@ -95,7 +96,6 @@ function Subscription({ show, onHide, type }) {
         <Offcanvas.Header closeButton closeVariant="white" />
         <Offcanvas.Body className="subscription-body text-center">
           <div className="subscription-title d-flex flex-column align-items-center mb-4">
-            <span>Subscription</span>
             <img className="subscription-logo" src={logo.logo} alt="HeyItzMe" />
             <p>Choose a plan that suits your needs.</p>
           </div>
@@ -115,18 +115,37 @@ function Subscription({ show, onHide, type }) {
                 </div>
               </div>
               <div className="subscription-card-content">
-                <h4 className="text-start fw-bold text-white mt-3">Features</h4>
+                <div className="d-flex justify-content-between">
+                  <h4 className="text-start fw-bold text-white mt-3">
+                    Features
+                  </h4>
+                  <button className="btn btn-secondary">GET</button>
+                </div>
                 <div className="d-flex justify-content-between">
                   <div className="features-wrapper">
-                    {plan.features.map((feature, index) => (
-                      <p key={index}>
-                        <i className="bi bi-check-all"></i> {feature}
-                      </p>
-                    ))}
+                    {plan.features
+                      .slice(0, expandedPlans[plan.type] ? undefined : 2)
+                      .map((feature, index) => (
+                        <p key={index}>
+                          <i className="bi bi-check-all"></i> {feature}
+                        </p>
+                      ))}
                   </div>
-                  <div className="align-self-end">
-                    <button className="btn btn-secondary">GET</button>
-                  </div>
+                  {plan.features.length > 2 && (
+                    <button
+                      type="button"
+                      className="feature-toggle align-self-end"
+                      aria-expanded={!!expandedPlans[plan.type]}
+                      onClick={() =>
+                        setExpandedPlans((previous) => ({
+                          ...previous,
+                          [plan.type]: !previous[plan.type],
+                        }))
+                      }
+                    >
+                      {expandedPlans[plan.type] ? "Hide" : "Show more"}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
