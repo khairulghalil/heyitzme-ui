@@ -39,10 +39,55 @@ function Subscription({ show, onHide, type }) {
     };
   }, [show]);
 
+  const subscriptionData = [
+    {
+      type: "basic",
+      title: "Basic Plan",
+      description: "Free plan with basic features.",
+      badge: "✦",
+      price: "RM 35",
+      period: "Per Year",
+      features: [
+        "Custom banner",
+        "Up to 5 font styles to choose",
+        "Custom profile theme",
+        "Unlimited profile sharing",
+      ],
+    },
+    {
+      type: "pro",
+      title: "Pro Plan",
+      description: "Paid plan with advanced features.",
+      badge: "✦",
+      price: "RM 45",
+      period: "Per Year",
+      features: [
+        "Unlock 2 additional sections",
+        "Up to 10 font styles to choose",
+        "Upload custom logo feature",
+        "Basic Plan features included",
+      ],
+    },
+    {
+      type: "premium",
+      title: "Premium Plan",
+      description: "Paid plan with advanced features.",
+      badge: "♛",
+      price: "RM 50",
+      period: "Per Year",
+      features: [
+        "Up to 5 additional sections",
+        "Up to 15 font styles to choose",
+        "Unlock verified badge",
+        "Pro Plan features included",
+      ],
+    },
+  ];
   return (
     <>
       <Offcanvas
-        show={show}
+        // show={show}
+        show={true}
         onHide={onHide}
         placement="end"
         className={`subscription-offcanvas w-100 ${type}`}
@@ -52,13 +97,119 @@ function Subscription({ show, onHide, type }) {
           <div className="subscription-title d-flex flex-column align-items-center mb-4">
             <span>Subscription</span>
             <img className="subscription-logo" src={logo.logo} alt="HeyItzMe" />
-            <p>Make the most of your digital profile.</p>
+            <p>Choose a plan that suits your needs.</p>
           </div>
+
+          {subscriptionData.map((plan) => (
+            <div className="subscription-card mb-3" key={plan.type}>
+              <div className="subscription-card-header d-flex justify-content-between">
+                <div className="badge-wrapper">
+                  <span className={plan.type}>
+                    <i className="badge-icon">{plan.badge}</i> {plan.title}
+                  </span>
+                  <p>{plan.description}</p>
+                </div>
+                <div className="price-wrapper">
+                  <h2>{plan.price}</h2>
+                  <p>{plan.period}</p>
+                </div>
+              </div>
+              <div className="subscription-card-content">
+                <h4 className="text-start fw-bold text-white mt-3">Features</h4>
+                <div className="d-flex justify-content-between">
+                  <div className="features-wrapper">
+                    {plan.features.map((feature, index) => (
+                      <p key={index}>
+                        <i className="bi bi-check-all"></i> {feature}
+                      </p>
+                    ))}
+                  </div>
+                  <div className="align-self-end">
+                    <button className="btn btn-secondary">GET</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          {/* <div className="subscription-card mb-3">
+            <div className="subscription-card-header d-flex justify-content-between">
+              <div className="badge-wrapper">
+                <span className="basic">
+                  <i className="badge-icon"></i> Basic Plan
+                </span>
+                <p>Free plan with basic features.</p>
+              </div>
+              <div className="price-wrapper">
+                <h2>RM 35</h2>
+                <p>Per Year</p>
+              </div>
+            </div>
+            <div className="subscription-card-content">
+              <h4 className="text-start fw-bold text-white mt-3">Features</h4>
+              <div className="d-flex justify-content-between">
+                <div className="features-wrapper">
+                  <p>
+                    <i className="bi bi-check-all"></i> Custom banner
+                  </p>
+                  <p>
+                    <i className="bi bi-check-all"></i> Up to 5 font styles to
+                    choose from
+                  </p>
+                  <p>
+                    <i className="bi bi-check-all"></i> Custom profile theme
+                  </p>
+                  <p>
+                    <i className="bi bi-check-all"></i> Unlimited profile
+                    sharing
+                  </p>
+                </div>
+                <div className="align-self-end">
+                  <button className="btn btn-secondary">GET</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="subscription-card">
-            <p>
-              Choose a plan that suits your needs and unlock premium features.
-            </p>
-          </div>
+            <div className="subscription-card-header d-flex justify-content-between">
+              <div className="badge-wrapper">
+                <span className="pro">
+                  <i className="badge-icon">✦</i> Pro Plan
+                </span>
+                <p>Free plan with basic features.</p>
+              </div>
+              <div className="price-wrapper">
+                <h2>RM 45</h2>
+                <p>Per Year</p>
+              </div>
+            </div>
+            <div className="subscription-card-content">
+              <h4 className="text-start fw-bold text-white mt-3">Features</h4>
+              <div className="d-flex justify-content-between">
+                <div className="features-wrapper">
+                  <p>
+                    <i className="bi bi-check-all"></i> Unlock 2 additional
+                    sections
+                  </p>
+                  <p>
+                    <i className="bi bi-check-all"></i> Up to 10 font styles to
+                    choose from
+                  </p>
+                  <p>
+                    <i className="bi bi-check-all"></i> Upload custom logo
+                    feature
+                  </p>
+                  <p>
+                    <i className="bi bi-check-all"></i> Basic Plan features
+                    included
+                  </p>
+                </div>
+                <div className="align-self-end">
+                  <button className="btn btn-secondary">GET</button>
+                </div>
+              </div>
+            </div>
+          </div> */}
         </Offcanvas.Body>
       </Offcanvas>
     </>

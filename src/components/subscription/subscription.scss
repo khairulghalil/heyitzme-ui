@@ -46,17 +46,125 @@
   }
 
   .subscription-card {
-    // background: rgba(1, 1, 1, 0.1);
-    background: linear-gradient(155deg, #54545437 0%, #0707075f 100%);
+    background: rgba(1, 1, 1, 0.3);
+    // background: linear-gradient(155deg, #54545437 0%, #0707075f 100%);
     border-radius: 10px;
     padding: 20px;
     margin: auto;
     max-width: 90%;
 
-    p {
-      color: rgb(184, 184, 184);
-      font-size: 15px;
-      margin: 0;
+    .subscription-card-header {
+      display: flex;
+      justify-content: space-between;
+
+      .badge-wrapper {
+        padding: 0;
+        text-align: left;
+
+        span {
+          text-align: center;
+          width: 150px;
+          text-transform: uppercase;
+          display: inline-block;
+          padding: 10px 8px;
+          border-radius: 8px;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          font-size: 15px;
+          background: linear-gradient(
+            155deg,
+            #595959 0%,
+            #221715 100%
+          ) !important;
+          color: white !important;
+          font-family: var(--font-app-family) !important;
+          margin-bottom: 5px;
+
+          &.basic {
+            .badge-icon {
+              display: none;
+            }
+          }
+
+          &.pro {
+            background: linear-gradient(
+              155deg,
+              var(--primary-app-color) 0%,
+              #cb33e2 100%
+            ) !important;
+
+            .badge-icon {
+              margin-right: 3px;
+              font-style: normal;
+            }
+          }
+
+          &.premium {
+            background: linear-gradient(
+              155deg,
+              var(--accent-app-color) 0%,
+              #d74123 100%
+            ) !important;
+
+            .badge-icon {
+              font-size: 16px;
+              position: relative;
+              top: -0.5px;
+              margin-right: 3px;
+              font-style: normal;
+            }
+          }
+        }
+
+        p {
+          font-size: 12px;
+          color: darkgray;
+          margin: 0;
+        }
+      }
+
+      .price-wrapper {
+        h2 {
+          color: white;
+          margin: 0;
+        }
+
+        p {
+          font-size: 13px;
+          color: darkgray;
+          margin: 0;
+          text-align: right;
+        }
+      }
+    }
+
+    .subscription-card-content {
+      .features-wrapper {
+        i {
+          margin-right: 5px;
+          color: lime;
+        }
+        p {
+          text-align: left;
+          font-size: 13px;
+          color: rgb(230, 230, 230);
+          margin: 5px 0;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .btn-secondary {
+        border-color: rgb(167, 167, 167) !important;
+        color: rgb(167, 167, 167) !important;
+        font-size: 13px;
+        border-radius: 100px;
+        border-width: 1px;
+        width: 80px;
+        min-width: 30px;
+      }
     }
   }
 }
