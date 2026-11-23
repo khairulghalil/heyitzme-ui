@@ -87,8 +87,8 @@ function Subscription({ show, onHide, type }) {
   return (
     <>
       <Offcanvas
-        // show={show}
-        show={true}
+        show={show}
+        // show={true}
         onHide={onHide}
         placement="end"
         className={`subscription-offcanvas w-100 ${type}`}
