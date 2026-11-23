@@ -50,9 +50,9 @@ function Subscription({ show, onHide, type }) {
       period: "Per Year",
       features: [
         "Custom banner",
+        "Unlimited profile sharing",
         "Up to 5 font styles to choose",
         "Custom profile theme",
-        "Unlimited profile sharing",
       ],
     },
     {
@@ -63,9 +63,9 @@ function Subscription({ show, onHide, type }) {
       price: "RM 45",
       period: "Per Year",
       features: [
+        "Upload custom logo feature",
         "Unlock 2 additional sections",
         "Up to 10 font styles to choose",
-        "Upload custom logo feature",
         "Basic Plan features included",
       ],
     },
@@ -77,9 +77,9 @@ function Subscription({ show, onHide, type }) {
       price: "RM 50",
       period: "Per Year",
       features: [
+        "Unlock verified badge",
         "Up to 5 additional sections",
         "Up to 15 font styles to choose",
-        "Unlock verified badge",
         "Pro Plan features included",
       ],
     },
