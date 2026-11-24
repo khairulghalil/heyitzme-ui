@@ -40,6 +40,11 @@ function Subscription({ show, onHide, type }) {
     };
   }, [show]);
 
+  const onHideCanvas = () => {
+    onHide();
+    setTimeout(() => setExpandedPlans({}), 300);
+  };
+
   const subscriptionData = [
     {
       type: "basic",
@@ -89,7 +94,7 @@ function Subscription({ show, onHide, type }) {
       <Offcanvas
         show={show}
         // show={true}
-        onHide={onHide}
+        onHide={onHideCanvas}
         placement="end"
         className={`subscription-offcanvas w-100 ${type}`}
       >

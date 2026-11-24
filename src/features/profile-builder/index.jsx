@@ -15,6 +15,9 @@ import {
   useToast,
   BackButton,
   Subscription,
+  BasicBadge,
+  ProBadge,
+  PremiumBadge,
 } from "../../components";
 import {
   ContactCard,
@@ -38,6 +41,8 @@ function ProfileBuilder({ type }) {
   const bannerInputRef = useRef(null);
   const logoInputRef = useRef(null);
   const bannerPreviewRef = useRef(null);
+  const planAlertRef = useRef(null);
+  const planAlertAnimationRef = useRef(null);
 
   const profile = useSelector(selectProfile);
   const updLoading = useSelector(selectUpdProfileLoading);
@@ -219,12 +224,24 @@ function ProfileBuilder({ type }) {
   };
 
   const handleConfirmUpdate = () => {
-    setModalText({
-      title: "Confirm Action",
-      text: "Are you sure you want to update your profile?",
-    });
-    setAction(() => handleUpdate);
-    setShowConfirmModal(true);
+    if (builderProfile?.plan !== selectedPlan) {
+      planAlertAnimationRef.current?.cancel();
+      planAlertAnimationRef.current = planAlertRef.current?.animate(
+        [
+          { transform: "scale(1)" },
+          { transform: "scale(1.04)" },
+          { transform: "scale(1)" },
+        ],
+        { duration: 500, easing: "ease-in-out" },
+      );
+    } else {
+      setModalText({
+        title: "Confirm Action",
+        text: "Are you sure you want to update your profile?",
+      });
+      setAction(() => handleUpdate);
+      setShowConfirmModal(true);
+    }
   };
 
   const handleUpdate = () => {
@@ -394,6 +411,21 @@ function ProfileBuilder({ type }) {
               </div>
 
               <div className="form-wrapper">
+                <div className="badge-wrapper">
+                  {builderProfile?.plan === "basic" && (
+                    <BasicBadge text="user" />
+                  )}
+                  {builderProfile?.plan === "pro" && <ProBadge text="user" />}
+                  {builderProfile?.plan === "premium" && (
+                    <PremiumBadge text="user" />
+                  )}
+                </div>
+                <div className="form-subtext">
+                  <p className="text-muted">
+                    <i className="bi bi-check-all"></i>You can use Pro and
+                    Premium features for free while editing.
+                  </p>
+                </div>
                 <Form.Group className="mb-3 mt-1" controlId="name">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
@@ -532,7 +564,7 @@ function ProfileBuilder({ type }) {
                 </button>
 
                 {builderProfile?.plan !== selectedPlan && (
-                  <div className="plan-alert mb-3">
+                  <div className="plan-alert mb-3" ref={planAlertRef}>
                     <p>
                       You are currently on the{" "}
                       <span className="text-capitalize fw-bold">
@@ -580,7 +612,7 @@ function ProfileBuilder({ type }) {
                     Cancel
                   </button>
                   <button
-                    className={`btn btn-primary ${builderProfile?.plan !== selectedPlan && "disabled"} mt-4 w-100`}
+                    className={`btn btn-primary ${builderProfile?.plan !== selectedPlan && "btn-look-disabled"} mt-4 w-100`}
                     onClick={handleConfirmUpdate}
                   >
                     Update

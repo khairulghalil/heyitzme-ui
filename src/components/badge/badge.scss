@@ -5,15 +5,22 @@
   text-align: center;
   height: 20px !important;
   vertical-align: middle !important;
-  width: 70px !important;
+  min-width: 70px;
   margin-left: 10px !important;
   font-weight: bolder !important;
+  text-transform: uppercase !important;
+
+  &.has-text {
+    // height: 25px !important;
+    width: 100px !important;
+  }
 
   &.basic {
-    padding-top: 3px !important;
-    background-color: darkgrey !important;
+    padding-top: 4.5px !important;
+    background: linear-gradient(155deg, #828282 0%, #221715 100%) !important;
     color: white !important;
     font-family: var(--font-app-family) !important;
+    border: 0.5px solid lightgrey !important;
   }
 
   &.pro {

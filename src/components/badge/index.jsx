@@ -1,25 +1,25 @@
 import "./badge.scss";
 
-function BasicBadge() {
+function BasicBadge({ text }) {
   return (
-    <span className="badge basic rounded-pill bg-primary-subtle text-primary-emphasis">
-      BASIC
+    <span className={`badge basic ${text && "has-text"} rounded-pill`}>
+      BASIC {text}
     </span>
   );
 }
 
-function ProBadge() {
+function ProBadge({ text }) {
   return (
-    <span className="badge pro rounded-pill bg-primary-subtle text-primary-emphasis px-3">
-      ✦ PRO
+    <span className={`badge pro ${text && "has-text"} rounded-pill`}>
+      ✦ PRO {text}
     </span>
   );
 }
 
-function PremiumBadge() {
+function PremiumBadge({ text }) {
   return (
-    <span className="badge premium rounded-pill bg-primary-subtle text-primary-emphasis px-2">
-      <span className="premium-icon">♛</span> PREMIUM
+    <span className={`badge premium ${text && "has-text"} rounded-pill`}>
+      <span className="premium-icon">♛</span> PREMIUM {text}
     </span>
   );
 }
