@@ -636,7 +636,15 @@ function ProfileBuilder({ type }) {
         show={showSubscription}
         onHide={() => setShowSubscription(false)}
         type="update"
+        selectedPlan={selectedPlan}
       />
+
+      {/* <Subscription
+        show={true}
+        onHide={() => setShowSubscription(false)}
+        type="update"
+        selectedPlan={"premium"}
+      /> */}
 
       <Modal
         show={showConfirmModal}

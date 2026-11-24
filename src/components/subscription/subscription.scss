@@ -46,6 +46,7 @@
   }
 
   .subscription-card {
+    position: relative;
     background: linear-gradient(155deg, #57575737 0%, #07070774 100%);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
@@ -176,6 +177,30 @@
         min-width: 30px;
         height: 30px !important;
         margin-top: 10px;
+      }
+    }
+
+    .content-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: 10;
+      border-radius: 10px;
+
+      span {
+        border-radius: 7px;
+        padding: 10px 15px;
+        margin: 0 10px;
+        background: rgba(45, 45, 45, 0.498);
+
+        p {
+          color: darkgray;
+          font-size: 14px;
+          letter-spacing: 0.2px;
+          margin: 0;
+        }
       }
     }
   }

@@ -5,10 +5,11 @@ import { useToast, Loader } from "..";
 import * as logo from "../../assets/img/logo";
 import "./subscription.scss";
 
-function Subscription({ show, onHide, type }) {
+function Subscription({ show, onHide, type, selectedPlan }) {
   const { showToast } = useToast();
   const dispatch = useDispatch();
   const [expandedPlans, setExpandedPlans] = useState({});
+  const [subscriptionData, setSubscriptionData] = useState([]);
 
   useEffect(() => {
     if (!show) return undefined;
@@ -30,6 +31,8 @@ function Subscription({ show, onHide, type }) {
     body.style.overflow = "hidden";
     html.style.overflow = "hidden";
 
+    priorityCheck();
+
     return () => {
       body.style.position = previousStyles.bodyPosition;
       body.style.top = previousStyles.bodyTop;
@@ -40,60 +43,95 @@ function Subscription({ show, onHide, type }) {
     };
   }, [show]);
 
+  const priorityCheck = () => {
+    const subscriptionDataRaw = [
+      {
+        type: "basic",
+        title: "Basic Plan",
+        description: "Free plan with basic features.",
+        badge: "✦",
+        price: "RM 35",
+        period: "Per Year",
+        features: [
+          "Custom banner",
+          "Unlimited profile sharing",
+          "Up to 5 font styles to choose",
+          "Custom profile theme",
+        ],
+        toHide: false,
+      },
+      {
+        type: "pro",
+        title: "Pro Plan",
+        description: "Paid plan with advanced features.",
+        badge: "✦",
+        price: "RM 45",
+        period: "Per Year",
+        features: [
+          "Upload custom logo feature",
+          "Unlock 2 additional sections",
+          "Up to 10 font styles to choose",
+          "Basic Plan features included",
+        ],
+        toHide: false,
+      },
+      {
+        type: "premium",
+        title: "Premium Plan",
+        description: "Paid plan with advanced features.",
+        badge: "♛",
+        price: "RM 50",
+        period: "Per Year",
+        features: [
+          "Unlock verified badge",
+          "Up to 5 additional sections",
+          "Up to 15 font styles to choose",
+          "Pro Plan features included",
+        ],
+        toHide: false,
+      },
+    ];
+
+    const planConfig = {
+      basic: {
+        order: ["basic", "pro", "premium"],
+        hidden: [],
+      },
+      pro: {
+        order: ["pro", "premium", "basic"],
+        hidden: ["basic"],
+      },
+      premium: {
+        order: ["premium", "basic", "pro"],
+        hidden: ["basic", "pro"],
+      },
+    };
+
+    const config = planConfig[selectedPlan] || planConfig.basic;
+
+    const priorityOrder = config.order;
+
+    const rearrangedSubscriptionData = subscriptionDataRaw
+      .map((plan) => ({
+        ...plan,
+        toHide: config.hidden.includes(plan.type),
+      }))
+      .sort(
+        (a, b) => priorityOrder.indexOf(a.type) - priorityOrder.indexOf(b.type),
+      );
+
+    setSubscriptionData(rearrangedSubscriptionData);
+  };
+
   const onHideCanvas = () => {
     onHide();
     setTimeout(() => setExpandedPlans({}), 300);
   };
 
-  const subscriptionData = [
-    {
-      type: "basic",
-      title: "Basic Plan",
-      description: "Free plan with basic features.",
-      badge: "✦",
-      price: "RM 35",
-      period: "Per Year",
-      features: [
-        "Custom banner",
-        "Unlimited profile sharing",
-        "Up to 5 font styles to choose",
-        "Custom profile theme",
-      ],
-    },
-    {
-      type: "pro",
-      title: "Pro Plan",
-      description: "Paid plan with advanced features.",
-      badge: "✦",
-      price: "RM 45",
-      period: "Per Year",
-      features: [
-        "Upload custom logo feature",
-        "Unlock 2 additional sections",
-        "Up to 10 font styles to choose",
-        "Basic Plan features included",
-      ],
-    },
-    {
-      type: "premium",
-      title: "Premium Plan",
-      description: "Paid plan with advanced features.",
-      badge: "♛",
-      price: "RM 50",
-      period: "Per Year",
-      features: [
-        "Unlock verified badge",
-        "Up to 5 additional sections",
-        "Up to 15 font styles to choose",
-        "Pro Plan features included",
-      ],
-    },
-  ];
   return (
     <>
       <Offcanvas
         show={show}
-        // show={true}
         onHide={onHideCanvas}
         placement="end"
         className={`subscription-offcanvas w-100 ${type}`}
@@ -154,6 +192,16 @@ function Subscription({ show, onHide, type }) {
                   )}
                 </div>
               </div>
+              {plan.toHide && (
+                <div className="content-overlay d-flex align-items-center justify-content-center px-2">
+                  <span>
+                    <p>
+                      This plan doesn't include the features you're currently
+                      using
+                    </p>
+                  </span>
+                </div>
+              )}
             </div>
           ))}
         </Offcanvas.Body>
